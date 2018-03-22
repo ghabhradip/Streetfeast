@@ -1,4 +1,4 @@
-
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <center>
 <div class="card bg-light mb-3" style="max-width: 26rem;">
   <div class="card-header">Header</div>
@@ -7,11 +7,11 @@
     <%= devise_error_messages! %>
       <fieldset>
         <div class="form-group">
-          <%= f.text_field :email, autofocus: true, class: 'form-control', placeholder: "Firstname"%>
+          <%= f.text_field :firstname, autofocus: true, class: 'form-control', placeholder: "Firstname"%>
         </div><br>
 
         <div class="form-group">
-          <%= f.text_field :email, autofocus: true, class: 'form-control', placeholder: "Lastname"%>
+          <%= f.text_field :lastname, autofocus: true, class: 'form-control', placeholder: "Lastname"%>
         </div><br>
 
         <div class="form-group">
@@ -34,22 +34,74 @@
           <%= f.text_field :mobile_no, autocomplete: "off", class: 'form-control', placeholder: "Mobile" %>
         </div><br>
 
-        <div class="form-group">
-          <select class="form-control" id="exampleSelect1">
-            <option class=" form-text text-muted">Please select your city</option>
-            <option>2</option>
-            <option>3</option>
-            <option>4</option>
-            <option>5</option>
-          </select>
+        
+
+        <div class="row">
+          <div class="col-sm-6">
+            <div class="form-group">
+             <%= f.text_field :city, autofocus: true, class: 'form-control', id: 'city', placeholder: "Select city"%>
+            </div>
+          </div>
+          <div class="col-sm-6">
+             <div class="form-group">
+              <select class="form-control" id="state" name="state">
+                <option class=" form-text text-muted" value="">Select your state</option>
+                <option value="Andaman and Nicobar Islands">Andaman and Nicobar Islands</option>
+                <option value="Andhra Pradesh">Andhra Pradesh</option>
+                <option value="Arunachal Pradesh">Arunachal Pradesh</option>
+                <option value="Assam">Assam</option>
+                <option value="Bihar">Bihar</option>
+                <option value="Chandigarh">Chandigarh</option>
+                <option value="Chhattisgarh">Chhattisgarh</option>
+                <option value="Dadra and Nagar Haveli">Dadra and Nagar Haveli</option>
+                <option value="Daman and Diu">Daman and Diu</option>
+                <option value="Delhi">Delhi</option>
+                <option value="Goa">Goa</option>
+                <option value="Gujarat">Gujarat</option>
+                <option value="Haryana">Haryana</option>
+                <option value="Himachal Pradesh">Himachal Pradesh</option>
+                <option value="Jammu and Kashmir">Jammu and Kashmir</option>
+                <option value="Jharkhand">Jharkhand</option>
+                <option value="Karnataka">Karnataka</option>
+                <option value="Kerala">Kerala</option>
+                <option value="Lakshadweep">Lakshadweep</option>
+                <option value="Madhya Pradesh">Madhya Pradesh</option>
+                <option value="Maharashtra">Maharashtra</option>
+                <option value="Manipur">Manipur</option>
+                <option value="Meghalaya">Meghalaya</option>
+                <option value="Mizoram">Mizoram</option>
+                <option value="Nagaland">Nagaland</option>
+                <option value="Orissa">Orissa</option>
+                <option value="Pondicherry">Pondicherry</option>
+                <option value="Punjab">Punjab</option>
+                <option value="Rajasthan">Rajasthan</option>
+                <option value="Sikkim">Sikkim</option>
+                <option value="Tamil Nadu">Tamil Nadu</option>
+                <option value="Tripura">Tripura</option>
+                <option value="Uttaranchal">Uttaranchal</option>
+                <option value="Uttar Pradesh">Uttar Pradesh</option>
+                <option value="West Bengal">West Bengal</option>
+              </select>
+            </div>
+          </div>
+          </div>
         </div>
 
         </fieldset>
-        <br>
-        <button type="submit" class="btn btn-primary btn_large">Log in</button>
+        <button type="submit" class="btn btn-primary btn_large">Register</button>
       </fieldset>
     <%end%>
-    <%= render "devise/shared/forgot_password_link" %>
   </div>
 </div>
 </center>
+
+
+<script>
+  $( function() {
+    var availableTags = ["Mumbai","Delhi","Bangalore","Hyderabad","Ahmedabad","Chennai","Kolkata","Surat","Pune","Jaipur","Lucknow","Kanpur","Nagpur","Visakhapatnam","Indore"];
+   
+    $( "#city" ).autocomplete({
+      source: availableTags
+    });
+  } );
+  </script>
