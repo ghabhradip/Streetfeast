@@ -29,5 +29,21 @@ StreetFeast::Application.configure do
 
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
-  config.action_mailer.default_url_options = { host: 'localhost', port: 3001 }
+  #config.action_mailer.default_url_options = { host: 'localhost', port: 3001 }
+
+  config.action_mailer.raise_delivery_errors = true
+  config.action_mailer.perform_deliveries = true
+  config.action_mailer.default_url_options = { host: 'localhost', port: 9292}
+  config.action_mailer.delivery_method = :smtp
+  
+  b='ghabhradip@gmail.com'
+  c='goodbyegodiminhere@2017'
+ ActionMailer::Base.smtp_settings = {
+  address:        'smtp.gmail.com', # default: localhost
+  port:           '25',                  # default: 25
+  user_name:      b,
+  password:       c,
+  authentication: :plain  ,               # :plain, :login or :cram_md5
+  content_type: :"text/html"
+}
 end
