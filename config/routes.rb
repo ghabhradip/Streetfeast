@@ -7,6 +7,8 @@ StreetFeast::Application.routes.draw do
   # You can have the root of your site routed with "root"
   root 'home#index'
 
+  get 'test_email' => 'application#test_email'
+  get 'home/dashboard' => 'home#dashboard', as: :dashboard
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 
