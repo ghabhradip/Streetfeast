@@ -1,4 +1,5 @@
 StreetFeast::Application.routes.draw do
+  get "management/show_users"
   get "home/index"
   devise_for :users
   # The priority is based upon order of creation: first created -> highest priority.
@@ -9,6 +10,12 @@ StreetFeast::Application.routes.draw do
 
   get 'test_email' => 'application#test_email'
   get 'home/dashboard' => 'home#dashboard', as: :dashboard
+
+  get 'home/user_data' => 'home#user_data'
+  post 'home/user_data' => 'home#user_data'
+
+  get 'management/show_users' => 'management#show_users'
+  post 'management/show_users' => 'management#show_users'
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 

@@ -1,1 +1,73 @@
-<h1>hello w</h1>
+<div class="row">
+	<div class="col-sm-9">
+	</div>
+	<div class="col-sm-1.5">
+		<button type="button" class="btn btn-success right-align">Analytics Report</button>
+	</div>
+	<div class="col-sm-1">
+		<button type="button" class="btn btn-warning right-align">Create a Blog</button>
+	</div>
+</div>
+
+
+<div class="row">
+  <div class="col-sm-12"><br>
+    <div class="jumbotron">
+	  <div class="row">
+		  <div class="col-sm-3">
+		  	<ul class="list-group">
+			  <li class="list-group-item d-flex justify-content-between align-items-center">
+			    Blogs
+			    <span class="badge badge-primary badge-pill">14</span>
+			  </li>
+			  <li id="user_list" class="list-group-item d-flex justify-content-between align-items-center" style="cursor: pointer;" onclick="show_users()">
+			    Users
+			    <span class="badge badge-primary badge-pill">2</span>
+			  </li>
+			  <li class="list-group-item d-flex justify-content-between align-items-center">
+			    Restaurants
+			    <span class="badge badge-primary badge-pill">1</span>
+			  </li>
+			</ul>
+
+			<br>
+			<ul class="list-group">
+			  <li class="list-group-item d-flex justify-content-between align-items-center">
+			    <button type="button" class="btn btn-outline-primary">Primary</button>
+			    <button type="button" class="btn btn-outline-warning">Warning</button>
+				<button type="button" class="btn btn-outline-danger">Danger</button>
+			  </li>
+			</ul>
+			<br>
+
+			<ul class="list-group">
+			  <li class="list-group-item d-flex justify-content-between align-items-center">
+			    <span class="badge badge-danger size-mid">Blog</span>
+			    <span class="badge badge-success size-mid">Restaurant</span>
+				<span class="badge badge-warning size-mid">Issue</span>
+			  </li>
+			</ul>
+
+		  </div>
+
+		  <div class="col-sm-9">
+		  </div>
+	  </div>
+	</div>
+  </div>
+
+</div>
+
+<script>
+	function show_users() 
+	{
+		$.getScript('/management/show_users.js?pt=' + "call")
+	}
+</script>
+
+<style>
+	.size-mid
+	{
+		width: 66px;
+	}
+</style>																											
