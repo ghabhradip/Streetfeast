@@ -3,12 +3,6 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
   before_filter :configure_permitted_parameters, if: :devise_controller?
-
-  def test_email
-  	UserMailer.send_email("test").deliver
-  	render text:"success"
-  end
-
   protected
 
     def configure_permitted_parameters
@@ -17,10 +11,18 @@ class ApplicationController < ActionController::Base
     end
 
     def after_sign_in_path_for(resource)
-      	dashboard_path
+      if resource.is_admin == true
+        dashboard_path
+      else
+         home_dashboard_user_path
+      end
     end
 
     def after_sign_up_path_for(resource)
-      	dashboard_path
+      if resource.is_admin == true
+        dashboard_path
+      else
+         home_dashboard_user_path
+      end
     end
 end

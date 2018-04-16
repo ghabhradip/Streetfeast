@@ -10,7 +10,9 @@ StreetFeast::Application.routes.draw do
 
   get 'test_email' => 'application#test_email'
   get 'home/dashboard' => 'home#dashboard', as: :dashboard
-
+  get 'home/dashboard_user' => 'home#dashboard_user'
+  get 'home/:id/edit' => 'home#edit'
+  patch 'home/:id/update' => 'home#update'
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 

@@ -30,19 +30,18 @@ StreetFeast::Application.configure do
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
   #config.action_mailer.default_url_options = { host: 'localhost', port: 3001 }
-
+  config.action_mailer.delivery_method = :smtp
   config.action_mailer.raise_delivery_errors = true
   config.action_mailer.perform_deliveries = true
-  config.action_mailer.default_url_options = { host: 'localhost', port: 3001}
-  config.action_mailer.delivery_method = :smtp
-  config.action_mailer.smtp_settings = {  
-      address:                'smtp.zoho.com',  
-      port:                    465,  
-      user_name:              'abhradip@streetfeast.in',  
-      domain:                 'streetfeast.in',  
-      password:               ENV['ADMIN_PASSWORD'],  
-      authentication:         :plain,  
-      ssl:                    true,  
-      tls:                    true  
-  } 
+  #config.action_mailer.default_url_options = { host: 'localhost', port: 3001}
+  config.action_mailer.default_url_options = { :host => 'localhost:3000' }
+  config.action_mailer.smtp_settings = {
+    :address        => 'smtp.zoho.com',
+    :port           => '465',
+    :enable_starttls_auto => true,
+    ssl: true,
+    :user_name      => 'support@streetfeast.in', # must be identical to :from
+    :password       => 'Streetfeastsupport@123',
+    :authentication => :login,
+  }
 end

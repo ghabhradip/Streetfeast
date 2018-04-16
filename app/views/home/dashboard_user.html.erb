@@ -1,0 +1,6 @@
+<% if flash[:notice]  %>
+  <div class="notice">
+    <%= flash[:notice]  %>
+  </div>
+<% end %>
+<%= link_to("Update Profile","/home/#{current_user.id}/edit") %> 
