@@ -1,83 +1,92 @@
 <div class="row">
-	<div class="col-sm-9">
-		<div class="btn btn-outline-primary">
-		  <%= link_to("Send Invitation",new_user_invitation_path) %>
-		</div>
-	</div>
-	<div class="col-sm-1.5">
-		<button type="button" class="btn btn-success right-align">Analytics Report</button>
-	</div>
-	<div class="col-sm-1">
-		<button type="button" class="btn btn-warning right-align">Create a Blog</button>
-	</div>
+  <div class="col-sm-9">
+    <div class="btn btn-outline-primary">
+      <%= link_to("Send Invitation",new_user_invitation_path) %>
+    </div>
+    <% if current_user.firstname.present? && current_user.lastname.present? && current_user.mobile_no.present? && current_user.state.present? && current_user.city.present? %>
+      <div class="btn btn-outline-primary">
+        <%= link_to("Edit profile","/home/#{current_user.id}/edit") %>
+      </div>
+    <% else %>
+      <div class="btn btn-outline-primary">
+        <%= link_to("Update profile","/home/#{current_user.id}/edit") %>
+      </div>
+    <% end %>
+  </div>
+  <div class="col-sm-1.5">
+    <button type="button" class="btn btn-success right-align">Analytics Report</button>
+  </div>
+  <div class="col-sm-1">
+    <a class="btn btn-warning right-align" href="/blog/new">Create a Blog</a>
+  </div>
 </div>
 
 <div class="row">
   <div class="col-sm-12"><br>
     <div class="jumbotron">
-	  <div class="row">
-		  <div class="col-sm-3">
-		  	<ul class="list-group">
-			  <li class="list-group-item d-flex justify-content-between align-items-center" style="cursor: pointer;" onclick="show_blogs()">
-			    Blogs
-			    <span class="badge badge-primary badge-pill">14</span>
-			  </li>
-			  <li id="user_list" class="list-group-item d-flex justify-content-between align-items-center" style="cursor: pointer;" onclick="show_users()">
-			    Users
-			    <span class="badge badge-primary badge-pill">2</span>
-			  </li>
-			  <li class="list-group-item d-flex justify-content-between align-items-center" style="cursor: pointer;" onclick="show_restaurants()">
-			    Restaurants
-			    <span class="badge badge-primary badge-pill">1</span>
-			  </li>
-			</ul>
+    <div class="row">
+      <div class="col-sm-3">
+        <ul class="list-group">
+        <li class="list-group-item d-flex justify-content-between align-items-center" style="cursor: pointer;" onclick="show_blogs()">
+          Blogs
+          <span class="badge badge-primary badge-pill">14</span>
+        </li>
+        <li id="user_list" class="list-group-item d-flex justify-content-between align-items-center" style="cursor: pointer;" onclick="show_users()">
+          Users
+          <span class="badge badge-primary badge-pill">2</span>
+        </li>
+        <li class="list-group-item d-flex justify-content-between align-items-center" style="cursor: pointer;" onclick="show_restaurants()">
+          Restaurants
+          <span class="badge badge-primary badge-pill">1</span>
+        </li>
+      </ul>
 
-			<br>
-			<ul class="list-group">
-			  <li class="list-group-item d-flex justify-content-between align-items-center">
-			    <button type="button" class="btn btn-outline-primary">Primary</button>
-			    <button type="button" class="btn btn-outline-warning">Warning</button>
-				<button type="button" class="btn btn-outline-danger">Danger</button>
-			  </li>
-			</ul>
-			<br>
+      <br>
+      <ul class="list-group">
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          <button type="button" class="btn btn-outline-primary">Primary</button>
+          <button type="button" class="btn btn-outline-warning">Warning</button>
+        <button type="button" class="btn btn-outline-danger">Danger</button>
+        </li>
+      </ul>
+      <br>
 
-			<ul class="list-group">
-			  <li class="list-group-item d-flex justify-content-between align-items-center">
-			    <span class="badge badge-danger size-mid">Blog</span>
-			    <span class="badge badge-success size-mid">Restaurant</span>
-				<span class="badge badge-warning size-mid">Issue</span>
-			  </li>
-			</ul>
+      <ul class="list-group">
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          <span class="badge badge-danger size-mid">Blog</span>
+          <span class="badge badge-success size-mid">Restaurant</span>
+        <span class="badge badge-warning size-mid">Issue</span>
+        </li>
+      </ul>
 
-		  </div>
+      </div>
 
-		  <div id="table_container" class="col-sm-9">
-		  </div>
-	  </div>
-	</div>
+      <div id="table_container" class="col-sm-9">
+      </div>
+    </div>
+  </div>
   </div>
 
 </div>
 
 <script>
-	function show_blogs() 
-	{
-		$("#table_container").html("<%= escape_javascript(render('blog_list')) %>");
-	}
-	function show_users() 
-	{
-		$("#table_container").html("<%= escape_javascript(render('user_list')) %>");
-	}
-	function show_restaurants() 
-	{
-		$("#table_container").html("<%= escape_javascript(render('restaurant_list')) %>");
-	}
+  function show_blogs() 
+  {
+    $("#table_container").html("<%= escape_javascript(render('blog_list')) %>");
+  }
+  function show_users() 
+  {
+    $("#table_container").html("<%= escape_javascript(render('user_list')) %>");
+  }
+  function show_restaurants() 
+  {
+    $("#table_container").html("<%= escape_javascript(render('restaurant_list')) %>");
+  }
 </script>
 
 <style>
-	.size-mid
-	{
-		width: 66px;
-	}
-</style>																											
+  .size-mid
+  {
+    width: 66px;
+  }
+</style>                                                      

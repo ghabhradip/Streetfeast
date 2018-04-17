@@ -15,7 +15,7 @@
 //= require jquery-ui
 //= require turbolinks
 //= require_tree .
-
+//= require tinymce
 
 /*!
  DataTables 1.10.16

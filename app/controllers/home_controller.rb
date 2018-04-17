@@ -2,6 +2,8 @@ class HomeController < ApplicationController
   before_filter :authenticate_user!, only: [:dashboard]
 
   def index
+    @blog = Blog.new
+    @picture = Picture.new
   end
 
   def dashboard
@@ -18,8 +20,15 @@ class HomeController < ApplicationController
   def update
     @user = User.find_by_id(params[:id])
     @user.update_attributes(user_params)
+    state = params[:state]
+    @user.update_attribute(:state,state)
+    @user.save
     flash[:notice] = "User details updated"
-    redirect_to home_dashboard_user_path
+    if @user.is_admin == true
+      redirect_to dashboard_path
+    else
+      redirect_to home_dashboard_user_path
+    end
   end
   private
   def user_params
