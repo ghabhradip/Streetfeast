@@ -6,7 +6,8 @@ StreetFeast::Application.routes.draw do
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"
-  root 'home#index'
+  #root 'home#index'
+  root 'home#under_construction'
 
   get 'test_email' => 'application#test_email'
   get 'home/dashboard' => 'home#dashboard', as: :dashboard

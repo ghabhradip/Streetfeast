@@ -1,7 +1,12 @@
 class HomeController < ApplicationController
   before_filter :authenticate_user!, only: [:dashboard]
 
+
   def index
+  end
+
+  def under_construction
+    render layout: false
   end
 
   def dashboard
