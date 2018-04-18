@@ -12,11 +12,18 @@
       <%= f.text_field :title,:class=>"form-control",:placeholder => "Title" %>
     </div>
     <br>
-
     <div class="field">
       <%= f.text_area :content, :class => "tinymce",:placeholder => "Content" %>
     </div>
     <br/>
+    <div class="field">
+      <%= f.text_field :email,:placeholder => "Email",:class=>"form-control" %>
+    </div>
+    <br>
+    <div class="field">
+      <%= f.text_field :fullname,:placeholder => "Fullname",:class=>"form-control" %>
+    </div>
+    <br>
     <div class="field">
       <%= f.fields_for @picture do |a|  %>
         <b> Upload Images : </b>
@@ -26,16 +33,24 @@
     <br/>
     <div class="actions">
       <button type="submit" class="btn btn-primary btn_large" >Create</button>
+      <button class="btn btn-primary btn_large" id = "cancel_btn" >Cancel</button>
     </div>
   <% end %>
 </div>
 <script>
   $(document).ready(function(){
     $(".new_blog").hide();
+    $("#cancel_btn").hide();
     });
   $("#blog_btn").click(function(){
     $(this).hide();
     $(".new_blog").show();
+    $("#cancel_btn").show();
+  })
+  $("#cancel_btn").click(function(e){
+    e.preventDefault();
+    $(".new_blog").hide();
+    $("#blog_btn").show();
   })
 
 </script>

@@ -30,6 +30,15 @@ class HomeController < ApplicationController
       redirect_to home_dashboard_user_path
     end
   end
+
+  
+  def blog_list
+    @blogs = Blog.all
+    render partial: "blog_list"
+  end
+
+
+
   private
   def user_params
     params.require(:user).permit(:firstname, :lastname, :mobile_no,:city,:state)

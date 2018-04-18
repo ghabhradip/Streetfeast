@@ -1,11 +1,19 @@
 class BlogController < ApplicationController
+  skip_before_action :verify_authenticity_token
+
   def create
+    debugger
     @blog  = Blog.create(blog_params)
-    params[:blog][:picture][:avatar].each do |c|
-      Picture.create(:avatar=> c,:blog_id => @blog.id)
+    if params[:blog][:picture].nil?
+      redirect_to :back
+    else
+      params[:blog][:picture][:avatar].each do |c|
+        Picture.create(:avatar=> c,:blog_id => @blog.id)
+        redirect_to :back
+      end
     end
-    redirect_to :back
   end
+
   def new
     @blog = Blog.new
     @picture = Picture.new
@@ -13,22 +21,34 @@ class BlogController < ApplicationController
 
   def create_blog_user
     @blog  = Blog.create(blog_params)
-    @blog.author_id = current_user.id
+    @blog.user_id = current_user.id
     @blog.save
-    params[:blog][:picture][:avatar].each do |c|
-      Picture.create(:avatar=> c,:blog_id => @blog.id,:user_id => current_user.id)
+    unless params[:blog][:picture].nil?
+      params[:blog][:picture][:avatar].each do |c|
+        Picture.create(:avatar=> c,:blog_id => @blog.id,:user_id => current_user.id)
+      end
     end
     if current_user.is_admin == true
-      redirect_to dashboard_path 
+      redirect_to dashboard_path
     else
       redirect_to home_dashboard_user_path
     end
   end
 
-
-  private
-  def blog_params
-    params.require(:blog).permit(:title, :content)
+  def edit
+    @blog = Blog.find_by_id(params[:id])
+    render partial: "edit"
   end
 
+  def update
+    @blog = Blog.find_by_id(params[:id])
+    @blog.update_attributes(blog_params)
+    render json: @blog
+  end
+
+  private
+  
+  def blog_params
+    params.require(:blog).permit(:title, :content,:email,:fullname)
+  end
 end

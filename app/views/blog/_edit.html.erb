@@ -1,0 +1,53 @@
+<%= tinymce%>
+<%= form_for (@blog),url: "/blog/update/#{@blog.id}", :html => { :multipart => true },:id =>"editblog",:remote => true do |f| %>
+  <div class="field">
+    <%= f.text_field :title,:class=>"form-control",:placeholder => "Title" %>
+  </div>
+  <br>
+
+  <div class="field">
+    <%= f.text_area :content, :class => "tinymce" %>
+  </div>
+  <br/>
+
+  <br/>
+  <div class="actions">
+    <button type="submit" class="btn btn-primary btn_large" >Update</button>
+  </div>
+<% end %>
+<script type="text/javascript">
+  tinymce.remove();
+  tinymce.init({ selector: ".tinymce" })
+
+
+  $("#editblog").on("submit", function(event){
+    event.preventDefault();
+    $.ajax({
+      url: this.action,
+      data: $(this).serialize(),
+      dataType: "json",
+      success: function(response) {
+        alert(1);
+      }
+    });
+  });
+
+  // $("#editblog").bind("ajax:success", function(event,xhr,settings)
+  // {
+  //   alert(1);
+  // //     //alert(xhr.responseText);
+  // //     // $('body').removeClass('modal-open');
+  // //     // $('.modal-backdrop').remove();
+  // //     // $("#main_div").html(xhr.responseText);
+  // });
+
+</script>
+
+
+
+
+
+
+
+
+
