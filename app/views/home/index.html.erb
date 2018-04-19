@@ -1,42 +1,56 @@
 <% @picture.errors.full_messages.each do |message| %>
   <li><%= message %></li>
 <% end %>
-<div class="btn btn-outline-primary" id ="blog_btn">
-  <%= link_to("Create blog","javascript:void(0)",:remote => true,:class => "create_blog_btn") %>
+
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-3 col-md-6">
+      <div class="btn btn-outline-primary" id ="blog_btn">
+        <%= link_to("Create blog","javascript:void(0)",:remote => true,:class => "create_blog_btn") %>
+      </div>
+
+      <div class ="new_blog">
+        <h2>Create a new blog</h2>
+        <%= form_for (@blog),url: "/blog/create", :html => { :multipart => true } do |f| %>
+          <div class="field">
+            <%= f.text_field :title,:class=>"form-control",:placeholder => "Title" %>
+          </div>
+          <br>
+
+          <div class="field">
+            <%= f.text_area :content, :class => "tinymce",:placeholder => "Content" %>
+          </div>
+          <br/>
+          <div class="field">
+            <%= f.text_field :email,:placeholder => "Email",:class=>"form-control" %>
+          </div>
+          <br>
+          <div class="field">
+            <%= f.text_field :fullname,:placeholder => "Fullname",:class=>"form-control" %>
+          </div>
+          <br>
+          <div class="field">
+            <%= f.fields_for @picture do |a|  %>
+              <b> Upload Images : </b>
+              <%= a.file_field :avatar , multiple: true %>
+            <% end %>
+          </div>
+          <br/>
+          <div class="actions">
+            <button type="submit" class="btn btn-primary btn_large" >Create</button>
+            <button class="btn btn-primary btn_large" id = "cancel_btn" >Cancel</button>
+          </div>
+        <% end %>
+      </div>
+    </div>
+    <div class="col-sm-9 col-md-6">
+      
+    </div>
+  </div>
 </div>
 
-<div class ="new_blog">
-  <h2>Create a new blog</h2>
-  <%= form_for (@blog),url: "/blog/create", :html => { :multipart => true } do |f| %>
-    <div class="field">
-      <%= f.text_field :title,:class=>"form-control",:placeholder => "Title" %>
-    </div>
-    <br>
-    <div class="field">
-      <%= f.text_area :content, :class => "tinymce",:placeholder => "Content" %>
-    </div>
-    <br/>
-    <div class="field">
-      <%= f.text_field :email,:placeholder => "Email",:class=>"form-control" %>
-    </div>
-    <br>
-    <div class="field">
-      <%= f.text_field :fullname,:placeholder => "Fullname",:class=>"form-control" %>
-    </div>
-    <br>
-    <div class="field">
-      <%= f.fields_for @picture do |a|  %>
-        <b> Upload Images : </b>
-        <%= a.file_field :avatar , multiple: true %>
-      <% end %>
-    </div>
-    <br/>
-    <div class="actions">
-      <button type="submit" class="btn btn-primary btn_large" >Create</button>
-      <button class="btn btn-primary btn_large" id = "cancel_btn" >Cancel</button>
-    </div>
-  <% end %>
-</div>
+
 <script>
   $(document).ready(function(){
     $(".new_blog").hide();
@@ -54,4 +68,3 @@
   })
 
 </script>
-
