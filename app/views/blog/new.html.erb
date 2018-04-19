@@ -1,0 +1,21 @@
+<h2>Create a new blog</h2>
+  <%= form_for (@blog),url: "/blog/create_blog_user", :html => { :multipart => true } do |f| %>
+    <div class="field">
+      <%= f.text_field :title,:class=>"form-control",:placeholder => "Title" %>
+    </div>
+    <br>
+
+    <div class="field">
+      <%= f.text_area :content, :class => "tinymce" %>
+    </div>
+    <br/>
+    <div class="field">
+      <%= f.fields_for @picture do |a|  %>
+        <%= a.file_field :avatar , multiple: true %>
+      <% end %>
+    </div>
+    <br/>
+    <div class="actions">
+      <button type="submit" class="btn btn-primary btn_large" >Create</button>
+    </div>
+  <% end %>

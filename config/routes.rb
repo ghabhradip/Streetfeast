@@ -1,4 +1,5 @@
 StreetFeast::Application.routes.draw do
+  get "blog/create"
   get "management/show_users"
   get "home/index"
   devise_for :users
@@ -14,6 +15,13 @@ StreetFeast::Application.routes.draw do
   get 'home/dashboard_user' => 'home#dashboard_user'
   get 'home/:id/edit' => 'home#edit'
   patch 'home/:id/update' => 'home#update'
+  post 'blog/create' => 'blog#create'
+  post 'blog/create_blog_user' => 'blog#create_blog_user'
+  get 'blog/new' => 'blog#new'
+
+  get 'blog/edit/:id' => 'blog#edit'
+
+  patch 'blog/update/:id' => 'blog#update'
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 

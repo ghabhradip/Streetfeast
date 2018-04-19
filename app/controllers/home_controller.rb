@@ -3,6 +3,8 @@ class HomeController < ApplicationController
 
 
   def index
+    @blog = Blog.new
+    @picture = Picture.new
   end
 
   def under_construction
@@ -23,9 +25,25 @@ class HomeController < ApplicationController
   def update
     @user = User.find_by_id(params[:id])
     @user.update_attributes(user_params)
+    state = params[:state]
+    @user.update_attribute(:state,state)
+    @user.save
     flash[:notice] = "User details updated"
-    redirect_to home_dashboard_user_path
+    if @user.is_admin == true
+      redirect_to dashboard_path
+    else
+      redirect_to home_dashboard_user_path
+    end
   end
+
+  
+  def blog_list
+    @blogs = Blog.all
+    render partial: "blog_list"
+  end
+
+
+
   private
   def user_params
     params.require(:user).permit(:firstname, :lastname, :mobile_no,:city,:state)

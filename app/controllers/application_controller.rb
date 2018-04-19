@@ -6,15 +6,14 @@ class ApplicationController < ActionController::Base
   protected
 
     def configure_permitted_parameters
-        # Fields for sign up
-        devise_parameter_sanitizer.for(:sign_up) { |u| u.permit(:firstname, :lastname, :email, :password, :mobile_no, :city, :state) }
+      devise_parameter_sanitizer.for(:sign_up) { |u| u.permit(:firstname, :lastname, :email, :password, :mobile_no, :city,:state) }
     end
 
     def after_sign_in_path_for(resource)
       if resource.is_admin == true
         dashboard_path
       else
-         home_dashboard_user_path
+        home_dashboard_user_path
       end
     end
 
@@ -22,7 +21,7 @@ class ApplicationController < ActionController::Base
       if resource.is_admin == true
         dashboard_path
       else
-         home_dashboard_user_path
+        home_dashboard_user_path
       end
     end
 end

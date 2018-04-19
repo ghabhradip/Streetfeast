@@ -25,6 +25,12 @@ log:clear
 middleware
 notes
 notes:custom
+paperclip:clean
+paperclip:find_broken_attachments
+paperclip:refresh
+paperclip:refresh:metadata
+paperclip:refresh:missing_styles
+paperclip:refresh:thumbnails
 rails:template
 rails:update
 routes

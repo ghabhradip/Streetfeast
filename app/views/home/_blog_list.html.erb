@@ -2,24 +2,72 @@
   <thead>
     <tr>
       <th scope="col">Type</th>
-      <th scope="col">Column heading</th>
-      <th scope="col">Column heading</th>
-      <th scope="col">Column heading</th>
+      <th scope="col">Title</th>
+      <th scope="col">Content</th>
+      <th scope="col">Email</th>
+      <th scope="col">Edit</th>
     </tr>
   </thead>
   <tbody>
-    <tr class="table-active">
-      <th scope="row">Active</th>
-      <td>Column content</td>
-      <td>Column content</td>
-      <td>Column content</td>
-    </tr>
-    <tr>
-      <th scope="row">Default</th>
-      <td>Column content</td>
-      <td>Column content</td>
-      <td>Column content</td>
-    </tr>    
+    <% Blog.all.each do |b| %>
+      <tr class="table-active">
+        <th scope="row">Active</th>
+        <td><%= b.title %></td>
+        <td><%= b.content.html_safe %></td>
+        <% if b.user_id.present? %>
+          <td><%= b.user.email %></td>
+        <% else %>
+          <td><%= b.email %></td>
+        <% end %>
+        <td><%= link_to "javascript:void(0)",:class => "blog_edit","data-id" => "#{b.id}","data-toggle"=>"modal" ,"data-target"=>".modal",:remote => true do %>
+          <span><img src="/assets/edit_icon.png" style ="height:20px;width:20px;"></span>
+          <% end %>
+        </td>
+      </tr> 
+    <% end %>
   </tbody>
 </table> 
 
+
+<div class="modal">
+  <div class="modal" role="document">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Modal Header</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+  </div>
+</div>
+<%= tinymce %>
+
+<script type="text/javascript">
+
+  $(".blog_edit").click(function(e)
+      { 
+        var id = $(this).data('id'); 
+        $.ajax({ 
+          async: true,
+          type: 'GET',
+          url: "/blog/edit/"+id,
+          success: function(data)
+          {
+            //console.log(data);
+            $(".modal-body").html(data);
+            //alert(data);
+          }, 
+          error: function(data){ alert('error'); } 
+        })
+      });
+  
+
+</script>
