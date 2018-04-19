@@ -1,5 +1,5 @@
 <%= tinymce%>
-<%= form_for (@blog),url: "/blog/update/#{@blog.id}", :html => { :multipart => true },:id =>"editblog",:remote => true do |f| %>
+<%= form_for (@blog),url: "/blog/update/#{@blog.id}", :html => { :multipart => true },:id =>"editblog",:remote => true,"data-id" => "#{@blog.id}" do |f| %>
   <div class="field">
     <%= f.text_field :title,:class=>"form-control",:placeholder => "Title" %>
   </div>
@@ -9,8 +9,12 @@
     <%= f.text_area :content, :class => "tinymce" %>
   </div>
   <br/>
-
-  <br/>
+  <div>
+    <% @blog.pictures.each do |p| %>
+      <img src="<%= p.avatar %>" style="height: 100px;width: 100px;"> &nbsp;&nbsp;&nbsp;
+    <% end %>
+  </div>
+  <br>
   <div class="actions">
     <button type="submit" class="btn btn-primary btn_large" >Update</button>
   </div>
@@ -20,26 +24,22 @@
   tinymce.init({ selector: ".tinymce" })
 
 
-  $("#editblog").on("submit", function(event){
-    event.preventDefault();
-    $.ajax({
-      url: this.action,
-      data: $(this).serialize(),
-      dataType: "json",
-      success: function(response) {
-        alert(1);
-      }
-    });
-  });
-
-  // $("#editblog").bind("ajax:success", function(event,xhr,settings)
-  // {
-  //   alert(1);
-  // //     //alert(xhr.responseText);
-  // //     // $('body').removeClass('modal-open');
-  // //     // $('.modal-backdrop').remove();
-  // //     // $("#main_div").html(xhr.responseText);
-  // });
+  $(".edit_blog").on("submit", function(event){ 
+    var id = <%= @blog.id %>
+    $.ajax({ type: "POST",
+     url: this.action,
+      data: $(this).serialize(), 
+      success: function(response) 
+      {
+        
+        $('.modal-backdrop').remove();
+        $('.modal').hide();
+        $('.blog_title_'+id).html(response.title);
+        $('.blog_content_'+id).html(response.content);
+      } 
+    }); 
+    event.preventDefault(); 
+  }); 
 
 </script>
 
