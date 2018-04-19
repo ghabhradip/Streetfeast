@@ -12,6 +12,13 @@ StreetFeast::Application.routes.draw do
   root 'home#index'
 
   get 'test_email' => 'application#test_email'
+
+  get 'home/blacklist' => 'home#blacklist'
+  post 'home/blacklist' => 'home#blacklist'
+
+  get 'home/undo_blacklist' => 'home#undo_blacklist'
+  post 'home/undo_blacklist' => 'home#undo_blacklist'
+
   get 'home/dashboard' => 'home#dashboard', as: :dashboard
   get 'home/dashboard_user' => 'home#dashboard_user'
   get 'home/:id/edit' => 'home#edit'

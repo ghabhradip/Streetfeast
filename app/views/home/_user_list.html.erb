@@ -8,15 +8,20 @@
       <th scope="col">State</th>
       <th scope="col">Current Login</th>
       <th scope="col">Last Login</th>
-      <th></th>
-      <th></th>
+      <th scope="col">Posts</th>
+      <th scope="col"></th>
+      <th scope="col"></th>
     </tr>
   </thead>
   
   <tbody>
       <%users=User.all%>
       <%users.each do |user|%>
-        <tr>
+        <%if user.is_blocked%>
+          <tr id="<%=user.id%>row" class="table-warning">
+        <%else%>
+          <tr id="<%=user.id%>row">
+        <%end%>
           <td><%=user.firstname%> <%=user.lastname%></td>
           <td><%=user.email%></td>
           <td><%=user.mobile_no%></td>
@@ -24,20 +29,121 @@
           <td><%=user.state%></td>
           <td><%=user.current_sign_in_at%></td>
           <td><%=user.last_sign_in_at%></td>
+          <td><%=user.blogs.count%></td>
           <td>
-            <span id="star_header" class="glyphicon glyphicon-star"></span>
+            <span  class="user_edit" style="cursor: pointer;"><img id="<%=user.id%>edit" src="/assets/edit_icon.png" class="user_edit" style ="height:20px;width:20px;"></span>
           </td>
           <td>
-            <span id="star_header" class="glyphicon glyphicon-star"></span>
+            <%if user.is_blocked%>
+              <span class="user_ban" style="cursor: pointer;"><img id="<%=user.id%>ban" src="/assets/ban_icon.png" class="unblock" style ="height:20px;width:20px;"></span>
+            <%else%>
+              <span class="user_ban" style="cursor: pointer;"><img id="<%=user.id%>ban" src="/assets/ban_icon.png" class="block" style ="height:20px;width:20px;"></span>
+            <%end%>
           </td>
         </tr>
       <%end%>
   </tbody>
 </table> 
 
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        ...
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <script>
   $(document).ready(function(){
-  $("#example").DataTable({
+    $("#example").DataTable({
+    });
   });
-});
+
+  $(".user_edit").click(function(){
+    // var img_id=event.target.id;
+    // var user_id=img_id.replace('ban','');
+    // //alert(event.target.id);
+   
+    // swal({
+    //   title: 'Are you sure?',
+    //   text: "You won't be able to revert this!",
+    //   type: 'warning',
+    //   showCancelButton: true,
+    //   confirmButtonColor: '#3085d6',
+    //   cancelButtonColor: '#d33',
+    //   confirmButtonText: 'Yes, block!'
+    // }).then((result) => {
+    //   $("#"+user_id+"row").addClass("table-warning");
+    //   $("#"+user_id+"ban").addClass("unblock");
+    //   $.getScript('/home/blacklist.js?pt=' + user_id);
+    // })
+    //$("#exampleModal").modal('show');
+  });
+
+
+  $(".block").click(function(){
+    var img_id=event.target.id;
+    var user_id=img_id.replace('ban','');
+    //alert(event.target.id);
+   
+    swal({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, block!'
+    }).then((result) => {
+      $("#"+user_id+"row").addClass("table-warning");
+      $("#"+user_id+"ban").addClass("unblock");
+      $.getScript('/home/blacklist.js?pt=' + user_id);
+    })
+
+  });
+
+
+  $(".unblock").click(function(){
+    var img_id=event.target.id;
+    var user_id=img_id.replace('ban','');
+
+    swal({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, unblock!'
+    }).then((result) => {
+      $("#"+user_id+"row").removeClass("table-warning");
+      $("#"+user_id+"ban").removeClass("unblock");
+      $.getScript('/home/undo_blacklist.js?pt=' + user_id);
+    })
+  });
 </script>
+
+<style>
+  .unblock
+  {
+    filter: grayscale(100%);
+    opacity: 0.7;
+  }
+
+  #example_wrapper .row:first-child{
+        margin-bottom: 24px;
+  }
+</style>

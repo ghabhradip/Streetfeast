@@ -17,11 +17,14 @@ class HomeController < ApplicationController
       format.js   
     end
   end
+
   def dashboard_admin
   end
+
   def edit
     @user = User.find_by_id(params[:id])
   end
+
   def update
     @user = User.find_by_id(params[:id])
     @user.update_attributes(user_params)
@@ -42,7 +45,25 @@ class HomeController < ApplicationController
     render partial: "blog_list"
   end
 
+  def blacklist
+    user_id=params[:pt]
+    user=User.find(user_id.to_i)
+    user.update(:is_blocked => true)
 
+    respond_to do |format|
+     format.js { render nothing: true}
+    end 
+  end
+
+  def undo_blacklist
+    user_id=params[:pt]
+    user=User.find(user_id.to_i)
+    user.update(:is_blocked => nil)
+
+    respond_to do |format|
+     format.js { render nothing: true}
+    end 
+  end
 
   private
   def user_params
