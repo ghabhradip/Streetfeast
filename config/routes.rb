@@ -21,6 +21,10 @@ StreetFeast::Application.routes.draw do
   get 'blog/edit/:id' => 'blog#edit'
 
   patch 'blog/update/:id' => 'blog#update'
+
+  post 'blog/add_picture_to_blog' => 'blog#add_picture_to_blog'
+
+  
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 

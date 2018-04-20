@@ -2,7 +2,6 @@ class BlogController < ApplicationController
   skip_before_action :verify_authenticity_token
 
   def create
-    debugger
     @blog  = Blog.create(blog_params)
     if params[:blog][:picture].nil?
       redirect_to :back
@@ -37,6 +36,7 @@ class BlogController < ApplicationController
 
   def edit
     @blog = Blog.find_by_id(params[:id])
+    @picture = Picture.new
     render partial: "edit"
   end
 
@@ -44,6 +44,11 @@ class BlogController < ApplicationController
     @blog = Blog.find_by_id(params[:id])
     @blog.update_attributes(blog_params)
     render json: @blog
+  end
+
+  def add_picture_to_blog
+    picture = params[:pic].to_jsons
+    render text: "uploaded"
   end
 
   private

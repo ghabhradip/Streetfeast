@@ -1,18 +1,29 @@
+<style type="text/css">
+  .uploadpic{
+    display: none;
+  }
+
+</style>
 <%= tinymce%>
 <%= form_for (@blog),url: "/blog/update/#{@blog.id}", :html => { :multipart => true },:id =>"editblog",:remote => true,"data-id" => "#{@blog.id}" do |f| %>
   <div class="field">
     <%= f.text_field :title,:class=>"form-control",:placeholder => "Title" %>
   </div>
   <br>
-
   <div class="field">
     <%= f.text_area :content, :class => "tinymce" %>
+  </div>
+  <div class="field">
+    <%= f.fields_for @picture do |a|  %>
+      <%= a.file_field :avatar,:class => "uploadpic",:id => "upload_pic"%>
+    <% end %>
   </div>
   <br/>
   <div>
     <% @blog.pictures.each do |p| %>
-      <img src="<%= p.avatar %>" style="height: 100px;width: 100px;"> &nbsp;&nbsp;&nbsp;
+      <img src="<%= p.avatar %>" id = "<%=p.id %>" style="height: 100px;width: 100px;"> &nbsp;&nbsp;&nbsp;
     <% end %>
+    <a href="javascript:void(0)"><img src="/assets/addpic.png" class= "add_image_blog" style="height: 50px;width: 50px;"></a>
   </div>
   <br>
   <div class="actions">
@@ -40,6 +51,50 @@
     }); 
     event.preventDefault(); 
   }); 
+
+
+  $(".add_image_blog").on("click",function(event){
+
+
+
+    //var file_data = $(".uploadpic").prop("files")[0];
+    $(".uploadpic").trigger("click");
+    var x= $(".uploadpic").val();
+    //$("#upload_pic").removeClass("uploadpic");
+    console.log(x);
+
+
+
+    //var x = $("#upload_pic").val();
+    //alert(x)
+    //$("#upload_pic").addClass("uploadpic");
+
+    //var files = document.getElementById("upload_pic").files;
+    //var length = files.length;
+
+
+    //var files = $(".uploadpic").val();
+
+    //var fl = files.length;
+
+    //alert(files);
+
+
+    //alert(image);
+    //alert(JSON.stringify(file_data));
+    //alert(JSON.stringify(x));
+    // $.ajax({ 
+    //   type: "POST",
+    //   url: "/blog/add_picture_to_blog",
+    //   data: {'blog_id' :<%= @blog.id %>,'pic' :JSON.stringify(x)}, 
+    //   success: function(response) 
+    //   {
+    //     alert(response);       
+    //   } 
+    // }); 
+  });
+
+
 
 </script>
 
