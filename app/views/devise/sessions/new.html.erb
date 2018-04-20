@@ -23,6 +23,8 @@
         <button type="submit" class="btn btn-primary btn_large">Log in</button>
       </fieldset>
     <%end%>
+    <%= link_to "Sign in with Google", user_omniauth_authorize_path(:google_oauth2) %>
+    <br>
     <%= render "devise/shared/forgot_password_link" %>
   </div>
 </div>

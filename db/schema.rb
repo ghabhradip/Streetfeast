@@ -11,14 +11,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180418071249) do
+ActiveRecord::Schema.define(version: 20180420073503) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "blogs", force: true do |t|
     t.string   "title"
-    t.string   "content"
+    t.text     "content"
     t.integer  "user_id"
     t.boolean  "is_reviewd"
     t.boolean  "is_blocked"
@@ -59,10 +59,6 @@ ActiveRecord::Schema.define(version: 20180418071249) do
     t.boolean  "is_blocked"
     t.boolean  "is_admin"
     t.string   "state"
-    t.string   "provider"
-    t.string   "uid"
-    t.string   "name"
-    t.text     "image"
     t.string   "invitation_token"
     t.datetime "invitation_created_at"
     t.datetime "invitation_sent_at"
@@ -71,6 +67,7 @@ ActiveRecord::Schema.define(version: 20180418071249) do
     t.integer  "invited_by_id"
     t.string   "invited_by_type"
     t.integer  "invitations_count",      default: 0
+    t.string   "sign_in_type",           default: ""
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree

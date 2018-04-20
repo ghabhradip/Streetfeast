@@ -11,6 +11,7 @@
       <th scope="col">Posts</th>
       <th scope="col"></th>
       <th scope="col"></th>
+      <th scope="col"></th>
     </tr>
   </thead>
   <tbody>
@@ -32,6 +33,7 @@
           <td>
             <span  class="user_edit" style="cursor: pointer;"><img id="<%=user.id%>edit" src="/assets/edit_icon.png" class="user_edit" style ="height:20px;width:20px;"></span>
           </td>
+          <td><a href="/user/show/<%=user.id%>"><img id="<%=user.id%>show" src="/assets/profile.png" class="user_edit" style ="height:20px;width:20px;"></span></a></td>
           <td>
             <%if user.is_blocked%>
               <span class="user_ban" style="cursor: pointer;"><img id="<%=user.id%>ban" src="/assets/ban_icon.png" class="unblock" style ="height:20px;width:20px;"></span>
@@ -39,6 +41,7 @@
               <span class="user_ban" style="cursor: pointer;"><img id="<%=user.id%>ban" src="/assets/ban_icon.png" class="block" style ="height:20px;width:20px;"></span>
             <%end%>
           </td>
+
         </tr>
       <%end%>
   </tbody>

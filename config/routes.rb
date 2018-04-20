@@ -2,7 +2,7 @@ StreetFeast::Application.routes.draw do
   get "blog/create"
   get "management/show_users"
   get "home/index"
-  devise_for :users
+  devise_for :users, controllers: { omniauth_callbacks: 'users/omniauth_callbacks' }
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
@@ -32,7 +32,10 @@ StreetFeast::Application.routes.draw do
   patch 'blog/update/:id' => 'blog#update'
 
   post 'blog/add_picture_to_blog' => 'blog#add_picture_to_blog'
+  get 'user/show/:id' => 'user#show'
+  patch 'user/update/:id' => 'user#update'
 
+  delete 'user/photo_remove/:id' => "user#photo_remove"
   
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

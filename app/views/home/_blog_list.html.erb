@@ -22,7 +22,7 @@
 <table id="example" class="table table-hover display responsive no-wrap">
   <thead>
     <tr>
-      <th scope="col">Type</th>
+      <th scope="col">Blog Type</th>
       <th scope="col">Title</th>
       <th scope="col">Content</th>
       <th scope="col">User</th>
@@ -37,7 +37,7 @@
         <tr>
           <td>Active</td>
           <td class = "blog_title_<%=b.id%>"><%= b.title %></td>
-          <td class = "blog_content_<%=b.id%>"><%= b.content.truncate(30).capitalize.html_safe %></td>
+          <td class = "blog_content_<%=b.id%>"><%= b.content.truncate(30).html_safe %></td>
           <% if b.user_id.present? %>
             <td><%= b.user.email %></td>
           <% else %>
@@ -81,4 +81,8 @@
   opacity: 0.5;
   height:100% 
   }
+  #example_wrapper .row:first-child{
+    margin-bottom: 24px;
+  }
+
 </style>

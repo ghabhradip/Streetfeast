@@ -47,7 +47,7 @@ end
 # Use debugger
 # gem 'debugger', group: [:development, :test]
 gem 'devise_invitable'
-
 gem 'byebug'
 gem 'paperclip', '~> 4.0'
 gem 'tinymce-rails'
+gem 'omniauth-google-oauth2'

@@ -1,0 +1,143 @@
+<center>
+  <div class="card bg-light mb-3" style="max-width: 26rem;">
+    <div class="card-header">Profile</div>
+    <div class="card-body">
+      <%= form_for (@user), url: "/user/update/#{@user.id}", :html => {:class =>"my_form",multipart: true} do |f| %>
+        <fieldset>
+          <% if @user.picture.present? %>
+            <div class="form-group">
+              <div>
+                <img src = "<%=@user.picture.avatar %>" style="height: 100px;width: 100px; border-radius: 50px;" class= "user_img">
+                <img src = "/assets/delete.png" style="height: 25px;width: 25px;" class = "remove_photo">
+                <img src = "/assets/edit_icon.png" style="height: 25px;width: 25px;" class = "edit_photo" >
+              </div>
+            </div>
+          <% else %>
+            <div class="form-group">
+              <img src = "/assets/profile.png" style="height: 100px;width: 100px; border-radius: 50px;">
+              <img src = "/assets/addpic.png" style="height: 25px;width: 25px;" class = "add_photo">
+            </div>
+          <% end %>
+          <div class="form-group">
+            <%= f.text_field :firstname,:required => true,:class=>"form-control",placeholder: "Firstname" , autofocus: true %>
+          </div>
+          <div class="form-group">
+            <%= f.text_field :lastname,:required => true,:class=>"form-control",placeholder: "Lastname" %>
+          </div>
+	        <div class="form-group">
+	          <%= f.text_field :email,:required => true,:class=>"form-control",placeholder: "Email"  %>
+	        </div>
+          <div class="form-group">
+            <%= f.text_field :mobile_no,:required => true,:class=>"form-control",placeholder: "Mobile No"  %>
+          </div>
+          <div class="row">
+            <div class="col-sm-6">
+              <div class="form-group">
+               <%= f.text_field :city, class: 'form-control', id: 'city', placeholder: "Select city"%>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="form-group">
+                <select class="form-control" id="state" name="state" value = "<%= @user.state%>">
+                  <% if @user.state.present? %>
+                  <option class=" form-text text-muted" value = "<%= @user.state%>"><%= @user.state%></option>
+                  <% else %>
+                  <option class=" form-text text-muted" value = "">Select your state</option>
+                  <% end %>
+                  <option value="Andaman and Nicobar Islands">Andaman and Nicobar Islands</option>
+                  <option value="Andhra Pradesh">Andhra Pradesh</option>
+                  <option value="Arunachal Pradesh">Arunachal Pradesh</option>
+                  <option value="Assam">Assam</option>
+                  <option value="Bihar">Bihar</option>
+                  <option value="Chandigarh">Chandigarh</option>
+                  <option value="Chhattisgarh">Chhattisgarh</option>
+                  <option value="Dadra and Nagar Haveli">Dadra and Nagar Haveli</option>
+                  <option value="Daman and Diu">Daman and Diu</option>
+                  <option value="Delhi">Delhi</option>
+                  <option value="Goa">Goa</option>
+                  <option value="Gujarat">Gujarat</option>
+                  <option value="Haryana">Haryana</option>
+                  <option value="Himachal Pradesh">Himachal Pradesh</option>
+                  <option value="Jammu and Kashmir">Jammu and Kashmir</option>
+                  <option value="Jharkhand">Jharkhand</option>
+                  <option value="Karnataka">Karnataka</option>
+                  <option value="Kerala">Kerala</option>
+                  <option value="Lakshadweep">Lakshadweep</option>
+                  <option value="Madhya Pradesh">Madhya Pradesh</option>
+                  <option value="Maharashtra">Maharashtra</option>
+                  <option value="Manipur">Manipur</option>
+                  <option value="Meghalaya">Meghalaya</option>
+                  <option value="Mizoram">Mizoram</option>
+                  <option value="Nagaland">Nagaland</option>
+                  <option value="Orissa">Orissa</option>
+                  <option value="Pondicherry">Pondicherry</option>
+                  <option value="Punjab">Punjab</option>
+                  <option value="Rajasthan">Rajasthan</option>
+                  <option value="Sikkim">Sikkim</option>
+                  <option value="Tamil Nadu">Tamil Nadu</option>
+                  <option value="Tripura">Tripura</option>
+                  <option value="Uttaranchal">Uttaranchal</option>
+                  <option value="Uttar Pradesh">Uttar Pradesh</option>
+                  <option value="West Bengal">West Bengal</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <br>
+          <center>
+	          <div class="form-group user_picture">
+	            <%= f.fields_for @picture do |a|  %>
+	              <%= a.file_field :avatar , :class=> "user_upload_image"%>
+	            <% end %>
+	          </div>
+	        </center>
+          <div class="actions">
+            <button type="submit" class="btn btn-primary btn_large">Update</button>
+          </div>
+        </fieldset>
+      <% end %>
+    </div>
+  </div>
+</center>
+<script type="text/javascript">
+
+
+
+
+   $(document).ready(function(){
+  $(".user_picture").css("display", "none");
+  });
+
+
+
+  $(".remove_photo").on("click",function(){
+    $(".user_img").attr("src","/assets/profile.png");
+    $(".add_photo").show();
+    var id = <%= @user.id %>
+    $.ajax({ type: "DELETE",
+     url: "/user/photo_remove/"+id, 
+      success: function(response) 
+      {
+        $(".edit_photo").hide();
+        $(".remove_photo").hide();
+
+      } 
+    }); 
+    event.preventDefault(); 
+  })
+
+
+  $(".edit_photo").on("click",function(){
+    $(".user_upload_image").trigger("click");
+    //$(".user_img").attr("src","/assets/profile.png");
+  })
+
+
+
+  $(".add_photo").on("click",function(){
+    $(".user_upload_image").trigger("click");
+  })
+
+
+
+</script>
