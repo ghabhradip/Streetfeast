@@ -29,6 +29,7 @@ StreetFeast::Application.routes.draw do
   get 'blog/new' => 'blog#new'
 
   get 'blog/edit/:id' => 'blog#edit'
+  get 'blog/show/:id' => 'blog#show'
 
   patch 'blog/update/:id' => 'blog#update'
 
@@ -37,6 +38,9 @@ StreetFeast::Application.routes.draw do
   patch 'user/update/:id' => 'user#update'
 
   delete 'user/photo_remove/:id' => "user#photo_remove"
+
+
+  patch 'blog/update_blog_user/:id' => 'blog#update_blog_user'
   
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

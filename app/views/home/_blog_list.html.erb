@@ -36,7 +36,7 @@
       <% Blog.all.each do |b| %>
         <tr>
           <td>Active</td>
-          <td class = "blog_title_<%=b.id%>"><%= b.title %></td>
+          <td class = "blog_title_<%=b.id%>" onclick="show(<%=b.id%>);" style="cursor: pointer;"><%= b.title %></td>
           <td class = "blog_content_<%=b.id%>"><%= b.content.truncate(30).html_safe %></td>
           <% if b.user_id.present? %>
             <td><%= b.user.email %></td>
@@ -86,3 +86,9 @@
   }
 
 </style>
+<script type="text/javascript">
+  function show(id)
+  {
+    window.location = "/blog/show/"+id;
+  }
+</script>

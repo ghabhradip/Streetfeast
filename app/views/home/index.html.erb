@@ -1,7 +1,23 @@
 <% @picture.errors.full_messages.each do |message| %>
   <li><%= message %></li>
 <% end %>
+<!-- <style type="text/css">
 
+
+</style>
+<% @blogs.each do |b| %>
+  <% if b.pictures.present? %>
+    <div style="padding: 25px;">
+      <div class="card border-primary mb-3" style="max-width: 20rem;background-image:url(<%= b.pictures.first.avatar %>);">
+        <div class="card-header">Header</div>
+        <div class="card-body">
+          <br><br><br>
+          <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+        </div>
+      </div>
+    </div>
+  <% end %>
+<% end %> -->
 
 <div class="container-fluid">
   <div class="row">
@@ -49,7 +65,6 @@
     </div>
   </div>
 </div>
-
 
 <script>
   $(document).ready(function(){

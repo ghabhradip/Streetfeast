@@ -29,20 +29,55 @@
     <div class="row">
       <div class="col-sm-3">
         <ul class="list-group">
-        <li class="menu_item onactive list-group-item d-flex justify-content-between align-items-center" style="cursor: pointer;" onclick="show_blogs()" >
+
+
+        <li id="show_submenu" class="menu_item onactive list-group-item d-flex justify-content-between align-items-center" style="cursor: pointer;" onclick="show_blogs()" >
           Blogs
           <span class="badge badge-primary badge-pill"><%=Blog.all.count %></span>
         </li>
-        <li id="user_list" class="menu_item list-group-item d-flex justify-content-between align-items-center" style="cursor: pointer;" onclick="show_users()" >
+        <div id="blogs_dropdown">
+          <li class="menu_item list-group-item d-flex justify-content-between align-items-center" style="cursor: pointer;"  >
+            Reviewed Blogs
+            <span class="badge badge-primary badge-pill"><%= Blog.all.where("is_reviewed =?",true).count %></span>
+          </li>
+          <li class="menu_item list-group-item d-flex justify-content-between align-items-center" style="cursor: pointer;" >
+            Blocked Blogs
+            <span class="badge badge-primary badge-pill"><%= Blog.all.where("is_blocked =?",true).count %></span>
+          </li>
+          <li class="menu_item list-group-item d-flex justify-content-between align-items-center" style="cursor: pointer;" onclick="show_blogs()"  >
+            All Blogs
+            <span class="badge badge-primary badge-pill"><%= Blog.all.count %></span>
+          </li>
+        </div> 
+
+
+        <li class="menu_item list-group-item d-flex justify-content-between align-items-center" style="cursor: pointer;" onclick="users_dropdown()" >
           Users
           <span class="badge badge-primary badge-pill"><%=User.all.count %></span>
         </li>
+        <div id="users_dropdown">
+          <li class="menu_item list-group-item d-flex justify-content-between align-items-center" style="cursor: pointer;" onclick="show_restaurants()" >
+            Blocked Users
+            <span class="badge badge-primary badge-pill"><%= User.all.where("is_blocked =?",true).count %></span>
+          </li>
+          <li class="menu_item list-group-item d-flex justify-content-between align-items-center" style="cursor: pointer;" onclick="show_users()" >
+            All Users
+            <span class="badge badge-primary badge-pill"><%=User.all.count %></span>
+          </li>
+        </div>
+
         <li class="menu_item list-group-item d-flex justify-content-between align-items-center" style="cursor: pointer;" onclick="show_restaurants()" >
           Restaurants
-          <span class="badge badge-primary badge-pill">1</span>
+          <span class="badge badge-primary badge-pill">2</span>
         </li>
-      </ul>
 
+
+
+
+
+
+
+      </ul>
       <br>
       <ul class="list-group">
         <li class="list-group-item d-flex justify-content-between align-items-center">
@@ -70,6 +105,8 @@
   </div>
 
 </div>
+
+
 <script>
   function show_blogs() 
   {
@@ -92,7 +129,47 @@
   $(document).ready(function(){
     $(".onactive").addClass("active");
     $(".onactive").trigger("click");
+    $("#users_dropdown").hide();
+    $("#blogs_dropdown").hide();
+
   });
+
+
+
+  function users_dropdown()
+  {
+    $("#users_dropdown").slideToggle();
+  }
+
+
+  $("#show_submenu").on("click",function()
+  {
+    $("#blogs_dropdown").slideToggle();
+  })
+
+  
+
+
+
+
+  function myFunction() {
+    document.getElementById("myDropdown").classList.toggle("show");
+}
+
+// Close the dropdown if the user clicks outside of it
+window.onclick = function(event) {
+  if (!event.target.matches('.dropbtn')) {
+
+    var dropdowns = document.getElementsByClassName("dropdown-content");
+    var i;
+    for (i = 0; i < dropdowns.length; i++) {
+      var openDropdown = dropdowns[i];
+      if (openDropdown.classList.contains('show')) {
+        openDropdown.classList.remove('show');
+      }
+    }
+  }
+}
 </script>
 
 <style>
@@ -100,4 +177,5 @@
   {
     width: 66px;
   }
+
 </style>                                                      
