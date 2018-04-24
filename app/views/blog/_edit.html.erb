@@ -2,7 +2,6 @@
   .uploadpic{
     display: none;
   }
-
 </style>
 <%= tinymce%>
 <%= form_for (@blog),url: "/blog/update/#{@blog.id}", :html => { :multipart => true },:id =>"editblog",:remote => true,"data-id" => "#{@blog.id}" do |f| %>

@@ -19,8 +19,6 @@ class UserController < ApplicationController
         image = params[:user][:picture][:avatar]
         @picture = Picture.create(:avatar =>image,:user_id => @user.id)
       end
-    else
-      @picture = Picture.create(:user_id => @user.id)
     end
     flash[:notice] = "User details updated"
     redirect_to :back

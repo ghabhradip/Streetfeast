@@ -1,2 +1,35 @@
-<h1>Blog#create</h1>
-<p>Find me in app/views/blog/create.html.erb</p>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-3 col-md-6">
+      <div class ="new_blog">
+        <%= form_for (@blog),url: "/blog/update_blog_user/#{@blog.id}", :html => { :multipart => true } do |f| %>
+          <div class="field">
+            <%= f.text_field :title,:class=>"form-control",:placeholder => "Title" %>
+          </div>
+          <br>
+
+          <div class="field">
+            <%= f.text_area :content, :class => "tinymce",:placeholder => "Content" %>
+          </div>
+          <br>
+          <div class="field">
+            <% @blog.pictures.each do |p| %>
+              <img src="<%= p.avatar %>" id = "<%=p.id %>" style="height: 100px;width: 100px;"> &nbsp;&nbsp;&nbsp;
+            <% end %>
+          </div>
+          <br/>
+          <div class="field">
+            <%= f.fields_for @picture do |a|  %>
+              <b> Upload Images : </b>
+              <%= a.file_field :avatar , multiple: true %>
+            <% end %>
+          </div>
+          <br>
+          <div class="actions">
+            <button type="submit" class="btn btn-primary btn_large" >Update</button>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

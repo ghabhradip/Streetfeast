@@ -5,6 +5,8 @@ class HomeController < ApplicationController
   def index
     @blog = Blog.new
     @picture = Picture.new
+    @blogs = Blog.where("is_reviewed =?",true)
+
   end
 
   def under_construction
