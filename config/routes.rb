@@ -8,8 +8,9 @@ StreetFeast::Application.routes.draw do
 
   # You can have the root of your site routed with "root"
   #root 'home#index'
+  root 'home#dummy_homepage'
   # root 'home#under_construction'
-  root 'home#index'
+  #root 'home#index'
 
   get 'test_email' => 'application#test_email'
 

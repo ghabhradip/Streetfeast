@@ -11,6 +11,10 @@ class HomeController < ApplicationController
     render layout: false
   end
 
+  def dummy_homepage
+    render layout: false
+  end
+
   def dashboard
   	respond_to do |format|
       format.html 
