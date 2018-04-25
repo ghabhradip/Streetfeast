@@ -1,0 +1,144 @@
+<style type="text/css">
+  .ui-autocomplete{z-index: 9999999}
+</style>
+<%= form_for (@restaurant),url: "/restaurant/create" do |f| %>
+  <div class="field">
+    <%= f.text_field :name,:class=>"form-control",:placeholder => "Name", autofocus: true %>
+  </div>
+  <br>
+  <div class="field">
+    <%= f.text_area :description,:placeholder => "Description",:class=>"form-control" %>
+  </div>
+  <br>
+  <div class="field">
+    <%= f.text_field :closed_on,:class=>"form-control",:placeholder => "Closed On",:id=>"closed_on" %>
+  </div>
+  <br>
+  <div class="field">
+    <%= f.text_field :operator,:class=>"form-control",:placeholder => "Operator" %>
+  </div>
+  <br>
+  <div class="row">
+    <div class="col-sm-6">
+      <div class="field">
+        <%= f.text_field :opening_time,:id =>"timepickeropen",:class=>"form-control" ,:placeholder => "Opening Time"%>
+      </div>
+    </div>
+    <div class="col-sm-6">
+      <div class="field">
+        <%= f.text_field :closing_time,:id =>"timepickerclose",:class=>"form-control" ,:placeholder => "Closing Time"%>
+      </div>
+    </div>
+  </div>
+  <br>
+    <div class="field">
+      <%= f.text_field :associated_blogs,:class=>"form-control",:placeholder => "Associated Blogs" %>
+    </div>
+  </div>
+  <br>
+  <%= f.fields_for @address do |a|  %>
+    <div class="field">
+      <%= a.text_area :address_line,:class=>"form-control",:placeholder => "Address" %>
+    </div>
+    <br>
+    <div class="row">
+      <div class="col-sm-6">
+        <div class="field">
+          <%= a.text_field :latitude,:class=>"form-control",:placeholder => "Latitude",:id=>"latitude" %>
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <div class="field">
+          <%= a.text_field :longitude,:class=>"form-control",:placeholder => "Longitude" ,:id =>"longitude" %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+  <br>
+  <div class="row">
+    <div class="col-sm-10">
+      <div class="field">
+        <input id="search-input" class="form-control" type="text" placeholder="Search Location">
+      </div>
+    </div>
+    <div class="col-sm-2">
+      <div class="field">
+        <img src="/assets/search.png" style="height: 25px;width: 25px;" id="search">
+      </div>
+    </div>
+  </div>
+  <br>
+    <div id="map_canvas" style="width: auto; height: 250px;" class="map_location"></div>
+  <br>
+  <div class="actions">
+    <button type="submit" class="btn btn-primary btn_large" style="width: 150px;" >Add</button>
+  </div>
+<% end %>
+<script type="text/javascript">
+  $( document ).ready(function() {
+    $(".map_location").hide();  
+  });
+
+
+  $('#timepickeropen').timepicker();
+  $('#timepickerclose').timepicker();
+
+
+  $( function() {
+    var availableTags = [
+      "Sunday",
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday",
+      "Friday",
+      "Saturday",
+    ];
+    $( "#closed_on" ).autocomplete({
+      source: availableTags
+    });
+  });
+
+  $("#search").on("click",function(){
+    var geocoder = new google.maps.Geocoder();
+    $(".map_location").show();  
+    var add = $("#search-input").val();
+    geocoder.geocode( { 'address': add}, function(results, status) {
+
+      if (status == google.maps.GeocoderStatus.OK) 
+      {
+        var latitude = results[0].geometry.location.lat();
+        var longitude = results[0].geometry.location.lng();  
+        // alert(latitude);
+        // alert(longitude);
+        var map;
+        function initialize() 
+        {
+          var myLatlng = new google.maps.LatLng(latitude, longitude);
+
+          var myOptions = {
+              zoom: 15,
+              center: myLatlng,
+              mapTypeId: google.maps.MapTypeId.ROADMAP
+          };
+          map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+
+          var marker = new google.maps.Marker({
+              draggable: true,
+              position: myLatlng,
+              map: map
+          });
+
+          google.maps.event.addListener(marker, 'dragend', function (event) {
+
+
+              document.getElementById("latitude").value = event.latLng.lat();
+              document.getElementById("longitude").value = event.latLng.lng();
+          });
+        }
+        google.maps.event.addDomListener(window, "load", initialize());
+      }
+    }); 
+  });
+  
+</script>

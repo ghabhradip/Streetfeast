@@ -11,10 +11,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180423080352) do
+ActiveRecord::Schema.define(version: 20180425091537) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "addresses", force: true do |t|
+    t.text     "address_line"
+    t.integer  "restaurant_id"
+    t.string   "latitude"
+    t.string   "longitude"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "blogs", force: true do |t|
     t.string   "title"
@@ -37,6 +46,19 @@ ActiveRecord::Schema.define(version: 20180423080352) do
     t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "restaurants", force: true do |t|
+    t.string   "associated_blogs"
+    t.string   "name"
+    t.text     "description"
+    t.string   "operator"
+    t.string   "opening_time"
+    t.string   "closing_time"
+    t.boolean  "is_blacklisted"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "closed_on"
   end
 
   create_table "users", force: true do |t|

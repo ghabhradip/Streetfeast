@@ -1,0 +1,85 @@
+<table id="example" class="table table-hover display responsive no-wrap">
+  <thead>
+    <tr>
+      <th scope="col">Blog Type</th>
+      <th scope="col">Title</th>
+      <th scope="col">Content</th>
+      <th scope="col">User</th>
+      <th scope="col">No. of pictures</th>
+      <th scope="col">Created at</th>
+      <th scope="col">Updated At </th>
+      <th scope="col"></th>
+    </tr>
+  </thead>
+  <tbody>
+      <% Blog.all.where("is_blocked =?",true).each do |b| %>
+        <tr>
+          <td>Active</td>
+          <td class = "blog_title_<%=b.id%>" onclick="show(<%=b.id%>);" style="cursor: pointer;"><%= b.title %></td>
+          <td class = "blog_content_<%=b.id%>"><%= b.content.truncate(30).html_safe %></td>
+          <% if b.user_id.present? %>
+            <td><%= b.user.email %></td>
+          <% else %>
+            <td><%= b.email %></td>
+          <% end %>
+          <td><%=b.pictures.count %></td>
+          <td><%= b.created_at %></td>
+          <td><%= b.updated_at %></td>
+          <td><%= link_to "javascript:void(0)",:class => "blog_edit","data-id" => "#{b.id}","data-toggle"=>"modal" ,"data-target"=>"#myModal",:remote => true do %>
+          <span><img src="/assets/edit_icon.png" style ="height:20px;width:20px;"></span>
+          <% end %></td>
+        </tr>
+      <%end%>
+  </tbody>
+</table> 
+<div id="myModal" class="modal" role="document">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Modal Header</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p>Some text in the modal.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+<%= tinymce %>
+<style>
+
+.modal-backdrop {
+  position: absolute;
+  right: 0;
+  left: 0;
+  opacity: 0.5;
+  height:100% 
+  }
+  #example_wrapper .row:first-child{
+    margin-bottom: 24px;
+  }
+
+</style>
+<script>
+  $(document).ready(function(){
+    $("#example").DataTable({
+    });
+  });
+  $(".blog_edit").click(function(e)
+    { 
+      var id = $(this).data('id'); 
+      $.ajax({ 
+        async: true,
+        type: 'GET',
+        url: "/blog/edit/"+id,
+        success: function(data)
+        {
+          $(".modal-body").html(data);  
+        }, 
+        error: function(data){ alert('error'); } 
+      })
+    });
+</script>

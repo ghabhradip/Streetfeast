@@ -1,8 +1,11 @@
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
 <div class="container-fluid">
   <div class="row">
     <div class="col-sm-3 col-md-6">
       <div class ="new_blog">
         <%= form_for (@blog),url: "/blog/update_blog_user/#{@blog.id}", :html => { :multipart => true } do |f| %>
+          <h3>Blog #<%= @blog.id %></h3>
           <div class="field">
             <%= f.text_field :title,:class=>"form-control",:placeholder => "Title" %>
           </div>
@@ -26,10 +29,58 @@
           </div>
           <br>
           <div class="actions">
-            <button type="submit" class="btn btn-primary btn_large" >Update</button>
+            <button type="submit" class="btn btn-primary btn_large" >Update</button>&nbsp;&nbsp;
+            <button type="submit" class="btn btn-primary btn_large" id="add_to_restaurant" data-id="<%=@blog.id %>" data-toggle="modal" data-target="#myModal" >Add to restaurant</button>
           </div>
         <% end %>
       </div>
     </div>
   </div>
 </div>
+
+
+<div id="myModal" class="modal" role="document">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">ADD TO RESTAURANT</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  $("#add_to_restaurant").on("click",function(e){
+    e.preventDefault();
+    var id = $(this).data('id');
+    $.ajax({ 
+        async: true,
+        type: 'GET',
+        url: "/restaurant/new",
+        success: function(data)
+        {
+          $(".modal-body").html(data);  
+        }, 
+        error: function(data){ alert('error'); } 
+      })
+  })
+
+</script>
+<style>
+
+.modal-backdrop {
+  position: absolute;
+  right: 0;
+  left: 0;
+  opacity: 0.5;
+  height:100% 
+  }
+  #example_wrapper .row:first-child{
+    margin-bottom: 24px;
+  }
+
+</style>
