@@ -1,0 +1,49 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-3 col-md-6">
+      <div class ="new_blog">
+        <%= form_for (@restaurant),:url =>"#" ,:html => { :multipart => true } do |f| %>
+          <h3>Restaurant #<%= @restaurant.id %></h3>
+          <div class="field">
+            <%= f.text_field :name,:class=>"form-control",:placeholder => "Name" %>
+          </div>
+          <br>
+          <div class="field">
+            <%= f.text_area :description,:placeholder => "Description",:class=>"form-control" %>
+          </div>
+          <br>
+          <div class="field">
+            <%= f.text_field :contact_number,:placeholder => "Contact Number",:class=>"form-control" %>
+          </div>
+          <br>
+          <div class="row">
+            <div class="col-sm-6">
+              <div class="field">
+                <%= f.text_field :opening_time,:id =>"timepickeropen",:class=>"form-control" ,:placeholder => "Opening Time"%>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="field">
+                <%= f.text_field :closing_time,:id =>"timepickerclose",:class=>"form-control" ,:placeholder => "Closing Time"%>
+              </div>
+            </div>
+          </div>
+          <br>
+          <div class="field">
+            <% blogs = @restaurant.associated_blogs.split(',') %>
+            <% blogs.each do |i| %>
+              <% b = Blog.where("id =?",i.to_i).first %>
+                <% b.pictures.each do |p| %>
+                  <img src = "<%= p.avatar %>" style="height: 100px;width: 100px;" id="pic_<%=p.id %>">
+                <% end %>
+            <% end %>
+          </div>
+          <br>
+          <!-- <div class="actions">
+            <button type="submit" class="btn btn-primary btn_large" >Update</button>
+          </div> -->
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

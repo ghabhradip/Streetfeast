@@ -11,9 +11,11 @@ class RestaurantController < ApplicationController
   	redirect_to :back
   end
 
-
-
-
+  def show
+    
+    @restaurant = Restaurant.find_by_id(params[:id])
+    @address = Address.where("restaurant_id =? ", @restaurant.id)
+  end
 
  private
   def restaurant_params

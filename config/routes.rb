@@ -46,6 +46,8 @@ StreetFeast::Application.routes.draw do
   get 'restaurant/new' => 'restaurant#new'
 
   post 'restaurant/create' => 'restaurant#create'
+
+  get 'restaurant/show/:id' => 'restaurant#show'
   
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
