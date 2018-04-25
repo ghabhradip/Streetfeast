@@ -17,6 +17,9 @@ StreetFeast::Application.routes.draw do
   get 'home/blacklist' => 'home#blacklist'
   post 'home/blacklist' => 'home#blacklist'
 
+  get 'home/analytics' => 'home#analytics'
+  post 'home/analytics' => 'home#analytics'
+
   get 'home/undo_blacklist' => 'home#undo_blacklist'
   post 'home/undo_blacklist' => 'home#undo_blacklist'
 

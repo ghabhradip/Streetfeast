@@ -9,6 +9,9 @@ class HomeController < ApplicationController
 
   end
 
+  def analytics
+  end
+
   def under_construction
     render layout: false
   end
