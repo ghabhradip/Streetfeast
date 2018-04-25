@@ -83,21 +83,15 @@
   $('#timepickeropen').timepicker();
   $('#timepickerclose').timepicker();
 
-
-  $( function() {
-    var availableTags = [
-      "Sunday",
-      "Monday",
-      "Tuesday",
-      "Wednesday",
-      "Thursday",
-      "Friday",
-      "Saturday",
-    ];
-    $( "#closed_on" ).autocomplete({
-      source: availableTags
-    });
-  });
+  
+$('#closed_on').tokenfield({
+    autocomplete: {
+      source: ['Sunday','Monday','Tuesday','Wednesday','Thrusday','Friday','Saturday'],
+      delay: 100
+    },
+    showAutocompleteOnFocus: true
+  })
+  //$("#closed_on").tokenInput();
 
   $("#search").on("click",function(){
     var geocoder = new google.maps.Geocoder();
