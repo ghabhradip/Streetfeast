@@ -59,8 +59,6 @@ class BlogController < ApplicationController
     end
   end
 
-
-
   def edit
     @blog = Blog.find_by_id(params[:id])
     if @blog.is_reviewed.nil?
@@ -92,9 +90,12 @@ class BlogController < ApplicationController
     end
   end
 
+
+
+
   private
-  
   def blog_params
     params.require(:blog).permit(:title, :content,:email,:fullname)
   end
+
 end

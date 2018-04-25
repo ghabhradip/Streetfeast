@@ -1,82 +1,71 @@
 <script src="https://cdn.jsdelivr.net/sweetalert2/6.6.2/sweetalert2.min.js"></script>
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/sweetalert2/6.6.2/sweetalert2.min.css">
-<div class="row">
-  <div class="col-sm-9">
-    <div class="btn btn-outline-primary">
-      <%= link_to("Send Invitation",new_user_invitation_path) %>
+<div style="padding: 10px;">
+  <div class="row">
+    <div class="col-sm-9">
+      <div class="btn btn-outline-primary">
+        <%= link_to("Send Invitation",new_user_invitation_path) %>
+      </div>
+      <% if current_user.firstname.present? && current_user.lastname.present? && current_user.mobile_no.present? && current_user.state.present? && current_user.city.present? %>
+        <div class="btn btn-outline-primary">
+          <%= link_to("Edit profile","/home/#{current_user.id}/edit") %>
+        </div>
+      <% else %>
+        <div class="btn btn-outline-primary">
+          <%= link_to("Update profile","/home/#{current_user.id}/edit") %>
+        </div>
+      <% end %>
     </div>
-    <% if current_user.firstname.present? && current_user.lastname.present? && current_user.mobile_no.present? && current_user.state.present? && current_user.city.present? %>
-      <div class="btn btn-outline-primary">
-        <%= link_to("Edit profile","/home/#{current_user.id}/edit") %>
-      </div>
-    <% else %>
-      <div class="btn btn-outline-primary">
-        <%= link_to("Update profile","/home/#{current_user.id}/edit") %>
-      </div>
-    <% end %>
-  </div>
-  <div class="col-sm-1.5">
-    <a class="btn btn-success right-align" href="/home/analytics">Analytics Report</a>
-  </div>
-  <div class="col-sm-1">
-    <a class="btn btn-warning right-align" href="/blog/new">Create a Blog</a>
+    <div class="col-sm-1.5">
+      <button type="button" class="btn btn-success right-align">Analytics Report</button>
+    </div>
+    <div class="col-sm-1">
+      <a class="btn btn-warning right-align" href="/blog/new">Create a Blog</a>
+    </div>
   </div>
 </div>
-
 <div class="row">
   <div class="col-sm-12"><br>
     <div class="jumbotron">
     <div class="row">
       <div class="col-sm-3">
         <ul class="list-group">
-
-
-        <li id="show_submenu" class="menu_item onactive list-group-item d-flex justify-content-between align-items-center" style="cursor: pointer;" onclick="show_blogs()" >
-          Blogs
-          <span class="badge badge-primary badge-pill"><%=Blog.all.count %></span>
-        </li>
-        <div id="blogs_dropdown">
-          <li class="menu_item list-group-item d-flex justify-content-between align-items-center" style="cursor: pointer;"  >
-            Reviewed Blogs
-            <span class="badge badge-primary badge-pill"><%= Blog.all.where("is_reviewed =?",true).count %></span>
+          <li id="show_submenu" class="menu_item onactive list-group-item d-flex justify-content-between align-items-center" style="cursor: pointer;" onclick="show_blogs()" >
+            Blogs
+            <span class="badge badge-primary badge-pill"><%=Blog.all.count %></span>
           </li>
-          <li class="menu_item list-group-item d-flex justify-content-between align-items-center" style="cursor: pointer;" >
-            Blocked Blogs
-            <span class="badge badge-primary badge-pill"><%= Blog.all.where("is_blocked =?",true).count %></span>
-          </li>
-          <li class="menu_item list-group-item d-flex justify-content-between align-items-center" style="cursor: pointer;" onclick="show_blogs()"  >
-            All Blogs
-            <span class="badge badge-primary badge-pill"><%= Blog.all.count %></span>
-          </li>
-        </div> 
-
-
-        <li class="menu_item list-group-item d-flex justify-content-between align-items-center" style="cursor: pointer;" onclick="users_dropdown()" >
-          Users
-          <span class="badge badge-primary badge-pill"><%=User.all.count %></span>
-        </li>
-        <div id="users_dropdown">
-          <li class="menu_item list-group-item d-flex justify-content-between align-items-center" style="cursor: pointer;" onclick="show_restaurants()" >
-            Blocked Users
-            <span class="badge badge-primary badge-pill"><%= User.all.where("is_blocked =?",true).count %></span>
-          </li>
-          <li class="menu_item list-group-item d-flex justify-content-between align-items-center" style="cursor: pointer;" onclick="show_users()" >
-            All Users
+          <div id="blogs_dropdown">
+            <li class="menu_item list-group-item d-flex justify-content-between align-items-center" style="cursor: pointer;" onclick="reviewed_blogs()" >
+              Reviewed Blogs
+              <span class="badge badge-primary badge-pill"><%= Blog.all.where("is_reviewed =?",true).count %></span>
+            </li>
+            <li class="menu_item list-group-item d-flex justify-content-between align-items-center" style="cursor: pointer;" onclick="blocked_blogs()">
+              Blocked Blogs
+              <span class="badge badge-primary badge-pill"><%= Blog.all.where("is_blocked =?",true).count %></span>
+            </li>
+            <li class="menu_item list-group-item d-flex justify-content-between align-items-center" style="cursor: pointer;" onclick="show_blogs()"  >
+              All Blogs
+              <span class="badge badge-primary badge-pill"><%= Blog.all.count %></span>
+            </li>
+          </div>
+          <li class="menu_item list-group-item d-flex justify-content-between align-items-center" style="cursor: pointer;" onclick="users_dropdown()" >
+            Users
             <span class="badge badge-primary badge-pill"><%=User.all.count %></span>
           </li>
-        </div>
-
-        <li class="menu_item list-group-item d-flex justify-content-between align-items-center" style="cursor: pointer;" onclick="show_restaurants()" >
-          Restaurants
-          <span class="badge badge-primary badge-pill">2</span>
-        </li>
-
-
-
-
-
-
-
+          <div id="users_dropdown">
+            <li class="menu_item list-group-item d-flex justify-content-between align-items-center" style="cursor: pointer;" onclick="blocked_users()" >
+              Blocked Users
+              <span class="badge badge-primary badge-pill"><%= User.all.where("is_blocked =?",true).count %></span>
+            </li>
+            <li class="menu_item list-group-item d-flex justify-content-between align-items-center" style="cursor: pointer;" onclick="show_users()" >
+              All Users
+              <span class="badge badge-primary badge-pill"><%=User.all.count %></span>
+            </li>
+          </div>
+          <li class="menu_item list-group-item d-flex justify-content-between align-items-center" style="cursor: pointer;" onclick="show_restaurants()" >
+            Restaurants
+            <span class="badge badge-primary badge-pill">2</span>
+          </li>
       </ul>
       <br>
       <ul class="list-group">
@@ -112,10 +101,37 @@
   {
     $("#table_container").html("<%= escape_javascript(render('blog_list')) %>");
   }
+  function reviewed_blogs() 
+  {
+    $("#table_container").html("<%= escape_javascript(render('reviewed_blogs_list')) %>");
+  }
+  function blocked_blogs() 
+  {
+    $("#table_container").html("<%= escape_javascript(render('blocked_blogs_list')) %>");
+  }
+
+
+
+
   function show_users() 
   {
     $("#table_container").html("<%= escape_javascript(render('user_list')) %>");
   }
+
+  function blocked_users() 
+  {
+    $("#table_container").html("<%= escape_javascript(render('blocked_users_list')) %>");
+  }
+
+
+
+
+
+
+
+
+
+
   function show_restaurants() 
   {
     $("#table_container").html("<%= escape_javascript(render('restaurant_list')) %>");
@@ -140,7 +156,6 @@
   {
     $("#users_dropdown").slideToggle();
   }
-
 
   $("#show_submenu").on("click",function()
   {

@@ -36,7 +36,7 @@
       <% Blog.all.each do |b| %>
         <tr>
           <td>Active</td>
-          <td class = "blog_title_<%=b.id%>" onclick="show(<%=b.id%>);" style="cursor: pointer;"><%= b.title %></td>
+          <td class = "blog_title_<%=b.id%>" onclick="show(<%=b.id%>);" style="cursor: pointer;"><%= b.title.truncate(30) %></td>
           <td class = "blog_content_<%=b.id%>"><%= b.content.truncate(30).html_safe %></td>
           <% if b.user_id.present? %>
             <td><%= b.user.email %></td>
@@ -63,10 +63,7 @@
         <button type="button" class="close" data-dismiss="modal">&times;</button>
       </div>
       <div class="modal-body">
-        <p>Some text in the modal.</p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        
       </div>
     </div>
   </div>

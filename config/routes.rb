@@ -44,6 +44,12 @@ StreetFeast::Application.routes.draw do
 
 
   patch 'blog/update_blog_user/:id' => 'blog#update_blog_user'
+
+
+
+  get 'restaurant/new' => 'restaurant#new'
+
+  post 'restaurant/create' => 'restaurant#create'
   
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
