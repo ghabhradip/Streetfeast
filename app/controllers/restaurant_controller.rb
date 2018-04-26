@@ -12,9 +12,13 @@ class RestaurantController < ApplicationController
   end
 
   def show
-    
     @restaurant = Restaurant.find_by_id(params[:id])
-    @address = Address.where("restaurant_id =? ", @restaurant.id)
+    @pictures_res = @restaurant.pictures
+  end
+
+  def show_pic
+    @picture = Picture.find_by_id(params[:id])
+    render json: {pic: @picture.avatar, id: @picture.id}
   end
 
  private

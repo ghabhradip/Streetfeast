@@ -8,7 +8,14 @@ class HomeController < ApplicationController
     @blogs = Blog.where("is_reviewed =?",true)
   end
 
+  def analytics
+  end
+
   def under_construction
+    render layout: false
+  end
+
+  def dummy_homepage
     render layout: false
   end
 

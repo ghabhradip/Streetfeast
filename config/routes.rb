@@ -8,13 +8,17 @@ StreetFeast::Application.routes.draw do
 
   # You can have the root of your site routed with "root"
   #root 'home#index'
+  root 'home#dummy_homepage'
   # root 'home#under_construction'
-  root 'home#index'
+  #root 'home#index'
 
   get 'test_email' => 'application#test_email'
 
   get 'home/blacklist' => 'home#blacklist'
   post 'home/blacklist' => 'home#blacklist'
+
+  get 'home/analytics' => 'home#analytics'
+  post 'home/analytics' => 'home#analytics'
 
   get 'home/undo_blacklist' => 'home#undo_blacklist'
   post 'home/undo_blacklist' => 'home#undo_blacklist'
@@ -48,6 +52,10 @@ StreetFeast::Application.routes.draw do
   post 'restaurant/create' => 'restaurant#create'
 
   get 'restaurant/show/:id' => 'restaurant#show'
+
+  get 'restaurant/pic/show/:id' => 'restaurant#show_pic'
+
+  get 'like/pic_like/:id' => 'like#pic_like'
   
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
