@@ -70,7 +70,9 @@
       <div class="modal-body">
         <img src="" id = "modal-pic" style="width: 466px;height: auto;">
         <hr>
-          <img src="/assets/pic_like.png" style="width: 20px;height: auto;cursor: pointer;" id="pic_like">
+          <div id="like_section">
+            <!-- <img src="/assets/pic_like.png" style="width: 20px;height: auto;cursor: pointer;" id="pic_like"> -->
+          </div>
         <div class="comment">
 
         </div>
@@ -130,7 +132,17 @@
         alert(data.id);
         $("#modal-pic").attr("src",data.pic);
         $("#modal-pic").attr("data-id",data.id);  
-        $("#pic_like").attr("data-id",data.id);
+        //$("#pic_like").attr("data-id",data.id);
+
+        $("#like_section").html("");
+        var like = document.createElement('img');
+        like.src = "/assets/pic_like.png";
+        //like.css('cursor', 'pointer');
+        like.setAttribute("class", "like_style");
+        like.setAttribute("id", "pic_like");
+        like.setAttribute("data-id", data.id);
+        $("#like_section").html(like);
+
       }, 
       error: function(data){ alert('error'); } 
     })
@@ -139,13 +151,16 @@
 
 
 
-  $("#pic_like").on("click",function()
+  $(".like_style").on("click",function()
   {
     var pic_id = $(this).data("id");
-    
     alert(pic_id);
   })
 
+  // $("#pic_like").on("click", function(){
+  //   var pic_id = $(this).data("id");
+  //   alert(pic_id);
+  // });
 
 
 </script>
@@ -159,4 +174,10 @@
   position: fixed;
   }
 
+  .like_style
+  {
+    width: 20px;
+    height: auto;
+    cursor: pointer;
+  }
 </style>
