@@ -35,15 +35,15 @@
             <span class="badge badge-primary badge-pill"><%=Blog.all.count %></span>
           </li>
           <div id="blogs_dropdown">
-            <li class="menu_item list-group-item d-flex justify-content-between align-items-center" style="cursor: pointer;" onclick="reviewed_blogs()" >
+            <li class="menu_item list-group-item d-flex justify-content-between align-items-center" style="cursor: pointer;background-color: #ffe6e6;" onclick="reviewed_blogs()" >
               Reviewed Blogs
               <span class="badge badge-primary badge-pill"><%= Blog.all.where("is_reviewed =?",true).count %></span>
             </li>
-            <li class="menu_item list-group-item d-flex justify-content-between align-items-center" style="cursor: pointer;" onclick="blocked_blogs()">
+            <li class="menu_item list-group-item d-flex justify-content-between align-items-center" style="cursor: pointer;background-color: #ffe6e6;" onclick="blocked_blogs()">
               Blocked Blogs
               <span class="badge badge-primary badge-pill"><%= Blog.all.where("is_blocked =?",true).count %></span>
             </li>
-            <li class="menu_item list-group-item d-flex justify-content-between align-items-center" style="cursor: pointer;" onclick="show_blogs()"  >
+            <li class="menu_item list-group-item d-flex justify-content-between align-items-center" style="cursor: pointer;background-color: #ffe6e6;" onclick="show_blogs()"  >
               All Blogs
               <span class="badge badge-primary badge-pill"><%= Blog.all.count %></span>
             </li>
@@ -53,11 +53,11 @@
             <span class="badge badge-primary badge-pill"><%=User.all.count %></span>
           </li>
           <div id="users_dropdown">
-            <li class="menu_item list-group-item d-flex justify-content-between align-items-center" style="cursor: pointer;" onclick="blocked_users()" >
+            <li class="menu_item list-group-item d-flex justify-content-between align-items-center" style="cursor: pointer; background-color: #ffe6e6;" onclick="blocked_users()" >
               Blocked Users
               <span class="badge badge-primary badge-pill"><%= User.all.where("is_blocked =?",true).count %></span>
             </li>
-            <li class="menu_item list-group-item d-flex justify-content-between align-items-center" style="cursor: pointer;" onclick="show_users()" >
+            <li class="menu_item list-group-item d-flex justify-content-between align-items-center" style="cursor: pointer;background-color: #ffe6e6;" onclick="show_users()" >
               All Users
               <span class="badge badge-primary badge-pill"><%=User.all.count %></span>
             </li>

@@ -1,0 +1,162 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-3 col-md-6">
+      <div class ="new_blog">
+        <%= form_for (@restaurant),:url =>"#" ,:html => { :multipart => true } do |f| %>
+          <h3>Restaurant #<%= @restaurant.id %></h3>
+          <div class="field">
+            <%= f.text_field :name,:class=>"form-control",:placeholder => "Name" %>
+          </div>
+          <br>
+          <div class="field">
+            <%= f.text_area :description,:placeholder => "Description",:class=>"form-control" %>
+          </div>
+          <br>
+          <div class="row">
+            <div class="col-sm-6">
+              <div class="field">
+                <%= f.text_field :operator,:class=>"form-control" ,:placeholder => "Operator"%>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="field">
+                <%= f.text_field :contact_number,:class=>"form-control" ,:placeholder => "Contact Number"%>
+              </div>
+            </div>
+          </div>
+          <br>
+          <div class="field">
+            <%= f.fields_for @restaurant.addresses.first do |a|  %>
+              <%= a.text_area :address_line,:class=>"form-control"  %>
+            <% end %>
+          </div>
+          <br>
+          <div class="row">
+            <div class="col-sm-6">
+              <div class="field">
+                <%= f.text_field :opening_time,:id =>"timepickeropen",:class=>"form-control" ,:placeholder => "Opening Time"%>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="field">
+                <%= f.text_field :closing_time,:id =>"timepickerclose",:class=>"form-control" ,:placeholder => "Closing Time"%>
+              </div>
+            </div>
+          </div>
+          <br>
+          <div class="field">
+            <% blogs = @restaurant.associated_blogs.split(',') %>
+            <% blogs.each do |i| %>
+              <% b = Blog.where("id =?",i.to_i).first %>
+                <% b.pictures.each do |p| %>
+                  <img src = "<%= p.avatar %>" style="height: 100px;width: 100px;" class = "pic_show"  data-id = "<%= p.id %>" data-toggle="modal" data-target= "#myModal" data-remote = "true">
+                <% end %>
+            <% end %>
+            <br>
+          </div>
+          <br>
+          <div id="geolocation" style="width: 300px; height: 300px;"></div>
+          <br>
+        <% end %>
+        <br>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="myModal" class="modal" role="document" >
+  <div class="modal-dialog">
+    <div class="modal-content" style="width: 500px;height: 500px;">
+      <div class="modal-body">
+        <img src="" id = "modal-pic" style="width: 466px;height: auto;">
+        <hr>
+          <img src="/assets/pic_like.png" style="width: 20px;height: auto;cursor: pointer;" id="pic_like">
+        <div class="comment">
+
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="close" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<script type="text/javascript">
+
+  var geocoder = new google.maps.Geocoder();
+  var add =$("#restaurant_address_address_line").val().replace(/"/g,"");
+  geocoder.geocode( { 'address': add}, function(results, status) {
+    if (status == google.maps.GeocoderStatus.OK) 
+    {
+      var latitude = results[0].geometry.location.lat();
+      var longitude = results[0].geometry.location.lng();  
+      var map;
+      function initialize() 
+      {
+        var myLatlng = new google.maps.LatLng(latitude, longitude);
+        var myOptions = {
+            zoom: 15,
+            center: myLatlng,
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+        map = new google.maps.Map(document.getElementById("geolocation"), myOptions);
+        var marker = new google.maps.Marker({
+            draggable: false,
+            position: myLatlng,
+            map: map
+        });
+        google.maps.event.addListener(marker, 'dragend', function (event) {
+            document.getElementById("latitude").value = event.latLng.lat();
+            document.getElementById("longitude").value = event.latLng.lng();
+        });
+      }
+      google.maps.event.addDomListener(window, "load", initialize());
+    }
+  }); 
+
+  $(".pic_show").on("click",function(){
+
+    var id = $(this).data('id');
+    alert(id); 
+    $.ajax({ 
+      async: true,
+      type: 'GET',
+      url: "/restaurant/pic/show/"+id,
+      success: function(data)
+      {
+        alert(data.id);
+        $("#modal-pic").attr("src",data.pic);
+        $("#modal-pic").attr("data-id",data.id);  
+        $("#pic_like").attr("data-id",data.id);
+      }, 
+      error: function(data){ alert('error'); } 
+    })
+  });
+
+
+
+
+  $("#pic_like").on("click",function()
+  {
+    var pic_id = $(this).data("id");
+    
+    alert(pic_id);
+  })
+
+
+
+</script>
+<style type="text/css">
+.modal-backdrop {
+  position: absolute;
+  right: 0;
+  left: 0;
+  opacity: 0.5;
+  height:100%; 
+  position: fixed;
+  }
+
+</style>

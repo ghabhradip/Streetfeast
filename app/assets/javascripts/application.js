@@ -16,9 +16,8 @@
 //= require jquery-ui
 //= require turbolinks
 //= require bootstrap-tokenfield
-//= require_tree .
 //= require tinymce
-
+//= require_tree .
 /*!
  DataTables 1.10.16
  ©2008-2017 SpryMedia Ltd - datatables.net/license
