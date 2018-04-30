@@ -16,6 +16,8 @@
 //= require jquery-ui
 //= require turbolinks
 //= require tinymce
+//= require gmaps/google
+//= require underscore
 //= require_tree .
 /*!
  DataTables 1.10.16

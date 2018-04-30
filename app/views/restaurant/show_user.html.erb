@@ -1,68 +1,63 @@
-<div class="container-fluid">
-  <div class="row">
-    <div class="col-sm-3 col-md-6">
-      <div class ="new_blog">
+<div style="padding-top: : 10px;padding-left: 333px;" >
+  <div class="card bg-light mb-3" style="max-width: 40rem;">
+    <div class="card-header"><center><strong><%= @restaurant.name.capitalize %></strong></center></div>
+      <div class="card-body">
         <%= form_for (@restaurant),:url =>"#" ,:html => { :multipart => true } do |f| %>
-          <h3>Restaurant #<%= @restaurant.id %></h3>
           <div class="field">
-            <%= f.text_field :name,:class=>"form-control",:placeholder => "Name" %>
-          </div>
-          <br>
-          <div class="field">
-            <%= f.text_area :description,:placeholder => "Description",:class=>"form-control" %>
+            <strong>Description:</strong>
+            <%= f.text_area :description,:placeholder => "Description",:class=>"form-control",:disabled => "disabled" %>
           </div>
           <br>
           <div class="row">
             <div class="col-sm-6">
               <div class="field">
-                <%= f.text_field :operator,:class=>"form-control" ,:placeholder => "Operator"%>
+                <strong>Operator:</strong>
+                <%= f.text_field :operator,:class=>"form-control" ,:placeholder => "Operator",:disabled => "disabled"%>
               </div>
             </div>
             <div class="col-sm-6">
               <div class="field">
-                <%= f.text_field :contact_number,:class=>"form-control" ,:placeholder => "Contact Number"%>
+                <strong>Contact Number:</strong>
+                <%= f.text_field :contact_number,:class=>"form-control" ,:placeholder => "Contact Number",:disabled => "disabled"%>
               </div>
             </div>
           </div>
           <br>
           <div class="field">
+            <strong>Address:</strong>
             <%= f.fields_for @restaurant.addresses.first do |a|  %>
-              <%= a.text_area :address_line,:class=>"form-control"  %>
+              <%= a.text_area :address_line,:class=>"form-control",:disabled => "disabled"  %>
             <% end %>
-          </div>
-          <br>
-          <div class="row">
-            <div class="col-sm-6">
-              <div class="field">
-                <%= f.text_field :opening_time,:id =>"timepickeropen",:class=>"form-control" ,:placeholder => "Opening Time"%>
-              </div>
-            </div>
-            <div class="col-sm-6">
-              <div class="field">
-                <%= f.text_field :closing_time,:id =>"timepickerclose",:class=>"form-control" ,:placeholder => "Closing Time"%>
-              </div>
-            </div>
           </div>
           <br>
           <div class="field">
-            <% blogs = @restaurant.associated_blogs.split(',') %>
-            <% blogs.each do |i| %>
-              <% b = Blog.where("id =?",i.to_i).first %>
-                <% b.pictures.each do |p| %>
-                  <img src = "<%= p.avatar %>" style="height: 100px;width: 100px;" class = "pic_show"  data-id = "<%= p.id %>" data-toggle="modal" data-target= "#myModal" data-remote = "true">
-                <% end %>
-            <% end %>
-            <br>
+            <strong>Timings: </strong><%=@restaurant.opening_time %>-<%=@restaurant.closing_time %>
           </div>
           <br>
-          <div id="geolocation" style="width: 500px; height: 500px;"></div>
+          <% if @restaurant.associated_blogs.present? %>
+            <div class="field">
+              <% blogs = @restaurant.associated_blogs.split(',') %>
+              <% blogs.each do |i| %>
+                <% b = Blog.where("id =?",i.to_i).first %>
+                  <% b.pictures.each do |p| %>
+                    <img src = "<%= p.avatar %>" style="height: 100px;width: 100px;" class = "pic_show"  data-id = "<%= p.id %>" data-toggle="modal" data-target= "#myModal" data-remote = "true">
+                  <% end %>
+              <% end %>
+              <br>
+            </div>
+          <% end %>
+          <br>
+          <center>
+            
+          <div id="geolocation" style="width: 300px; height: 300px;"></div>
+          </center>
           <br>
         <% end %>
         <br>
       </div>
     </div>
   </div>
-</div>
+
 
 <div id="myModal" class="modal" role="document" >
   <div class="modal-dialog">
@@ -86,7 +81,7 @@
 <script type="text/javascript">
 
   var geocoder = new google.maps.Geocoder();
-  var add = $("#restaurant_address_address_line").val().replace(/"/g,"");
+  var add = $("#restaurant_address_address_line").val().replace(/"/g,""
   geocoder.geocode( { 'address': add}, function(results, status) {
     if (status == google.maps.GeocoderStatus.OK) 
     {
