@@ -15,11 +15,21 @@ class RestaurantController < ApplicationController
     @restaurant = Restaurant.find_by_id(params[:id])
     @pictures_res = @restaurant.pictures
   end
+  def show_user
+    @restaurant = Restaurant.find_by_id(params[:id])
+    @pictures_res = @restaurant.pictures
+  end
 
   def show_pic
     @picture = Picture.find_by_id(params[:id])
     render json: {pic: @picture.avatar, id: @picture.id}
   end
+
+  def address
+    @address = Address.where("restaurant_id =?",params[:id]).first
+    render json: {lat: @address.latitude,long: @address.longitude}
+  end
+
 
  private
   def restaurant_params

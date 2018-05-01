@@ -7,7 +7,6 @@ StreetFeast::Application.routes.draw do
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"
-  #root 'home#index'
   #root 'home#dummy_homepage'
   # root 'home#under_construction'
   root 'home#index'
@@ -53,9 +52,14 @@ StreetFeast::Application.routes.draw do
 
   get 'restaurant/show/:id' => 'restaurant#show'
 
+  get 'restaurant/show_user/:id' => 'restaurant#show_user'
+
   get 'restaurant/pic/show/:id' => 'restaurant#show_pic'
 
   get 'like/pic_like/:id' => 'like#pic_like'
+
+  get 'restaurant/address/:id' => 'restaurant#address'
+
   
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

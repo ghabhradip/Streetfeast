@@ -17,6 +17,8 @@
 //= require turbolinks
 //= require bootstrap-tokenfield
 //= require tinymce
+//= require gmaps/google
+//= require underscore
 //= require_tree .
 /*!
  DataTables 1.10.16

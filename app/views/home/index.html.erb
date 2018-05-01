@@ -2,23 +2,7 @@
   <li><%= message %></li>
 <% end %>
 
-<!-- 
-<style type="text/css">
 
-</style>
-<% @blogs.each do |b| %>
-  <% if b.pictures.present? %>
-    <div style="padding: 25px;">
-      <div class="card border-primary mb-3" style="max-width: 20rem;background-image:url(<%= b.pictures.first.avatar %>);">
-        <div class="card-header">Header</div>
-        <div class="card-body">
-          <br><br><br>
-          <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-        </div>
-      </div>
-    </div>
-  <% end %>
-<% end %> -->
 <style>
 .card {
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
@@ -26,43 +10,74 @@
     border: 1px solid;
     border-radius: 5px;
     height: 400px;
-    width:  auto; ;
-    padding: 20px;
+}
+.col-md-4.fl {
+    float: left;
 }
 
-.card:hover {
-    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
-}
-
-img {
-  width: auto;
-  height: 400px;
-  border-radius: 5px 5px 0 0;
-
-}
-
-.container {
-    padding: 2px 16px;
-
-}
 </style>
 
-<% @blogs.each do |b| %>
-   <% if b.pictures.present? %>
-    <div style="padding: 10px;">
-      <div class="col-md-4 card" style="background-image:url(<%=b.pictures.first.avatar %>); background-repeat: no-repeat;">
-        <center>
-          
-        </center>
-        <div class="container">
-          <hr>
-          <h4><b>Jane Doe</b></h4> 
-          <p>Interior Designer</p> 
-        </div>
+<style type="text/css">
+.modal-backdrop {
+  position: absolute;
+  right: 0;
+  left: 0;
+  opacity: 0.5;
+  height:100%; 
+  position: fixed;
+  }
+
+</style>
+
+
+
+
+
+
+<div class="row" style="padding-left: 20px;">
+  <div class="col-sm-10">
+    <div class="field">
+      <input id="search-input" class="form-control" type="text" placeholder="Search Restaurant">
+    </div>
+  </div>
+  <div class="col-sm-2">
+    <div class="field">
+      <img src="/assets/search.png" style="height: 25px;width: 25px;" id="search">
+    </div>
+  </div>
+</div>
+<br>
+<br>
+
+<%restaurant_id_array=[]%>
+<%restaurant_lat_array=[]%>
+<%restaurant_long_array=[]%>
+
+<% Restaurant.all.each do |r| %>
+  <%restaurant_id_array.push(r.id)%>
+  <%if r.addresses.first.latitude.present? && r.addresses.first.longitude.present? %>
+    <%restaurant_lat_array.push(r.addresses.first.latitude.to_f)%>
+    <%restaurant_long_array.push(r.addresses.first.longitude.to_f)%>
+  <%else%>
+    <%restaurant_lat_array.push(0)%>
+    <%restaurant_long_array.push(0)%>
+  <%end%>
+
+  <div class="col-md-4 fl">
+    <div class="card bg-light mb-4">
+      <div class="card-header"><h4><b><%= link_to("#{r.name.capitalize}","/restaurant/show_user/#{r.id}") %></b></h4> </div>
+      <div class="card-body">
+        <p><b>Description:</b> <%= r.description %></p> 
+        <p><b>Contact Number: </b><%= r.contact_number %></p>
+        <p><b>Address: </b><%= r.addresses.first.address_line %></p>
+        <p><b>Timings: </b><%= r.opening_time %>-<%= r.closing_time %></p>
+        <p><b>Get Route :</b><img src="/assets/map_icon.png" style="height: 30px;width: 30px;" data-id ="<%=r.id%>" class ="map_icon" data-toggle="modal" data-target= "#myModal" data-remote = "true"></p>
+        <p id = "distance_<%= r.id %>"></p>
       </div>
     </div>
-  <% end %>
+  </div>
 <% end %>
+<div class="clearfix"></div>
 
 
 <div class="container-fluid">
@@ -111,21 +126,158 @@ img {
     </div>
   </div>
 </div>
+<div id="myModal" class="modal" role="document" >
+  <div class="modal-dialog">
+    <div class="modal-content" >
+      <div class="modal-body">
+        <div id="geolocation" style="width: 467px; height: 400px;"></div>
+        <div id = "distance" ></div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="close" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 <script>
-  $(document).ready(function(){
+if (navigator.geolocation) 
+{
+   
+  navigator.geolocation.getCurrentPosition(CalculateMinifiedDistance);
+  function CalculateMinifiedDistance(position) 
+  {
+      var res_id_array=<%=restaurant_id_array%>
+      var res_lat_array=<%=restaurant_lat_array%>
+      var res_long_array=<%=restaurant_long_array%>
+
+      for(i=0; i<res_id_array.length;i++)
+      {
+          var restaurant_latitude=res_lat_array[i];
+          var restaurant_longitude=res_long_array[i];
+          var restaurant_id=res_id_array[i];
+
+          if(restaurant_latitude==0 && restaurant_longitude==0)
+          {
+
+          }
+          else
+          {
+            var lat1=position.coords.latitude;
+            var lon1=position.coords.longitude;
+            var lat2=restaurant_latitude;
+            var lon2=restaurant_longitude;
+            var result=0;
+
+            var R = 6371; // km (change this constant to get miles)
+            var dLat = (lat2-lat1) * Math.PI / 180;
+            var dLon = (lon2-lon1) * Math.PI / 180;
+            var a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+              Math.cos(lat1 * Math.PI / 180 ) * Math.cos(lat2 * Math.PI / 180 ) *
+              Math.sin(dLon/2) * Math.sin(dLon/2);
+            var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+            var d = R * c;
+            if (d>1) 
+            {
+              result=Math.round(d)+"km away";
+            }
+            else if (d<=1) 
+            {
+              result=Math.round(d*1000)+"m";
+            }
+            $("#distance_"+restaurant_id).html(result);
+          }           
+      }
+  }
+} 
+
+
+
+  $(document).ready(function()
+  {
     $(".new_blog").hide();
     $("#cancel_btn").hide();
-    });
-  $("#blog_btn").click(function(){
+  });
+  $("#blog_btn").click(function()
+  {
     $(this).hide();
     $(".new_blog").show();
     $("#cancel_btn").show();
   })
-  $("#cancel_btn").click(function(e){
+  $("#cancel_btn").click(function(e)
+  {
     e.preventDefault();
     $(".new_blog").hide();
     $("#blog_btn").show();
+  })
+
+
+  function caldistance(lat1,lon1,lat2,lon2) { //function to calculate distance between two latitude,longitude
+
+    var R = 6371; // km (change this constant to get miles)
+    var dLat = (lat2-lat1) * Math.PI / 180;
+    var dLon = (lon2-lon1) * Math.PI / 180;
+    var a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+      Math.cos(lat1 * Math.PI / 180 ) * Math.cos(lat2 * Math.PI / 180 ) *
+      Math.sin(dLon/2) * Math.sin(dLon/2);
+    var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+    var d = R * c;
+    if (d>1) return Math.round(d)+"km away";
+    else if (d<=1) return Math.round(d*1000)+"m";
+    return d;
+  }
+
+
+
+  $(".map_icon").on("click",function(){
+    var id = $(this).data("id");
+    $.ajax({ 
+      async: true,
+      type: 'GET',
+      url: "/restaurant/address/"+id,
+      beforeSend: function() {
+              $(".modal-body").hide();
+           },
+      success: function(data)
+      {
+        $(".modal-body").show();
+        navigator.geolocation.getCurrentPosition(showPosition); //function to get current location
+        function showPosition(position) 
+        {
+
+          function calcRoute(latitude,longitude) 
+          {
+            var destination_lat = data.lat; // restaurant latitude
+            var destination_long = data.long;// restaurant longitude
+            var distance = caldistance(latitude,longitude,destination_lat,destination_long);
+            document.getElementById("distance").innerHTML = distance;
+            var origin      = new google.maps.LatLng(latitude,longitude);
+            var destination = new google.maps.LatLng(destination_lat,destination_long);
+            var request = {
+              origin:      origin,
+              destination: destination,
+              travelMode:  google.maps.TravelMode.DRIVING
+            };
+            directionsService.route(request, function(response, status) {
+              if (status == google.maps.DirectionsStatus.OK) {
+                directionsDisplay.setDirections(response);
+              }
+            });
+          }
+          var directionsDisplay = new google.maps.DirectionsRenderer();
+          var directionsService = new google.maps.DirectionsService();
+          var origin_latitude=position.coords.latitude;  //get current latitude
+          var origin_longitude=position.coords.longitude;  // get current longitude
+          calcRoute(origin_latitude,origin_longitude);  // function to calculate route
+          var handler = Gmaps.build('Google');
+          handler.buildMap({ internal: {id: 'geolocation'}}, function()  // geolocation is the id of the div
+          {
+            directionsDisplay.setMap(handler.getMap());
+          });
+        }
+      }, 
+      error: function(data){ alert('error'); } 
+    })
   })
 
 </script>
