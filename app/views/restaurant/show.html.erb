@@ -2,7 +2,7 @@
   <div class="row">
     <div class="col-sm-3 col-md-6">
       <div class ="new_blog">
-        <%= form_for (@restaurant),:url =>"#" ,:html => { :multipart => true } do |f| %>
+        <%= form_for (@restaurant),:url =>"/restaurant/update/#{@restaurant.id}" ,:html => { :multipart => true } do |f| %>
           <h3>Restaurant #<%= @restaurant.id %></h3>
           <div class="field">
             <%= f.text_field :name,:class=>"form-control",:placeholder => "Name" %>
@@ -27,9 +27,22 @@
           <br>
           <div class="field">
             <%= f.fields_for @restaurant.addresses.first do |a|  %>
-              <%= a.text_area :address_line,:class=>"form-control"  %>
-            <% end %>
+              <%= a.text_area :address_line,:class=>"form-control" %>
           </div>
+          <br>
+          <div class="row">
+            <div class="col-sm-6">
+              <div class="field">
+                <%= a.text_field :latitude,:class=>"form-control",:placeholder => "Latitude",:id=>"latitude"  %>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="field">
+                <%= a.text_field :longitude,:class=>"form-control",:placeholder => "Longitude",:id=>"longitude"  %>
+              </div>
+            </div>
+          </div>
+          <% end %>
           <br>
           <div class="row">
             <div class="col-sm-6">
@@ -57,6 +70,7 @@
           <br>
           <div id="geolocation" style="width: 300px; height: 300px;"></div>
           <br>
+          <button type="submit" class="btn btn-primary btn_large" >Update</button>&nbsp;&nbsp;
         <% end %>
         <br>
       </div>
@@ -70,9 +84,7 @@
       <div class="modal-body">
         <img src="" id = "modal-pic" style="width: 466px;height: auto;">
         <hr>
-          <div id="like_section">
-            <!-- <img src="/assets/pic_like.png" style="width: 20px;height: auto;cursor: pointer;" id="pic_like"> -->
-          </div>
+          <img src="/assets/pic_like.png" style="width: 20px;height: auto;cursor: pointer;" class="pic_like">
         <div class="comment">
 
         </div>
@@ -106,7 +118,7 @@
         };
         map = new google.maps.Map(document.getElementById("geolocation"), myOptions);
         var marker = new google.maps.Marker({
-            draggable: false,
+            draggable: true,
             position: myLatlng,
             map: map
         });
@@ -122,16 +134,17 @@
   $(".pic_show").on("click",function(){
 
     var id = $(this).data('id');
-    alert(id); 
+    //alert(id); 
     $.ajax({ 
       async: true,
       type: 'GET',
-      url: "/restaurant/pic/show/"+id,
+      url: "/restaurant/show_pic/"+id,
       success: function(data)
       {
-        alert(data.id);
+        //alert(data.id);
         $("#modal-pic").attr("src",data.pic);
         $("#modal-pic").attr("data-id",data.id);  
+<<<<<<< Updated upstream
         //$("#pic_like").attr("data-id",data.id);
 
         $("#like_section").html("");
@@ -142,6 +155,14 @@
         like.setAttribute("id", "pic_like");
         like.setAttribute("data-id", data.id);
         $("#like_section").html(like);
+=======
+        $(".pic_like").attr("id",data.id);
+        var is_liked = data.is_liked;
+        if(is_liked==true)
+          $("#"+data.id).attr("src","/assets/pic_unlike.png");
+        else
+          $("#"+data.id).attr("src","/assets/pic_like.png");
+>>>>>>> Stashed changes
 
       }, 
       error: function(data){ alert('error'); } 
@@ -151,10 +172,45 @@
 
 
 
+<<<<<<< Updated upstream
   $(".like_style").on("click",function()
   {
     var pic_id = $(this).data("id");
     alert(pic_id);
+=======
+  $(".pic_like").on("click",function()
+  {
+    var pic_id = $(".pic_like").attr("id");
+
+    <% if user_signed_in? %>
+      //var pic_id = $("#modal-pic").data("id");
+
+      //alert(pic_id);
+      $.ajax({ 
+      async: true,
+      type: 'GET',
+      url: "/like/pic_like/"+pic_id,
+      success: function(data)
+      {
+        // alert(data.is_liked);
+         if(data.is_liked == true)
+        {
+          //alert(data.is_liked);
+          $("#"+data.pic_id).attr("src","/assets/pic_unlike.png");
+        }
+         else
+        {
+          //alert(data.is_liked);
+          $("#"+data.pic_id).attr("src","/assets/pic_like.png");
+        }
+      }, 
+      error: function(data){ alert('error'); } 
+    })
+
+    <% else %>
+      
+    <% end %>
+>>>>>>> Stashed changes
   })
 
   // $("#pic_like").on("click", function(){
@@ -165,13 +221,14 @@
 
 </script>
 <style type="text/css">
-.modal-backdrop {
-  position: absolute;
-  right: 0;
-  left: 0;
-  opacity: 0.5;
-  height:100%; 
-  position: fixed;
+.modal-backdrop 
+  {
+    position: absolute;
+    right: 0;
+    left: 0;
+    opacity: 0.5;
+    height:100%; 
+    position: fixed;
   }
 
   .like_style

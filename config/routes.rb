@@ -52,15 +52,15 @@ StreetFeast::Application.routes.draw do
 
   get 'restaurant/show/:id' => 'restaurant#show'
 
-  get 'restaurant/show_user/:id' => 'restaurant#show_user'
+  get 'restaurant/show_for_user/:id' => 'restaurant#show_for_user'
 
-  get 'restaurant/pic/show/:id' => 'restaurant#show_pic'
+  get 'restaurant/show_pic/:id' => 'restaurant#show_pic'
 
   get 'like/pic_like/:id' => 'like#pic_like'
 
   get 'restaurant/address/:id' => 'restaurant#address'
 
-  
+  patch 'restaurant/update/:id' => 'restaurant#update'
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 

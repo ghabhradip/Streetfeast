@@ -65,18 +65,23 @@
 
   <div class="col-md-4 fl">
     <div class="card bg-light mb-4">
-      <div class="card-header"><h4><b><%= link_to("#{r.name.capitalize}","/restaurant/show_user/#{r.id}") %></b></h4> </div>
+      <div class="card-header"><h4><b><%= link_to("#{r.name.capitalize}","/restaurant/show_for_user/#{r.id}") %></b></h4> </div>
       <div class="card-body">
         <p><b>Description:</b> <%= r.description %></p> 
         <p><b>Contact Number: </b><%= r.contact_number %></p>
         <p><b>Address: </b><%= r.addresses.first.address_line %></p>
         <p><b>Timings: </b><%= r.opening_time %>-<%= r.closing_time %></p>
         <p><b>Get Route :</b><img src="/assets/map_icon.png" style="height: 30px;width: 30px;" data-id ="<%=r.id%>" class ="map_icon" data-toggle="modal" data-target= "#myModal" data-remote = "true"></p>
+
         <p id = "distance_<%= r.id %>"></p>
+
+        <p><b>Distance :</b><link id="distance_of_restaurant_<%= r.id %>" onload="getgeoLocation(<%= r.id%>,<%= r.addresses.first.latitude%>,<%= r.addresses.first.longitude %>)"></link></p>
+
       </div>
     </div>
   </div>
 <% end %>
+
 <div class="clearfix"></div>
 
 
@@ -228,7 +233,6 @@ if (navigator.geolocation)
   }
 
 
-
   $(".map_icon").on("click",function(){
     var id = $(this).data("id");
     $.ajax({ 
@@ -244,26 +248,26 @@ if (navigator.geolocation)
         navigator.geolocation.getCurrentPosition(showPosition); //function to get current location
         function showPosition(position) 
         {
-
           function calcRoute(latitude,longitude) 
-          {
-            var destination_lat = data.lat; // restaurant latitude
-            var destination_long = data.long;// restaurant longitude
-            var distance = caldistance(latitude,longitude,destination_lat,destination_long);
-            document.getElementById("distance").innerHTML = distance;
-            var origin      = new google.maps.LatLng(latitude,longitude);
-            var destination = new google.maps.LatLng(destination_lat,destination_long);
-            var request = {
-              origin:      origin,
-              destination: destination,
-              travelMode:  google.maps.TravelMode.DRIVING
-            };
-            directionsService.route(request, function(response, status) {
-              if (status == google.maps.DirectionsStatus.OK) {
-                directionsDisplay.setDirections(response);
-              }
-            });
-          }
+            {
+              var destination_lat = data.lat; // restaurant latitude
+              var destination_long = data.long;// restaurant longitude
+              var distance = caldistance(latitude,longitude,destination_lat,destination_long);
+              document.getElementById("distance").innerHTML = distance;
+              var origin      = new google.maps.LatLng(latitude,longitude);
+              var destination = new google.maps.LatLng(destination_lat,destination_long);
+              var request = {
+                origin:      origin,
+                destination: destination,
+                travelMode:  google.maps.TravelMode.DRIVING
+              };
+              directionsService.route(request, function(response, status) 
+              {
+                if (status == google.maps.DirectionsStatus.OK) {
+                  directionsDisplay.setDirections(response);
+                }
+              });
+            }
           var directionsDisplay = new google.maps.DirectionsRenderer();
           var directionsService = new google.maps.DirectionsService();
           var origin_latitude=position.coords.latitude;  //get current latitude

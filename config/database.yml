@@ -21,19 +21,3 @@ production:
   pool: 5
   username: postgres
   password: helloworld
-
-
-
-############################################ -------------- Rahil's ubuntu version
-# development:
-#   adapter: postgresql
-#   encoding: unicode
-#   database: my_development_street
-#   pool: 5
-
-
-# test:
-#   adapter: postgresql
-#   encoding: unicode
-#   database: my_test_test
-#   pool: 5
