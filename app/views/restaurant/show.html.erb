@@ -138,31 +138,21 @@
     $.ajax({ 
       async: true,
       type: 'GET',
-      url: "/restaurant/show_pic/"+id,
+      url: "/restaurant/pic/show/"+id,
       success: function(data)
       {
         //alert(data.id);
         $("#modal-pic").attr("src",data.pic);
         $("#modal-pic").attr("data-id",data.id);  
-<<<<<<< Updated upstream
+
         //$("#pic_like").attr("data-id",data.id);
 
-        $("#like_section").html("");
-        var like = document.createElement('img');
-        like.src = "/assets/pic_like.png";
-        //like.css('cursor', 'pointer');
-        like.setAttribute("class", "like_style");
-        like.setAttribute("id", "pic_like");
-        like.setAttribute("data-id", data.id);
-        $("#like_section").html(like);
-=======
         $(".pic_like").attr("id",data.id);
         var is_liked = data.is_liked;
         if(is_liked==true)
           $("#"+data.id).attr("src","/assets/pic_unlike.png");
         else
           $("#"+data.id).attr("src","/assets/pic_like.png");
->>>>>>> Stashed changes
 
       }, 
       error: function(data){ alert('error'); } 
@@ -170,22 +160,11 @@
   });
 
 
-
-
-<<<<<<< Updated upstream
-  $(".like_style").on("click",function()
-  {
-    var pic_id = $(this).data("id");
-    alert(pic_id);
-=======
   $(".pic_like").on("click",function()
   {
     var pic_id = $(".pic_like").attr("id");
 
     <% if user_signed_in? %>
-      //var pic_id = $("#modal-pic").data("id");
-
-      //alert(pic_id);
       $.ajax({ 
       async: true,
       type: 'GET',
@@ -210,8 +189,7 @@
     <% else %>
       
     <% end %>
->>>>>>> Stashed changes
-  })
+  });
 
   // $("#pic_like").on("click", function(){
   //   var pic_id = $(this).data("id");

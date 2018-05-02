@@ -29,11 +29,6 @@
 
 </style>
 
-
-
-
-
-
 <div class="row" style="padding-left: 20px;">
   <div class="col-sm-10">
     <div class="field">
@@ -72,11 +67,7 @@
         <p><b>Address: </b><%= r.addresses.first.address_line %></p>
         <p><b>Timings: </b><%= r.opening_time %>-<%= r.closing_time %></p>
         <p><b>Get Route :</b><img src="/assets/map_icon.png" style="height: 30px;width: 30px;" data-id ="<%=r.id%>" class ="map_icon" data-toggle="modal" data-target= "#myModal" data-remote = "true"></p>
-
         <p id = "distance_<%= r.id %>"></p>
-
-        <p><b>Distance :</b><link id="distance_of_restaurant_<%= r.id %>" onload="getgeoLocation(<%= r.id%>,<%= r.addresses.first.latitude%>,<%= r.addresses.first.longitude %>)"></link></p>
-
       </div>
     </div>
   </div>
@@ -91,7 +82,6 @@
       <div class="btn btn-outline-primary" id ="blog_btn">
         <%= link_to("Create blog","javascript:void(0)",:remote => true,:class => "create_blog_btn") %>
       </div>
-
       <div class ="new_blog">
         <h2>Create a new blog</h2>
         <%= form_for (@blog),url: "/blog/create", :html => { :multipart => true } do |f| %>

@@ -54,7 +54,7 @@ StreetFeast::Application.routes.draw do
 
   get 'restaurant/show_for_user/:id' => 'restaurant#show_for_user'
 
-  get 'restaurant/show_pic/:id' => 'restaurant#show_pic'
+  get 'restaurant/pic/show/:id' => 'restaurant#show_pic'
 
   get 'like/pic_like/:id' => 'like#pic_like'
 
