@@ -9,7 +9,7 @@
     transition: 0.3s;
     border: 1px solid;
     border-radius: 5px;
-    height: 400px;
+    height: 475px;
 }
 .col-md-4.fl {
     float: left;
@@ -33,6 +33,8 @@
   <div class="col-sm-10">
     <div class="field">
       <input id="search-input" class="form-control" type="text" placeholder="Search Restaurant">
+      <br>
+      <button class="btn btn-primary btn_large" id = "subscribe_btn" >Subscribe</button>
     </div>
   </div>
   <div class="col-sm-2">
@@ -43,7 +45,6 @@
 </div>
 <br>
 <br>
-
 <%restaurant_id_array=[]%>
 <%restaurant_lat_array=[]%>
 <%restaurant_long_array=[]%>
@@ -62,12 +63,13 @@
     <div class="card bg-light mb-4">
       <div class="card-header"><h4><b><%= link_to("#{r.name.capitalize}","/restaurant/show_for_user/#{r.id}") %></b></h4> </div>
       <div class="card-body">
-        <p><b>Description:</b> <%= r.description %></p> 
+        <p><b>Description:</b> <%= r.description.truncate(70) %></p> 
         <p><b>Contact Number: </b><%= r.contact_number %></p>
         <p><b>Address: </b><%= r.addresses.first.address_line %></p>
         <p><b>Timings: </b><%= r.opening_time %>-<%= r.closing_time %></p>
+        <p><b>Cost for two: </b>Rs.<%= r.cost_for_two %></p>
         <p><b>Get Route :</b><img src="/assets/map_icon.png" style="height: 30px;width: 30px;" data-id ="<%=r.id%>" class ="map_icon" data-toggle="modal" data-target= "#myModal" data-remote = "true"></p>
-        <p id = "distance_<%= r.id %>"></p>
+        <p><b>Distance: </b><span id = "distance_<%= r.id %>"></span></p>
       </div>
     </div>
   </div>
@@ -126,7 +128,8 @@
     <div class="modal-content" >
       <div class="modal-body">
         <div id="geolocation" style="width: 467px; height: 400px;"></div>
-        <div id = "distance" ></div>
+        <br>
+        <p><b>Distance: </b><span id = "distance" ></span></p>
       </div>
       <div class="modal-footer">
         <button type="button" class="close" data-dismiss="modal">Close</button>
@@ -142,47 +145,46 @@ if (navigator.geolocation)
   navigator.geolocation.getCurrentPosition(CalculateMinifiedDistance);
   function CalculateMinifiedDistance(position) 
   {
-      var res_id_array=<%=restaurant_id_array%>
-      var res_lat_array=<%=restaurant_lat_array%>
-      var res_long_array=<%=restaurant_long_array%>
+    var res_id_array=<%=restaurant_id_array%>
+    var res_lat_array=<%=restaurant_lat_array%>
+    var res_long_array=<%=restaurant_long_array%>
 
-      for(i=0; i<res_id_array.length;i++)
+    for(i=0; i<res_id_array.length;i++)
+    {
+      var restaurant_latitude=res_lat_array[i];
+      var restaurant_longitude=res_long_array[i];
+      var restaurant_id=res_id_array[i];
+      if(restaurant_latitude==0 && restaurant_longitude==0)
       {
-          var restaurant_latitude=res_lat_array[i];
-          var restaurant_longitude=res_long_array[i];
-          var restaurant_id=res_id_array[i];
 
-          if(restaurant_latitude==0 && restaurant_longitude==0)
-          {
-
-          }
-          else
-          {
-            var lat1=position.coords.latitude;
-            var lon1=position.coords.longitude;
-            var lat2=restaurant_latitude;
-            var lon2=restaurant_longitude;
-            var result=0;
-
-            var R = 6371; // km (change this constant to get miles)
-            var dLat = (lat2-lat1) * Math.PI / 180;
-            var dLon = (lon2-lon1) * Math.PI / 180;
-            var a = Math.sin(dLat/2) * Math.sin(dLat/2) +
-              Math.cos(lat1 * Math.PI / 180 ) * Math.cos(lat2 * Math.PI / 180 ) *
-              Math.sin(dLon/2) * Math.sin(dLon/2);
-            var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-            var d = R * c;
-            if (d>1) 
-            {
-              result=Math.round(d)+"km away";
-            }
-            else if (d<=1) 
-            {
-              result=Math.round(d*1000)+"m";
-            }
-            $("#distance_"+restaurant_id).html(result);
-          }           
       }
+      else
+      {
+        var lat1=position.coords.latitude;
+        var lon1=position.coords.longitude;
+        var lat2=restaurant_latitude;
+        var lon2=restaurant_longitude;
+        var result=0;
+
+        var R = 6371; // km (change this constant to get miles)
+        var dLat = (lat2-lat1) * Math.PI / 180;
+        var dLon = (lon2-lon1) * Math.PI / 180;
+        var a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+          Math.cos(lat1 * Math.PI / 180 ) * Math.cos(lat2 * Math.PI / 180 ) *
+          Math.sin(dLon/2) * Math.sin(dLon/2);
+        var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+        var d = R * c;
+        if (d>1) 
+        {
+          result=Math.round(d)+"km away";
+        }
+        else if (d<=1) 
+        {
+          result=Math.round(d*1000)+"m";
+        }
+        $("#distance_"+restaurant_id).html(result);
+      }           
+    }
   }
 } 
 
@@ -272,6 +274,38 @@ if (navigator.geolocation)
       }, 
       error: function(data){ alert('error'); } 
     })
+  })
+
+  $("#subscribe_btn").on("click",function()
+  {
+    swal({
+    title: 'Please provide us with your email',
+    input: 'email',
+    showCancelButton: true,
+    confirmButtonText: 'Confirm',
+    showLoaderOnConfirm: true,
+    }).then((value) => 
+    {
+      var email = value;
+      if(email!=null && email!="" )
+      {
+        $.ajax({ 
+        async: true,
+        type: 'GET',
+        url: "subscribe/",
+        data: {email: email},
+        success: function(data)
+        {
+          swal("Subscribed successfully!","Thank you for subscribing!", "success"); 
+        }, 
+        error: function(data){ alert('error'); } 
+        })
+      }
+      else
+      {
+        swal("Please provide your email","Email can't be blank!!", "error"); 
+      }
+     })
   })
 
 </script>

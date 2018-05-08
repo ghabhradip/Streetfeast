@@ -33,6 +33,11 @@ class UserController < ApplicationController
     render text: "success"
   end
 
+  def index
+    @users = User.all
+  end
+
+
 
   private
     def user_params

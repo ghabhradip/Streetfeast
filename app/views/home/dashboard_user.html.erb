@@ -14,6 +14,9 @@
         <%= link_to("Update profile","/home/#{current_user.id}/edit") %>
       </div>
     <% end %>
+    <div class="btn btn-outline-primary">
+      <%= link_to("Raise Issue","/support_ticket/new") %>
+    </div>
   </div>
   <div class="col-sm-1">
     <a class="btn btn-warning right-align" href="/blog/new">Create a Blog</a>
@@ -31,6 +34,5 @@
   }
 </style>
 <script>
-
 
 </script>

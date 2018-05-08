@@ -1,0 +1,116 @@
+<link href="//cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css"></link>
+<script src="//cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+<div style="padding: 10px;">
+  <table id="example" class="table table-hover display responsive no-wrap">
+    <thead>
+      <tr>
+        <th></th>
+        <th scope="col">Issue ID</th>
+        <th scope="col">Issue Type</th>
+        <th scope="col">Issue Description</th>
+        <th scope="col">User email</th>
+        <th scope="col"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @support_tickets.each do |support_ticket| %>
+        <tr>
+          <td><input type="checkbox" name="is_resolved" data-id ="<%= support_ticket.id %>" id="st_<%= support_ticket.id %>" class="is_checked_resolved"></td>
+          <td><%= support_ticket.id %></td>
+          <td><%= IssueType.find_by_id(support_ticket.issue_type_id).issue_type %></td>
+          <td><%= support_ticket.issue_description.truncate(30) %></td>
+          <td><%= support_ticket.user.email %></td>
+          <td><%= link_to "javascript:void(0)",:class => "show_ticket","data-id" => "#{support_ticket.id}","data-toggle"=>"modal" ,"data-target"=>"#myModal",:remote => true do %>
+          <span><img src="/assets/issue.png" style ="height:20px;width:20px;"></span>
+          <% end %></td>
+        </tr>
+      <%end%>
+    </tbody>
+  </table>
+<a class="btn btn-warning right-align resolve_issue_btn" >Resolve issue</a>
+</div>
+
+<div id="myModal" class="modal" role="document">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-body">
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="close" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div> 
+<script>
+  $(document).ready(function()
+  {
+    $("#example").DataTable({
+    });
+  });
+  var issue_id = [];
+  $(".is_checked_resolved").on("click",function()
+  {
+    var id = $(this).data('id'); 
+    var x = $("#st_"+id).checked;
+    if(document.getElementById("st_"+id).checked==true)
+    {
+      issue_id.push(id);
+    }
+    else
+    {
+      issue_id.pop();
+    }  
+  });
+
+  $(".resolve_issue_btn").on("click",function(e){
+    e.preventDefault();
+    $.ajax({ 
+      async: true,
+      type: 'GET',
+      url: "/support_ticket/resolve",
+      data: {issue_ids: issue_id},
+      success: function(data)
+      {
+        if(data=="success")
+        {
+          swal("Issues resolved!","", "success"); 
+        }  
+        else
+        {
+          swal("Please select issue to be resolved","", "error"); 
+        }
+
+      }, 
+      error: function(data){ alert('error'); } 
+    })
+  })
+
+
+
+
+  $(".show_ticket").click(function(e)
+  { 
+    var id = $(this).data('id'); 
+    $.ajax({ 
+      async: true,
+      type: 'GET',
+      url: "/support_ticket/show/"+id,
+      success: function(data)
+      {
+        $(".modal-body").html(data);  
+      }, 
+      error: function(data){ alert('error'); } 
+    })
+  });
+
+</script>
+<style type="text/css">
+  .modal-backdrop {
+  position: absolute;
+  right: 0;
+  left: 0;
+  opacity: 0.5;
+  height:100% 
+  }
+</style>

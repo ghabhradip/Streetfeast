@@ -44,8 +44,7 @@ StreetFeast::Application.routes.draw do
 
   patch 'blog/update_blog_user/:id' => 'blog#update_blog_user'
 
-
-
+  
   get 'restaurant/new' => 'restaurant#new'
 
   post 'restaurant/create' => 'restaurant#create'
@@ -61,6 +60,21 @@ StreetFeast::Application.routes.draw do
   get 'restaurant/address/:id' => 'restaurant#address'
 
   patch 'restaurant/update/:id' => 'restaurant#update'
+  
+  get 'restaurant/menu/:id' => "restaurant#show_menu",:as => 'restaurant_menu_show' 
+
+
+  get 'support_ticket/new' => "supportticket#new"
+
+  post 'support_ticket/create' => 'supportticket#create'
+
+  get 'home/support_ticket/list' => 'home#ticket_list'
+
+  get '/support_ticket/show/:id' => 'home#ticket_show'
+
+  get 'support_ticket/resolve' => "supportticket#resolve"
+
+  get '/subscribe' => 'home#subscribe'
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 

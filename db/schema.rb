@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180502124755) do
+ActiveRecord::Schema.define(version: 20180508052451) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -37,10 +37,24 @@ ActiveRecord::Schema.define(version: 20180502124755) do
     t.string   "fullname"
   end
 
+  create_table "issue_types", force: true do |t|
+    t.string   "issue_type"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "likes", force: true do |t|
     t.integer  "picture_id"
     t.integer  "user_id"
     t.boolean  "is_liked",   default: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "menus", force: true do |t|
+    t.string   "item_name"
+    t.integer  "price"
+    t.integer  "restaurant_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -69,8 +83,24 @@ ActiveRecord::Schema.define(version: 20180502124755) do
     t.datetime "updated_at"
     t.string   "closed_on"
     t.string   "contact_number"
-    t.integer  "minimum_order"
     t.string   "cuisine"
+    t.integer  "cost_for_two"
+    t.boolean  "is_deactive",      default: false
+  end
+
+  create_table "subscriptions", force: true do |t|
+    t.string   "user_email"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "support_tickets", force: true do |t|
+    t.integer  "user_id"
+    t.text     "issue_description"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.boolean  "is_resolved",       default: false
+    t.integer  "issue_type_id"
   end
 
   create_table "users", force: true do |t|

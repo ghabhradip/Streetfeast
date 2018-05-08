@@ -1,3 +1,4 @@
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <table id="example" class="table table-hover display responsive no-wrap">
   <thead>
     <tr>
@@ -45,7 +46,6 @@
               <span class="user_ban" style="cursor: pointer;"><img id="<%=user.id%>ban" src="/assets/ban_icon.png" class="block" style ="height:20px;width:20px;"></span>
             <%end%>
           </td>
-
         </tr>
       <%end%>
   </tbody>
@@ -118,7 +118,6 @@
       $("#"+user_id+"ban").addClass("unblock");
       $.getScript('/home/blacklist.js?pt=' + user_id);
     })
-
   });
 
 

@@ -2,8 +2,8 @@ source 'https://rubygems.org'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.0.13'
-gem "jquery-ui-rails"
-gem 'jquery-datatables-rails', '~> 3.4.0'
+
+
 
 # Use postgresql as the database for Active Record
 gem 'pg', '~> 0.20'
@@ -53,4 +53,8 @@ gem 'tinymce-rails'
 gem 'omniauth-google-oauth2'
 gem 'rails_db'
 gem 'gmaps4rails'
-gem 'gon'
+
+gem 'jquery-datatables-rails', github: 'rweng/jquery-datatables-rails'
+gem 'jquery-ui-rails'
+
+gem 'will_paginate'

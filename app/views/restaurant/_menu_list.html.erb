@@ -1,0 +1,75 @@
+<div  style="padding: 10px;">
+  <center><h4><b>Menu</b></h4></center>
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th scope="col"><h5>Item Name</h5></th>
+        <th scope="col"><h5>Price(rs)</h5></th>
+      </tr>
+    </thead>
+    <% @menu_for_restaurant.each do |menu| %>
+      <tbody>
+        <tr class="table-active">
+          <th scope="row"><%= menu.item_name%></th>
+          <th scope="row"><%= menu.price%></th>
+        </tr>
+      </tbody>
+    <% end %>
+  </table>
+
+
+
+
+
+  
+<% if user_signed_in? %>
+  <% if current_user.is_admin == true %>
+    <div class="menu_list">
+      <%= form_for @menu,:url=>"#" do |menu|  %>
+        <div class="row">
+          <div class="col-sm-6">
+              <div class="field">
+                <%= menu.text_field :item_name,:class=>"form-control",:placeholder => "Item name",:id=>"item_name" %>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="field">
+                <%= menu.text_field :price,:class=>"form-control",:placeholder => "Price" ,:id =>"price" %>
+              </div>
+            </div>
+        </div>
+        <br>
+      <% end %>
+    </div>
+    <div class="field">
+      <%= button_tag "Add more",:id => "add_more",:class=>"btn btn-danger" %>
+    </div>
+    <br>
+    <div class="field">
+      <%= button_tag "Add to menu",:id => "add_to_menu",:class=>"btn btn-success" %>
+    </div>
+  <% end %>
+<% end %>
+
+
+<script type="text/javascript">
+  $( document ).ready(function() {
+    $("#item_name").last().attr("name","menu_item_name[item_name1]");
+    $("#price").last().attr("name","menu_item_price[price1]");
+  });
+  $("#add_more").on("click",function(e){
+    e.preventDefault();
+    max_field = 10;
+    x=1;
+    var field_len = $('.menu_list').length;
+    if(x<=max_field){
+      var html = $(".menu_list").first().clone();
+      $(".menu_list").last().after(html);
+      $('#item_name').val('');
+      $('#price').val('');
+      //alert(field_len+1);
+      $("#item_name").last().attr("name","menu_item_name[item_name"+(field_len+1)+"]");
+      $("#price").last().attr("name","menu_item_price[price"+(field_len+1)+"]");
+    }
+  })
+</script>
