@@ -52,7 +52,6 @@ class RestaurantController < ApplicationController
   end
   
   def update
-
     @restaurant = Restaurant.find_by_id(params[:id])
     if @restaurant.present?
       @restaurant_address = Address.where("restaurant_id=?",@restaurant.id).first
@@ -68,14 +67,10 @@ class RestaurantController < ApplicationController
     redirect_to :back      
   end
 
-
-
   def show_menu
     @restaurant = Restaurant.find_by_id(params[:id])
     @menu_for_restaurant = Menu.where("restaurant_id=?",@restaurant.id)
     @menu = Menu.new
-    #render partial: "menu_list"
-    # render layout: false
     respond_to do |format|
       format.html { render :layout => false }
       format.json { render json: MenuDatatable.new(view_context) }

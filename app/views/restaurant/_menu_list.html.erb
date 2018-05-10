@@ -2,7 +2,7 @@
 <script type="text/javascript" charset="utf8" src="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.4/jquery.dataTables.min.js"></script>
 <div  style="padding: 10px;">
   <center><h4><b>Menu</b></h4></center>
-  <table class="table table-hover" id="menu_list" data-source="<%= restaurant_menu_show_path(format: "json") %>">
+  <table class="table table-hover" id="menu_list_datatable" data-source="<%= restaurant_menu_show_path(format: "json") %>">
     <thead>
       <tr>
         <th scope="col"><h5>Item Name</h5></th>
@@ -47,6 +47,7 @@
 
     $("#item_name").last().attr("name","menu_item_name[item_name1]");
     $("#price").last().attr("name","menu_item_price[price1]");
+
     
   });
   $("#add_more").on("click",function(e){
@@ -63,17 +64,18 @@
       $("#item_name").last().attr("name","menu_item_name[item_name"+(field_len+1)+"]");
       $("#price").last().attr("name","menu_item_price[price"+(field_len+1)+"]");
     }
-  })
-  jQuery(document).ready(function() {
-  $('#menu_list').dataTable({
-    "processing": true,
-    "serverSide": true,
-    "ajax": $('#menu_list').data('source'),
-    "pagingType": "full_numbers",
- 
-    // pagingType is optional, if you want full pagination controls.
-    // Check dataTables documentation to learn more about
-    // available options.
   });
-});
+  jQuery(document).ready(function() {
+    alert(1);
+    $('#menu_list_datatable').dataTable({
+      "processing": true,
+      "serverSide": true,
+      "ajax": $('#menu_list_datatable').data('source'),
+      "pagingType": "full_numbers"
+   
+      // pagingType is optional, if you want full pagination controls.
+      // Check dataTables documentation to learn more about
+      // available options.
+    });
+  });
 </script>

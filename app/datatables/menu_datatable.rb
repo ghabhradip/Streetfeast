@@ -6,6 +6,7 @@ class MenuDatatable
   end
   def as_json(options = {})
     {
+
       sEcho: params[:sEcho].to_i,
       iTotalRecords: Menu.count,
       aaData: data
