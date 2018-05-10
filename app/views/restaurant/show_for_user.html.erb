@@ -74,7 +74,6 @@
 
   var geocoder = new google.maps.Geocoder();
   var add = $("#restaurant_address_address_line").val().replace(/"/g,"");
-  //alert(add);
   geocoder.geocode( { 'address': add}, function(results, status) {
     if (status == google.maps.GeocoderStatus.OK) 
     {

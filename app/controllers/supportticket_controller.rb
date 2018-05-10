@@ -14,7 +14,7 @@ class SupportticketController < ApplicationController
       @support_ticket.save
       UserMailer.ticket_email_user(@user,@support_ticket).deliver
       UserMailer.ticket_email_admin(@user,@support_ticket).deliver
-      flash[:notice] = "Ticket has been raised successfully"
+      flash[:notice] = "Ticket has been raised successfully.Please check you email for the Ticket ID"
     else
       flash[:notice] = "Please select Issue type"
     end

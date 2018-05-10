@@ -83,14 +83,6 @@ class HomeController < ApplicationController
     render partial: 'supportticket/show'
   end
 
-
-  def subscribe
-    email = params[:email]
-    Subscription.create(:user_email=>email)
-    render text: "success"
-  end
-
-
   private
   def user_params
     params.require(:user).permit(:firstname, :lastname, :mobile_no,:city,:state)

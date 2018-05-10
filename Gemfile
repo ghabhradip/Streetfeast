@@ -53,7 +53,7 @@ gem 'tinymce-rails'
 gem 'omniauth-google-oauth2'
 gem 'rails_db'
 gem 'gmaps4rails'
-
+gem 'ajax-datatables-rails'
 gem 'jquery-datatables-rails', github: 'rweng/jquery-datatables-rails'
 gem 'jquery-ui-rails'
 

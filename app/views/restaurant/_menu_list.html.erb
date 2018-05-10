@@ -1,27 +1,17 @@
+<link href="//cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css"></link>
+<script src="//cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
 <div  style="padding: 10px;">
   <center><h4><b>Menu</b></h4></center>
-  <table class="table table-hover">
+  <table class="table table-hover" id="menu_list" data-source="<%= restaurant_menu_show_path(format: "json") %>">
     <thead>
       <tr>
         <th scope="col"><h5>Item Name</h5></th>
         <th scope="col"><h5>Price(rs)</h5></th>
       </tr>
     </thead>
-    <% @menu_for_restaurant.each do |menu| %>
       <tbody>
-        <tr class="table-active">
-          <th scope="row"><%= menu.item_name%></th>
-          <th scope="row"><%= menu.price%></th>
-        </tr>
       </tbody>
-    <% end %>
   </table>
-
-
-
-
-
-  
 <% if user_signed_in? %>
   <% if current_user.is_admin == true %>
     <div class="menu_list">
@@ -54,15 +44,17 @@
 
 <script type="text/javascript">
   $( document ).ready(function() {
+
     $("#item_name").last().attr("name","menu_item_name[item_name1]");
     $("#price").last().attr("name","menu_item_price[price1]");
+    
   });
   $("#add_more").on("click",function(e){
     e.preventDefault();
     max_field = 10;
     x=1;
     var field_len = $('.menu_list').length;
-    if(x<=max_field){
+    if(x < max_field){
       var html = $(".menu_list").first().clone();
       $(".menu_list").last().after(html);
       $('#item_name').val('');

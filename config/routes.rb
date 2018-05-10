@@ -74,7 +74,10 @@ StreetFeast::Application.routes.draw do
 
   get 'support_ticket/resolve' => "supportticket#resolve"
 
-  get '/subscribe' => 'home#subscribe'
+  get 'subscription/new' => 'subscription#new'
+
+
+
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 

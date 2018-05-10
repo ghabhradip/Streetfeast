@@ -1,7 +1,7 @@
 <link href="//cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css"></link>
 <script src="//cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
 <div style="padding: 10px;">
-  <table id="example" class="table table-hover display responsive no-wrap">
+  <table id="tickets_datatable" class="table table-hover display responsive no-wrap">
     <thead>
       <tr>
         <th></th>
@@ -10,12 +10,18 @@
         <th scope="col">Issue Description</th>
         <th scope="col">User email</th>
         <th scope="col"></th>
+        <th scope="col"></th>
+        <th scope="col"></th>
       </tr>
     </thead>
     <tbody>
       <% @support_tickets.each do |support_ticket| %>
         <tr>
-          <td><input type="checkbox" name="is_resolved" data-id ="<%= support_ticket.id %>" id="st_<%= support_ticket.id %>" class="is_checked_resolved"></td>
+          <% if support_ticket.is_resolved.eql? true %>
+            <td></td>
+          <% else %>
+            <td><input type="checkbox" name="is_resolved" data-id ="<%= support_ticket.id %>" id="st_<%= support_ticket.id %>" class="is_checked_resolved"></td>
+          <% end %>
           <td><%= support_ticket.id %></td>
           <td><%= IssueType.find_by_id(support_ticket.issue_type_id).issue_type %></td>
           <td><%= support_ticket.issue_description.truncate(30) %></td>
@@ -23,6 +29,13 @@
           <td><%= link_to "javascript:void(0)",:class => "show_ticket","data-id" => "#{support_ticket.id}","data-toggle"=>"modal" ,"data-target"=>"#myModal",:remote => true do %>
           <span><img src="/assets/issue.png" style ="height:20px;width:20px;"></span>
           <% end %></td>
+          <% if support_ticket.is_resolved.eql? true %>
+            <td><img src="/assets/resolved_ticket.png" style="height: 20px;width: 20px;"></td>
+            <td><span  style="display: none;">yes_resolved</span></td>
+          <% else %>
+            <td></td>
+            <td ><span style="display: none;">not_resolved</span></td>
+          <% end %>
         </tr>
       <%end%>
     </tbody>
@@ -45,7 +58,7 @@
 <script>
   $(document).ready(function()
   {
-    $("#example").DataTable({
+    $("#tickets_datatable").DataTable({
     });
   });
   var issue_id = [];
@@ -74,11 +87,13 @@
       {
         if(data=="success")
         {
-          swal("Issues resolved!","", "success"); 
+          swal("Issues resolved!","", "success");
+          //location. reload(true); 
         }  
         else
         {
-          swal("Please select issue to be resolved","", "error"); 
+          swal("Please select issue to be resolved","", "error");
+          //location. reload(true); 
         }
 
       }, 
