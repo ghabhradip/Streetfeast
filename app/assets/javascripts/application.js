@@ -12,8 +12,8 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require dataTables/jquery.dataTables
 //= require jquery-ui
+//= require dataTables/jquery.dataTables
 //= require turbolinks
 //= require bootstrap-tokenfield
 //= require tinymce
