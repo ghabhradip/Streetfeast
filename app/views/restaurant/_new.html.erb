@@ -214,6 +214,7 @@
     x=1;
     var field_len = $('.menu_list').length;
     if(x<=max_field){
+      x++;
       var html = $(".menu_list").first().clone();
       $(".menu_list").last().after(html);
       $('#item_name').val('');

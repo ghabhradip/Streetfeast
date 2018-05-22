@@ -74,15 +74,6 @@ class HomeController < ApplicationController
   end
 
 
-  def ticket_list
-    @support_tickets = SupportTicket.all
-  end
-
-  def ticket_show
-    @support_ticket = SupportTicket.where("id=?",params[:id]).first
-    render partial: 'supportticket/show'
-  end
-
   private
   def user_params
     params.require(:user).permit(:firstname, :lastname, :mobile_no,:city,:state)

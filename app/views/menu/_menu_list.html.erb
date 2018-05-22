@@ -1,0 +1,140 @@
+<div id ="main_page">
+
+<link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css" />
+<script type="text/javascript" charset="utf8" src="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.4/jquery.dataTables.min.js"></script>
+<div  style="padding: 10px;">
+  <center><h4><b>Menu</b></h4></center>
+
+
+<table class="table table-hover" id="menu_list_datatable">
+  <thead>
+    <tr>
+      <th scope="col">id</th>
+      <th scope="col"><h5>Item Name</h5></th>
+      <th scope="col"><h5>Price(rs)</h5></th>
+      <% if user_signed_in? %>
+        <% if current_user.is_admin == true %>
+          <th></th>
+        <% end %>
+      <% end %>
+    </tr>
+  </thead>
+  <% @menu_for_restaurant.order('id ASC').each do |menu| %>
+    <tbody>
+      <tr>
+        <td><%= menu.id %></td>
+        <td><%= menu.item_name %></td>
+        <td><%= menu.price %></td>
+        <% if user_signed_in? %>
+          <% if current_user.is_admin == true %>
+            <% if menu.is_available.eql? true %>
+              <td><span class="badge badge-success size-mid is_available" data-id="<%= menu.id %>"  style="cursor: pointer;">Available</span></td>
+            <% else %>
+              <td><span class="badge badge-danger size-mid is_available" data-id="<%= menu.id %>" style="cursor: pointer;">Not Available</span></td>
+            <% end %>
+          <% end %>
+        <% end %>
+
+      </tr>
+    </tbody>
+  <% end %>
+</table>
+<% if user_signed_in? %>
+  <% if current_user.is_admin == true %>
+    <%= form_for @menu,:url=>"/menu/create/#{@restaurant.id}"  do |menu| %>
+      <div class="menu_list">
+        <div class="row">
+          <div class="col-sm-6">
+              <div class="field">
+                <%= menu.text_field :item_name,:class=>"form-control",:placeholder => "Item name",:id=>"item_name"%>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="field">
+                <%= menu.text_field :price,:class=>"form-control",:placeholder => "Price" ,:id =>"price" %>
+              </div>
+            </div>
+        </div>
+        <br>
+      </div>
+    <% end %>
+
+
+    <div class="field">
+      <%= button_tag "Add more",:id => "add_more",:class=>"btn btn-danger" %>
+    </div>
+    <br>
+    <div class="field">
+      <%= button_tag "Add to menu",:id => "add_to_menu",:class=>"btn btn-success" %>
+    </div>
+
+
+  <% end %>
+<% end %>
+
+
+<script type="text/javascript">
+
+  $(".is_available").on("click",function(){
+    var id = $(this).data('id');
+
+    if ($(this).text() == "Available")
+    {
+      $(this).text("Not Available")
+    }
+    else
+    {
+      $(this).addClass("badge-success")
+      $(this).text("Available");
+    }
+    $(this).toggleClass("badge-danger");
+
+    $.ajax({ type: "get", 
+      url: "/menu/is_available/"+id, 
+      data: {id: id},
+      success: function(response) 
+      { 
+        
+      } 
+    }); 
+  });
+  $("#item_name").last().attr("name","menu_item_name[item_name1]");
+  $("#price").last().attr("name","menu_item_price[price1]");
+  x=1;
+  $("#add_more").on("click",function(e){
+    max_field = 100;
+    var field_len = $('.menu_list').length;
+    if(x < max_field){
+      x++;
+      var html = $(".menu_list").first().clone();
+      $(".menu_list").last().after(html);
+      $('#item_name').val('');
+      $('#price').val('');
+      $("#item_name").last().attr("name","menu_item_name[item_name"+(field_len+1)+"]");
+      $("#price").last().attr("name","menu_item_price[price"+(field_len+1)+"]");
+    }
+  });
+
+  $("#add_to_menu").on("click",function(){
+    $("#new_menu").submit();
+  });
+
+  $("#new_menu").on("submit", function(event)
+  { 
+    //alert(1);
+    $.ajax({ type: "POST", 
+      url: this.action, 
+      data: $(this).serialize(),
+      success: function(response) 
+      { 
+        //console.log(response);
+        $("#main_page").html(response); 
+        $('#item_name').val('');
+        $('#price').val('');
+
+      } 
+    }); 
+    event.preventDefault(); 
+  });
+</script>
+</div>

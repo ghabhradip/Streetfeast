@@ -15,7 +15,7 @@ class RestaurantController < ApplicationController
     menu_item_name.keys.each_with_index do |key, index|
       item_name = menu_item_name.values[index]
       item_price = menu_item_price.values[index]
-      @menu = Menu.create(:item_name=>item_name,:price=>item_price,:restaurant_id=>restaurant_id)
+      Menu.create(:item_name=>item_name,:price=>item_price,:restaurant_id=>restaurant_id)
     end
 
     @address = Address.create(:address_line => params[:restaurant][:address][:address_line],:latitude =>params[:restaurant][:address][:latitude],:longitude=>params[:restaurant][:address][:longitude],:restaurant_id=>@restaurant.id)
@@ -66,18 +66,6 @@ class RestaurantController < ApplicationController
     end
     redirect_to :back      
   end
-
-  def show_menu
-    @restaurant = Restaurant.find_by_id(params[:id])
-    @menu_for_restaurant = Menu.where("restaurant_id=?",@restaurant.id)
-    @menu = Menu.new
-    respond_to do |format|
-      format.html { render :layout => false }
-      format.json { render json: MenuDatatable.new(view_context) }
-    end
-  end
-
-
 
  private
   def restaurant_params

@@ -2,6 +2,7 @@ StreetFeast::Application.routes.draw do
   get "blog/create"
   get "management/show_users"
   get "home/index"
+  get "home/dashboard"
   devise_for :users, controllers: { omniauth_callbacks: 'users/omniauth_callbacks' }
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
@@ -61,21 +62,25 @@ StreetFeast::Application.routes.draw do
 
   patch 'restaurant/update/:id' => 'restaurant#update'
   
-  get 'restaurant/menu/:id' => "restaurant#show_menu",:as => 'restaurant_menu_show' 
+  get 'menu/:id' => "menu#show"
 
 
   get 'support_ticket/new' => "supportticket#new"
 
   post 'support_ticket/create' => 'supportticket#create'
 
-  get 'home/support_ticket/list' => 'home#ticket_list'
+  get '/support_tickets' => 'supportticket#index'
 
-  get '/support_ticket/show/:id' => 'home#ticket_show'
+
+  get '/support_ticket/show/:id' => 'supportticket#show'
 
   get 'support_ticket/resolve' => "supportticket#resolve"
 
   get 'subscription/new' => 'subscription#new'
 
+  post 'menu/create/:id' => 'menu#create'
+
+  get '/menu/is_available/:id' => 'menu#is_available'
 
 
   # Example of regular route:

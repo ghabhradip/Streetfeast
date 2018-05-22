@@ -2,6 +2,20 @@ class SupportticketController < ApplicationController
   def new
     @support_ticket = SupportTicket.new
   end
+
+  def index
+    respond_to do |format|
+      format.html
+      format.json { render json: SupportTicketDatatable.new(view_context) }
+    end
+  end
+
+  def show
+    @support_ticket = SupportTicket.where("id=?",params[:id]).first
+    render partial: 'supportticket/show'
+  end
+
+
   def create
     if params[:support_ticket][:issue_type].present?
       issue_type_id = params[:support_ticket][:issue_type].to_i
@@ -34,7 +48,7 @@ class SupportticketController < ApplicationController
       render text: "error"
     end
   end
-
+ 
 
   private
   def ticket_params

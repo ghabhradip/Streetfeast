@@ -54,13 +54,8 @@
 
 <div id="myModal" class="modal" role="document" >
   <div class="modal-dialog">
-    <div class="modal-content" style="width: 500px;height: 500px;">
-      <div class="modal-body">
-<!-- 
-        <img src="" id = "modal-pic" style="width: 466px;height: auto;">
-        <hr>
-        <img src="/assets/pic_like.png" style="width: 20px;height: auto;cursor: pointer;" id="pic_like">
- -->
+    <div class="modal-content">
+      <div class="modal-body"  style="overflow-y: auto;max-height: 500px;">
       </div>
       <div class="modal-footer">
         <button type="button" class="close" data-dismiss="modal">Close</button>
@@ -127,7 +122,7 @@
     $.ajax({ 
       async: true,
       type: 'GET',
-      url: "/restaurant/menu/"+id,
+      url: "/menu/"+id,
       success: function(data)
       {
         $(".modal-body").html(data);  

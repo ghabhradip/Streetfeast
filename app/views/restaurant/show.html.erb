@@ -138,6 +138,10 @@
 
 <script type="text/javascript">
 
+
+
+
+
   var geocoder = new google.maps.Geocoder();
   var add =$("#restaurant_address_address_line").val().replace(/"/g,"");
   geocoder.geocode( { 'address': add}, function(results, status) {
@@ -179,14 +183,14 @@
     $.ajax({ 
       async: true,
       type: 'GET',
-      url: "/restaurant/menu/"+id,
+      url: "/menu/"+id,
       success: function(data)
       {
         $(".modal-body2").html(data);  
       }, 
       error: function(data){ alert('error'); } 
     })
-  })
+  });
 
 
 

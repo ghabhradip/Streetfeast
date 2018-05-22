@@ -7,6 +7,7 @@ gem 'rails', '4.0.13'
 
 # Use postgresql as the database for Active Record
 gem 'pg', '~> 0.20'
+
 gem 'devise'
 
 # Use SCSS for stylesheets
@@ -56,5 +57,4 @@ gem 'gmaps4rails'
 gem 'ajax-datatables-rails'
 gem 'jquery-datatables-rails', github: 'rweng/jquery-datatables-rails'
 gem 'jquery-ui-rails'
-
 gem 'will_paginate'
