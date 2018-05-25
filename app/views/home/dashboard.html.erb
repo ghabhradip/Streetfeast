@@ -1,7 +1,7 @@
 <link href="//cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css"></link>
 <script src="//cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
 <div style="padding: 10px;">
-  <div class="row">
+<!--   <div class="row">
     <div class="col-sm-9">
       <div class="btn btn-outline-primary">
         <%= link_to("Send Invitation",new_user_invitation_path) %>
@@ -24,104 +24,7 @@
     </div>
   </div>
 </div>
-<div class="row">
-  <div class="col-sm-12"><br>
-    <div class="jumbotron">
-    <div class="row">
-      <div class="col-sm-3">
-        <ul class="list-group">
-          <li id="show_submenu" class="menu_item onactive list-group-item d-flex justify-content-between align-items-center" style="cursor: pointer;" onclick="show_blogs()" >
-            Blogs
-            <span class="badge badge-primary badge-pill"><%=Blog.all.count %></span>
-          </li>
-          <div id="blogs_dropdown">
-            <li class="menu_item list-group-item d-flex justify-content-between align-items-center" style="cursor: pointer;" onclick="reviewed_blogs()" >
-              Reviewed Blogs
-              <span class="badge badge-primary badge-pill"><%= Blog.all.where("is_reviewed =?",true).count %></span>
-            </li>
-            <li class="menu_item list-group-item d-flex justify-content-between align-items-center" style="cursor: pointer;" onclick="blocked_blogs()">
-              Blocked Blogs
-              <span class="badge badge-primary badge-pill"><%= Blog.all.where("is_blocked =?",true).count %></span>
-            </li>
-            <li class="menu_item list-group-item d-flex justify-content-between align-items-center" style="cursor: pointer;" onclick="show_blogs()"  >
-              All Blogs
-              <span class="badge badge-primary badge-pill"><%= Blog.all.count %></span>
-            </li>
-          </div>
-
-
-
-          <li class="menu_item list-group-item d-flex justify-content-between align-items-center" style="cursor: pointer;" onclick="users_dropdown()" >
-            Users
-            <span class="badge badge-primary badge-pill"><%=User.all.count %></span>
-          </li>
-
-
-
-          <div id="users_dropdown">
-            <li class="menu_item list-group-item d-flex justify-content-between align-items-center" style="cursor: pointer; " onclick="blocked_users()" >
-              Blocked Users
-              <span class="badge badge-primary badge-pill"><%= User.all.where("is_blocked =?",true).count %></span>
-            </li>
-            <li class="menu_item list-group-item d-flex justify-content-between align-items-center" style="cursor: pointer;" onclick="show_users()" >
-              List
-              <span class="badge badge-primary badge-pill"><%=User.all.count %></span>
-            </li>
-          </div>
-
-          <li class="menu_item list-group-item d-flex justify-content-between align-items-center" style="cursor: pointer;" onclick="restaurants_dropdown()" >
-            Restaurants
-            <span class="badge badge-primary badge-pill"><%= Restaurant.all.count %></span>
-          </li>
-
-          <div id="restaurants_dropdown">
-            <li class="menu_item list-group-item d-flex justify-content-between align-items-center" style="cursor: pointer;" onclick="show_restaurants()" >
-              All
-              <span class="badge badge-primary badge-pill"><%= Restaurant.all.count %></span>
-            </li>
-            <li class="menu_item list-group-item d-flex justify-content-between align-items-center" style="cursor: pointer; " onclick="blacklisted_restaurants()" >
-              Blacklisted List
-              <span class="badge badge-primary badge-pill"><%= Restaurant.all.where("is_blacklisted =?",true).count %></span>
-            </li>
-            <li class="menu_item list-group-item d-flex justify-content-between align-items-center" style="cursor: pointer;" onclick="deactive_restaurants()" >
-              Deactive List
-              <span class="badge badge-primary badge-pill"><%= Restaurant.all.where("is_deactive =?",true).count %></span>
-            </li>
-
-          </div>
-
-
-
-
-      </ul>
-      <br>
-      <ul class="list-group">
-        <li class="list-group-item d-flex justify-content-between align-items-center">
-          <button type="button" class="btn btn-outline-primary">Primary</button>
-          <button type="button" class="btn btn-outline-warning">Warning</button>
-        <button type="button" class="btn btn-outline-danger">Danger</button>
-        </li>
-      </ul>
-      <br>
-
-      <ul class="list-group">
-        <li class="list-group-item d-flex justify-content-between align-items-center">
-          <span class="badge badge-danger size-mid">Blog</span>
-          <span class="badge badge-success size-mid">Restaurant</span>
-          <span class="badge badge-warning size-mid show_issue" style="cursor: pointer;">Issue</span>
-        </li>
-      </ul>
-
-      </div>
-
-      <div id="table_container" class="col-sm-9">
-      </div>
-    </div>
-  </div>
-  </div>
-
-</div>
-
+ -->
 
 <script> 
   $(".show_issue").on("click",function(){

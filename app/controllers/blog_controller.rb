@@ -90,6 +90,10 @@ class BlogController < ApplicationController
     end
   end
 
+  def index
+    
+  end
+
   
 
 

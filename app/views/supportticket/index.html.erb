@@ -10,7 +10,7 @@
   <table id="tickets_datatable" class="table table-hover display responsive no-wrap" data-source="<%= support_tickets_path(format: :json) %>">
     <thead>
       <tr>
-        <th scope="col"></th>
+        <th scope="col"><input type="checkbox" name="select_all_checkbox" id="select_all"></th>
         <th scope="col">Issue ID</th>
         <th scope="col">Issue Type</th>
         <th scope="col">Issue Description</th>
@@ -40,6 +40,7 @@
 
   jQuery(document).ready(function() 
   {
+
     var table = $('#tickets_datatable').dataTable({
       "serverSide": true,
       "pagingType": "full_numbers",
@@ -47,6 +48,7 @@
       "columnDefs": [
         { "orderable": false, "targets": 0 },
         { "orderable": false, "targets": 2 },
+        { "orderable": false, "targets": 4 },
         { "orderable": false, "targets": 5 }
       ],
       "ajax":{
@@ -62,11 +64,19 @@
       },
       "initComplete": function(settings, json) {
         $("#input_filter").insertBefore('#tickets_datatable_filter input[type="search"]');
+
       },
       "drawCallback": function(settings) 
       {
         $(".loader").hide();
         initialize_script();
+        count_rows =0;
+        var x = $('#select_all').prop('checked');
+        if(x==true)
+        {
+          $('#select_all').prop('checked',false);
+        }
+
       },
     });
     $("#input_filter").on("change",function(){
@@ -75,23 +85,67 @@
   });
 
   var issue_id = [];
+  var count_rows=0;
+  var c_rows;
   function initialize_script()
   {
+    
+    $('#select_all').on("click",function() {
+      var rows,checked,each_issue_id;
+      issue_id=[];
+      rows = $('#tickets_datatable').find('tbody tr').find('input');
+      c_rows = rows.length;
+      count_rows=rows.length;
+      checked = $(this).prop('checked');
+      $( ".is_checked_resolved" ).each(function() {
+        $(this).prop('checked',checked);
+        each_issue_id =$(this).attr("data-id") ;
+        if(checked==true)
+        {
+          issue_id.push(parseInt(each_issue_id));
+        }
+        else
+        {
+          issue_id.pop();
+          count_rows--;
+          if(c_rows!=count_rows){
+            $('#select_all').attr('checked',false);
+          }
+        }
+      });
+
+    });
+
     $(".is_checked_resolved").on("click",function()
     {
-      var id = $(this).data('id'); 
-      var x = $("#st_"+id).prop('checked');
-      if(x == true)
-      {
-        issue_id.push(id);
 
+      var id = $(this).data('id');
+      var x = $("#st_"+id).prop('checked');
+      if(x == false)
+      {
+        var index = issue_id.indexOf(id);
+        if (index !== -1) 
+          issue_id.splice(index, 1);
+        count_rows--;
+
+        if(c_rows!=count_rows){
+          var ch = $('#select_all');
+          ch.prop('checked', false);
+        }
       }
       else
       {
-        issue_id.pop();
-      } 
+        issue_id.push(id);
+        count_rows++;
+        if(c_rows == count_rows){
+          var ch = $('#select_all');
+          ch.prop('checked', true);
+        }
+      }
     });
+
     $(".resolve_issue_btn").on("click",function(e){
+
       e.preventDefault();
       $.ajax({ 
         async: true,
@@ -105,6 +159,7 @@
             for (i = 0; i < issue_id.length; i++) 
             { 
               swal("Issues resolved!","", "success");
+              $("#select_all").prop("checked",false);
               $(".is_resolved_"+issue_id[i]).attr("src","/assets/resolved_ticket.png")
               $("#st_"+issue_id[i]).remove();
               $(".is_resolved_"+issue_id[i]).css("display","");
@@ -163,4 +218,7 @@
 #tickets_datatable_length{
   margin-left: 10px;
 }
+table.dataTable th.select-checkbox:before { border-color: white; }
+table.dataTable tr.selected th.select-checkbox:after { text-shadow: none; font-weight: normal;}
+
 </style>

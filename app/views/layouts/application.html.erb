@@ -31,7 +31,7 @@
 </script>
 
 
-<body>
+<body style="margin-top: 69px;">
   <% if user_signed_in? %>
    <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <% if current_user.is_admin.nil? %>
@@ -56,6 +56,51 @@
     <div class="loader">
       <img src="/assets/source.gif" height="50">
     </div>
+    <% if user_signed_in? %>
+      <% if current_user.is_admin.eql? true %>
+        <div class="sidenav">
+          <a href="/home/dashboard" class="active home"><b>Home</b></a>
+          <a onclick="blogs_category()" class="active blogs"><b>Blogs</b> <span class="badge badge-primary badge-pill"><%=Blog.all.count %></span></a>
+          <span class="blogs_category" class="active">
+            <a href="#services" class="active reviewed_blogs"><b>Reviewed Blogs</b> <span class="badge badge-primary badge-pill"><%=Blog.all.count %></span></a>
+            <a href="#services" class="active blacklisted_blogs"><b>Blacklisted Blogs</b> <span class="badge badge-primary badge-pill"><%=Blog.all.count %></span></a>
+          </span>
+          <a href="#clients" class="active restaurants"><b>Restaurants</b> <span class="badge badge-primary badge-pill"><%=Restaurant.all.count %></span></a>
+          <a href="/support_tickets" class="active support_tickets"  ><b>Issues</b> <span class="badge badge-primary badge-pill"><%=SupportTicket.all.count %></span></a>
+        </div>
+        <div class="main">
+          <% if notice %>
+            <div class="alert alert-dismissible alert-info alert_admin">
+              <button type="button" class="close" data-dismiss="alert">&times;</button>
+              <strong></strong><%= notice %>
+            </div>
+          <% end %>
+          <% if alert %>
+            <div class="alert alert-dismissible alert-warning">
+              <button type="button" class="close" data-dismiss="alert">&times;</button>
+              <strong></strong><%= alert %>
+           </div>
+          <% end %>
+          <%= yield %>
+        </div>
+      <% else %>
+        <div style="padding: 10px;">
+          <% if notice %>
+            <div class="alert alert-dismissible alert-info">
+              <button type="button" class="close" data-dismiss="alert">&times;</button>
+              <strong></strong><%= notice %>
+            </div>
+          <% end %>
+          <% if alert %>
+            <div class="alert alert-dismissible alert-warning">
+              <button type="button" class="close" data-dismiss="alert">&times;</button>
+              <strong></strong><%= alert %>
+           </div>
+          <% end %>
+          <%= yield %>
+        </div>
+      <% end %>
+    <%end%>
   <% else %>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
       <a class="navbar-brand" href="#">Navbar</a>
@@ -75,42 +120,106 @@
         </ul>
       </div>
     </nav>
+    <br>
+      <% if notice %>
+        <div class="alert alert-dismissible alert-info">
+          <button type="button" class="close" data-dismiss="alert">&times;</button>
+          <strong></strong><%= notice %>
+       </div>
+      <% end %>
+      <% if alert %>
+        <div class="alert alert-dismissible alert-warning">
+          <button type="button" class="close" data-dismiss="alert">&times;</button>
+          <strong></strong><%= alert %>
+       </div>
+      <% end %>
+    <%= yield %>
   <% end %>
-
   <br>
-
-  <% if notice %>
-    <div class="alert alert-dismissible alert-info">
-      <button type="button" class="close" data-dismiss="alert">&times;</button>
-      <strong></strong><%= notice %>
-   </div>
-  <% end %>
-  <% if alert %>
-    <div class="alert alert-dismissible alert-warning">
-      <button type="button" class="close" data-dismiss="alert">&times;</button>
-      <strong></strong><%= alert %>
-   </div>
-  <% end %>
-
-  <%= yield %>
   <%= tinymce %>
 </body>
 <style type="text/css">
-  .loader {
-    position: fixed;
-    height: 100%;
-    z-index: 99999;
-    background: rgba(130, 126, 126, 0.5098039215686274);
-    top: 0;
-    width: 100%;
-    display: none;
+.loader {
+  position: fixed;
+  height: 100%;
+  z-index: 99999;
+  background: rgba(130, 126, 126, 0.5098039215686274);
+  top: 0;
+  width: 100%;
+  display: none;
 }
 .loader img {
-    left: 50%;
-    position: fixed;
-    top: 50%;
-    margin: auto;
+  left: 50%;
+  position: fixed;
+  top: 50%;
+  margin: auto;
 }
+.sidenav {
+    width: 180px;
+    position:  fixed;
+    top: 69px;
+    background: #00000014;
+    overflow-x: hidden;
+    height:100%;
+}
+
+.sidenav a {
+    padding: 6px 0px 6px 16px;
+    text-decoration: none;
+    font-size: 15px;
+    color: #000;
+    display: block;
+}
+
+@media screen and (max-height: 450px) {
+    .sidenav {padding-top: 1px;}
+    .sidenav a {font-size: 18px;}
+}
+.main{
+  margin-left: 174px;
+  overflow-x: hidden;
+  margin-top: 75px;
+}
+.alert_admin{
+  margin-top: 3px;
+  margin-left:14px;
+  margin-right:7px;
+}
+a{
+  cursor: pointer;
+  margin-top: 5px;
+}
+.sidenav a:hover{
+  border-left: 5px solid #000;
+  background-color: #00000030; 
+}
+.on_click_active{
+  background: #00000030;
+  border-left: 5px solid #000;
+}
+
 </style>
+<script>
+  $( document ).ready(function() {
+    $(".blogs_category").hide();
+    
+    var x = window.location.pathname;
+    if(x=="/support_tickets"){
+      $(".support_tickets").addClass("on_click_active");
+    }
+    else if(x=="/home/dashboard")
+    {
+      $(".home").addClass("on_click_active");
+    }
+    else
+    {
+
+    }
+  });
+
+  function blogs_category(){
+    $(".blogs_category").slideToggle();
+  }
+</script>
 </html>
 
