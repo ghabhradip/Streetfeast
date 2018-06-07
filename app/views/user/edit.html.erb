@@ -1,10 +1,3 @@
-
-<% if flash[:notice]  %>
-  <div class="notice">
-    <%= flash[:notice]  %>
-  </div>
-<% end %>
-
 <% if @user.errors.any? %>
   <div id="error_explanation">
     <h2>
@@ -22,42 +15,44 @@
 <% end %>
 
 <center>
-  <div class="card bg-light mb-3" style="max-width: 26rem;">
+  <div class="card bg-light mb-3" style="max-width: 26rem;margin-top: 5%;">
     <div class="card-header">Update Profile</div>
     <div class="card-body">
-      <%= form_for (@user), url: "/home/#{@user.id}/update", :html => {:class =>"my_form",multipart: true} do |f| %>
+      <%= form_for (@user), url: "/user/#{@user.id}/update", :html => {:class =>"my_form",multipart: true} do |f| %>
         <fieldset>
-
-          <% if @user.is_admin !=true %>
-              <% if @user.firstname.present? %>
-                <div class="form-group">
-                  <%= f.text_field :firstname,:required => true,:class=>"form-control",placeholder: "Firstname" ,:disabled => "true", autofocus: true %>
-                </div>
-              <% else %>
-                <div class="form-group">
-                  <%= f.text_field :firstname,:required => true,:class=>"form-control",placeholder: "Firstname" , autofocus: true %>
-                </div>
-              <% end %>
-              <% if @user.lastname.present? %>  
-              <div class="form-group">
-                <%= f.text_field :lastname,:required => true,:class=>"form-control",placeholder: "Lastname" ,:disabled => "true" %>
+          <div class="form-group upload-preview">
+            <% if @user.picture.present? %>
+              <div>
+                <img src = "<%=@user.picture.avatar %>" style="height: 100px;width: 100px; border-radius: 50px;" class= "user_img">
+                <img class = "preview">
+                <img src = "/assets/delete.png" style="height: 25px;width: 25px;" class = "remove_photo">
+                <img src = "/assets/edit_icon.png" style="height: 25px;width: 25px;" class = "edit_photo" >
+                <img src = "/assets/addpic.png" style="height: 25px;width: 25px;" class = "add_photo">
+              </div> 
+            <% else %>
+              <div class="form-group upload-preview">
+                <img class = "preview">
+                <img src = "/assets/profile.png" style="height: 100px;width: 100px; border-radius: 50px;" class = "no_profile_img" >
+                <img src = "/assets/addpic.png" style="height: 25px;width: 25px;" class = "add_photo">
               </div>
+            <% end %>
+          </div>
+          <% if @user.is_admin !=true %>
+              <% if @user.fullname.present? %>
+                <div class="form-group">
+                  <%= f.text_field :fullname,:required => true,:class=>"form-control",placeholder: "Fullname" ,:disabled => "true", autofocus: true %>
+                </div>
               <% else %>
                 <div class="form-group">
-                  <%= f.text_field :lastname,:required => true,:class=>"form-control",placeholder: "Lastname" %>
+                  <%= f.text_field :fullname,:required => true,:class=>"form-control",placeholder: "Fullname" , autofocus: true %>
                 </div>
               <% end %>
               <div class="form-group">
                 <%= f.text_field :email,:required => true,:class=>"form-control",placeholder: "Email" ,:disabled => "true" %>
               </div>
-
-
           <% else %>
             <div class="form-group">
-              <%= f.text_field :firstname,:required => true,:class=>"form-control",placeholder: "Firstname" , autofocus: true %>
-            </div>
-            <div class="form-group">
-              <%= f.text_field :lastname,:required => true,:class=>"form-control",placeholder: "Lastname"  %>
+              <%= f.text_field :fullname,:required => true,:class=>"form-control",placeholder: "Fullname" , autofocus: true %>
             </div>
             <div class="form-group">
               <%= f.text_field :email,:required => true,:class=>"form-control",placeholder: "Email" %>
@@ -120,6 +115,13 @@
             </div>
           </div>
           <br>
+          <center>
+            <div class="form-group user_picture">
+              <%= f.fields_for @picture do |a|  %>
+                <%= a.file_field :avatar , :class=> "user_upload_image"%>
+              <% end %>
+            </div>
+          </center>
           <div class="actions">
             <button type="submit" class="btn btn-primary btn_large">Update</button>
           </div>
@@ -142,4 +144,65 @@
       source: availableTags
     });
   } );
+  $(document).ready(function(){
+    $(".user_picture").css("display", "none");
+
+    <% if @user.picture.present? %>
+      $(".add_photo").hide();
+
+    <% end %>
+     //$(".upload-preview").css("display", "none");
+    
+  });
+
+
+
+  $(".remove_photo").on("click",function(){
+    //$(".preview").hide();
+    var id = <%= @user.id %>
+    $.ajax({ type: "DELETE",
+     url: "/user/photo_remove/"+id, 
+      success: function(response) 
+      {
+        $(".edit_photo").hide();
+        $(".remove_photo").hide();
+        $(".add_photo").show();
+        $(".user_img").attr("src","/assets/profile.png");
+      } 
+    }); 
+    event.preventDefault(); 
+  })
+
+
+  $(".edit_photo").on("click",function(){
+    $(".user_upload_image").trigger("click");
+    $(".user_img").hide();
+    //$(".user_img").attr("src","/assets/profile.png");
+  })
+
+
+
+  $(".add_photo").on("click",function(){
+    $(".user_upload_image").trigger("click");
+    $(".upload-preview").show();
+  })
+
+    //var preview = $(".upload-preview img");
+
+    $(".user_upload_image").change(function(event){
+      var input = $(event.currentTarget);
+      var file = input[0].files[0];
+      var reader = new FileReader();
+      reader.onload = function(e)
+        {
+          image_base64 = e.target.result;
+          $(".upload-preview").show();
+          $('.upload-preview .no_profile_img').remove();
+          $(".user_img").hide();
+          $(".preview").attr("src", image_base64);
+          $('.preview').css({"height":"100px","border-radius":"50px","width":"100px"});
+        };
+      reader.readAsDataURL(file);
+    });
+
 </script>

@@ -1,12 +1,14 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>StreetFeast</title>
+  <title>New App</title>
   <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
   <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
 
   <%= csrf_meta_tags %>
 </head>
+<link href="//cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css"></link>
+<script src="//cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
 <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css" />
 <script type="text/javascript" charset="utf8" src="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.4/jquery.dataTables.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -36,13 +38,15 @@
    <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <% if current_user.is_admin.nil? %>
       <a class="navbar-brand" href="/home/dashboard_user">NAVBAR</a>
+      <div class="line"></div>
     <% else %>  
       <a class="navbar-brand" href="/home/dashboard">NAVBAR</a>
+      <div class="line"></div>
+
     <% end %>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
-
       <div class="collapse navbar-collapse" id="navbarColor01">
         <ul class="navbar-nav mr-auto"></ul>
         <ul class="navbar-nav">
@@ -60,25 +64,25 @@
       <% if current_user.is_admin.eql? true %>
         <div class="sidenav">
           <a href="/home/dashboard" class="active home"><b>Home</b></a>
-          <a onclick="blogs_category()" class="active blogs"><b>Blogs</b> <span class="badge badge-primary badge-pill"><%=Blog.all.count %></span></a>
-          <span class="blogs_category" class="active">
-            <a href="#services" class="active reviewed_blogs"><b>Reviewed Blogs</b> <span class="badge badge-primary badge-pill"><%=Blog.all.count %></span></a>
-            <a href="#services" class="active blacklisted_blogs"><b>Blacklisted Blogs</b> <span class="badge badge-primary badge-pill"><%=Blog.all.count %></span></a>
-          </span>
-          <a href="#clients" class="active restaurants"><b>Restaurants</b> <span class="badge badge-primary badge-pill"><%=Restaurant.all.count %></span></a>
+          <a href="/blogs" class="active blogs"><b>Blogs</b> <span class="badge badge-primary badge-pill"><%=Blog.all.count %></span></a>
+          <a href="/restaurants" class="active restaurants"><b>Restaurants</b> <span class="badge badge-primary badge-pill"><%=Restaurant.all.count %></span></a>
           <a href="/support_tickets" class="active support_tickets"  ><b>Issues</b> <span class="badge badge-primary badge-pill"><%=SupportTicket.all.count %></span></a>
+          <a href="/users" class="active users"  ><b>Users</b> <span class="badge badge-primary badge-pill"><%=User.all.count %></span></a>
+          <a href="/subscriptions" class="active subscriptions"  ><b>Subscription</b> <span class="badge badge-primary badge-pill"><%=Subscription.all.count %></span></a>
         </div>
+
+
         <div class="main">
           <% if notice %>
             <div class="alert alert-dismissible alert-info alert_admin">
               <button type="button" class="close" data-dismiss="alert">&times;</button>
-              <strong></strong><%= notice %>
+              <strong><%= notice %></strong>
             </div>
           <% end %>
           <% if alert %>
             <div class="alert alert-dismissible alert-warning">
               <button type="button" class="close" data-dismiss="alert">&times;</button>
-              <strong></strong><%= alert %>
+              <strong><%= alert %></strong>
            </div>
           <% end %>
           <%= yield %>
@@ -88,13 +92,13 @@
           <% if notice %>
             <div class="alert alert-dismissible alert-info">
               <button type="button" class="close" data-dismiss="alert">&times;</button>
-              <strong></strong><%= notice %>
+              <strong><%= notice %></strong>
             </div>
           <% end %>
           <% if alert %>
             <div class="alert alert-dismissible alert-warning">
               <button type="button" class="close" data-dismiss="alert">&times;</button>
-              <strong></strong><%= alert %>
+              <strong><%= alert %></strong>
            </div>
           <% end %>
           <%= yield %>
@@ -124,13 +128,13 @@
       <% if notice %>
         <div class="alert alert-dismissible alert-info">
           <button type="button" class="close" data-dismiss="alert">&times;</button>
-          <strong></strong><%= notice %>
+          <strong><%= notice %></strong>
        </div>
       <% end %>
       <% if alert %>
         <div class="alert alert-dismissible alert-warning">
           <button type="button" class="close" data-dismiss="alert">&times;</button>
-          <strong></strong><%= alert %>
+          <strong><%= alert %></strong>
        </div>
       <% end %>
     <%= yield %>
@@ -197,6 +201,12 @@ a{
   background: #00000030;
   border-left: 5px solid #000;
 }
+.line{
+  border-left: 1px solid #0000002e;
+  margin-left: 80px;
+  height: 54px;
+}
+
 
 </style>
 <script>
@@ -211,12 +221,22 @@ a{
     {
       $(".home").addClass("on_click_active");
     }
-    else
+    else if(x=="/restaurants")
     {
-
+      $(".restaurants").addClass("on_click_active");
+    }
+    else if(x=="/blogs"){
+      $(".blogs").addClass("on_click_active");
+    }
+    else if(x=="/users")
+    {
+     $(".users").addClass("on_click_active"); 
+    }
+    else if(x=="/subscriptions")
+    {
+      $(".subscriptions").addClass("on_click_active"); 
     }
   });
-
   function blogs_category(){
     $(".blogs_category").slideToggle();
   }

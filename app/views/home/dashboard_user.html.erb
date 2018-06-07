@@ -1,17 +1,13 @@
-<% if flash[:notice]  %>
-  <div class="notice">
-    <%= flash[:notice]  %>
-  </div>
-<% end %>
+
 <div class="row">
   <div class="col-sm-9">
-    <% if current_user.firstname.present? && current_user.lastname.present? && current_user.mobile_no.present? && current_user.state.present? && current_user.city.present? %>
+    <% if current_user.fullname.present?&& current_user.mobile_no.present? && current_user.state.present? && current_user.city.present? %>
       <div class="btn btn-outline-primary">
-        <%= link_to("Edit profile","/home/#{current_user.id}/edit") %>
+        <%= link_to("Edit profile","/user/#{current_user.id}/edit") %>
       </div>
     <% else %>
       <div class="btn btn-outline-primary">
-        <%= link_to("Update profile","/home/#{current_user.id}/edit") %>
+        <%= link_to("Update profile","/user/#{current_user.id}/edit") %>
       </div>
     <% end %>
     <div class="btn btn-outline-primary">

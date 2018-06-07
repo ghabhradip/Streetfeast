@@ -51,14 +51,15 @@
 
 <% Restaurant.all.each do |r| %>
   <%restaurant_id_array.push(r.id)%>
-  <%if r.addresses.first.latitude.present? && r.addresses.first.longitude.present? %>
-    <%restaurant_lat_array.push(r.addresses.first.latitude.to_f)%>
-    <%restaurant_long_array.push(r.addresses.first.longitude.to_f)%>
-  <%else%>
-    <%restaurant_lat_array.push(0)%>
-    <%restaurant_long_array.push(0)%>
-  <%end%>
-
+  <% if r.addresses.present? %>
+    <%if r.addresses.first.latitude.present? && r.addresses.first.longitude.present? %>
+      <%restaurant_lat_array.push(r.addresses.first.latitude.to_f)%>
+      <%restaurant_long_array.push(r.addresses.first.longitude.to_f)%>
+    <%else%>
+      <%restaurant_lat_array.push(0)%>
+      <%restaurant_long_array.push(0)%>
+    <%end%>
+  <% end %>
   <div class="col-md-4 fl">
     <div class="card bg-light mb-4">
       <div class="card-header"><h4><b><%= link_to("#{r.name.capitalize}","/restaurant/show_for_user/#{r.id}") %></b></h4> </div>

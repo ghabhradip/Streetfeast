@@ -1,11 +1,8 @@
 class SupportTicketDatatable
-
   delegate :params, :h, :link_to,:check_box_tag, :number_to_currency, to: :@view
-
   def initialize(view)
     @view = view
   end
-
   def as_json(options = {})
     {
       sEcho: params[:sEcho].to_i,
@@ -14,9 +11,7 @@ class SupportTicketDatatable
       aaData: data
     }
   end
-
 private
-
   def data
     support_tickets.map do |support_ticket|
       [ 
@@ -29,12 +24,10 @@ private
       ]
     end
   end
-
   def support_tickets
-    @support_tickets ||= fetch_products
+    @support_tickets ||= fetch_support_tickets
   end
-
-  def fetch_products
+  def fetch_support_tickets
     @support_tickets = SupportTicket.order("#{sort_column} #{sort_direction}")
     if params[:search][:value].present?
       @support_tickets = SupportTicket.where("issue_description like :search", search: "%#{params[:search][:value]}%")
@@ -67,5 +60,4 @@ private
   def sort_direction
     params[:order]['0'][:dir] == "desc" ? "asc" : "desc"
   end
-
 end

@@ -6,6 +6,8 @@ class BlogController < ApplicationController
       @blog  = Blog.create(blog_params)
       @blog.email = "Annonymus"
       @blog.fullname = "Annonymus"
+      @blog.is_reviewed = false
+      @blog.is_blocked = false
       @blog.save
       if params[:blog][:picture].nil?
         redirect_to :back
@@ -29,6 +31,8 @@ class BlogController < ApplicationController
   def create_blog_user
     @blog  = Blog.create(blog_params)
     @blog.user_id = current_user.id
+    @blog.is_reviewed = false
+    @blog.is_blocked = false
     @blog.save
     unless params[:blog][:picture].nil?
       params[:blog][:picture][:avatar].each do |c|
@@ -61,11 +65,13 @@ class BlogController < ApplicationController
 
   def edit
     @blog = Blog.find_by_id(params[:id])
-    if @blog.is_reviewed.nil?
-      @blog.is_reviewed = true
-      @blog.save
+    if @blog.present?
+      if @blog.is_reviewed.eql? false
+        @blog.is_reviewed = true
+        @blog.save
+      end
+      @picture = Picture.new
     end
-    @picture = Picture.new
     render partial: "edit"
   end
 
@@ -84,14 +90,17 @@ class BlogController < ApplicationController
   def show
     @blog = Blog.find_by_id(params[:id])
     @picture = Picture.new
-    if @blog.is_reviewed.nil?
+    if @blog.is_reviewed.eql? false
       @blog.is_reviewed = true
       @blog.save
     end
   end
 
   def index
-    
+     respond_to do |format|
+      format.html
+      format.json { render json: BlogDatatable.new(view_context) }
+    end
   end
 
   

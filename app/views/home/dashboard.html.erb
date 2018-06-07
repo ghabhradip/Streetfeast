@@ -1,30 +1,30 @@
 <link href="//cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css"></link>
 <script src="//cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
 <div style="padding: 10px;">
-<!--   <div class="row">
-    <div class="col-sm-9">
+  <div class="row">
+    <div class="col-sm-6">
       <div class="btn btn-outline-primary">
         <%= link_to("Send Invitation",new_user_invitation_path) %>
       </div>
-      <% if current_user.firstname.present? && current_user.lastname.present? && current_user.mobile_no.present? && current_user.state.present? && current_user.city.present? %>
+      <div class="btn btn-outline-primary">
+        <%= link_to("Send SMS","/home/new_sms") %>
+      </div>
+      <% if current_user.fullname && current_user.mobile_no.present? && current_user.state.present? && current_user.city.present? %>
         <div class="btn btn-outline-primary">
-          <%= link_to("Edit profile","/home/#{current_user.id}/edit") %>
+          <%= link_to("Edit profile","/user/#{current_user.id}/edit") %>
         </div>
       <% else %>
         <div class="btn btn-outline-primary">
-          <%= link_to("Update profile","/home/#{current_user.id}/edit") %>
+          <%= link_to("Update profile","/user/#{current_user.id}/edit") %>
         </div>
       <% end %>
     </div>
-    <div class="col-sm-1.5">
-      <button type="button" class="btn btn-success right-align">Analytics Report</button>
-    </div>
-    <div class="col-sm-1">
-      <a class="btn btn-warning right-align" href="/blog/new">Create a Blog</a>
+    <div class="col-sm-6">
+      <button type="button" class="btn btn-success" style="margin-left: 400px;">Analytics Report</button>
     </div>
   </div>
+  <a class="btn btn-warning" href="/blog/new">Create a Blog</a>
 </div>
- -->
 
 <script> 
   $(".show_issue").on("click",function(){
@@ -34,38 +34,38 @@
 
 
 
-  function show_blogs() 
-  {
-    $("#table_container").html("<%= escape_javascript(render('blog_list')) %>");
-  }
-  function reviewed_blogs() 
-  {
-    $("#table_container").html("<%= escape_javascript(render('reviewed_blogs_list')) %>");
-  }
-  function blocked_blogs() 
-  {
-    $("#table_container").html("<%= escape_javascript(render('blocked_blogs_list')) %>");
-  }
+  // function show_blogs() 
+  // {
+  //   $("#table_container").html("<%= escape_javascript(render('blog_list')) %>");
+  // }
+  // function reviewed_blogs() 
+  // {
+  //   $("#table_container").html("<%= escape_javascript(render('reviewed_blogs_list')) %>");
+  // }
+  // function blocked_blogs() 
+  // {
+  //   $("#table_container").html("<%= escape_javascript(render('blocked_blogs_list')) %>");
+  // }
 
-  function show_users() 
-  {
-    $("#table_container").html("<%= escape_javascript(render('user_list')) %>");
-  }
+  // function show_users() 
+  // {
+  //   $("#table_container").html("<%= escape_javascript(render('user_list')) %>");
+  // }
 
-  function blocked_users() 
-  {
-    $("#table_container").html("<%= escape_javascript(render('blocked_users_list')) %>");
-  }
+  // function blocked_users() 
+  // {
+  //   $("#table_container").html("<%= escape_javascript(render('blocked_users_list')) %>");
+  // }
 
-  function blacklisted_restaurants() 
-  {
-    $("#table_container").html("<%= escape_javascript(render('blacklisted_restaurants')) %>");
-  }
+  // function blacklisted_restaurants() 
+  // {
+  //   $("#table_container").html("<%= escape_javascript(render('blacklisted_restaurants')) %>");
+  // }
 
-  function deactive_restaurants() 
-  {
-    $("#table_container").html("<%= escape_javascript(render('deactive_restaurants')) %>");
-  }
+  // function deactive_restaurants() 
+  // {
+  //   $("#table_container").html("<%= escape_javascript(render('deactive_restaurants')) %>");
+  // }
 
 
 

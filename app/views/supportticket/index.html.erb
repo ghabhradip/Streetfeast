@@ -76,7 +76,6 @@
         {
           $('#select_all').prop('checked',false);
         }
-
       },
     });
     $("#input_filter").on("change",function(){
@@ -97,6 +96,7 @@
       c_rows = rows.length;
       count_rows=rows.length;
       checked = $(this).prop('checked');
+      
       $( ".is_checked_resolved" ).each(function() {
         $(this).prop('checked',checked);
         each_issue_id =$(this).attr("data-id") ;
@@ -118,7 +118,8 @@
 
     $(".is_checked_resolved").on("click",function()
     {
-
+      rows = $('#tickets_datatable').find('tbody tr').find('input');
+      c_rows = rows.length;
       var id = $(this).data('id');
       var x = $("#st_"+id).prop('checked');
       if(x == false)

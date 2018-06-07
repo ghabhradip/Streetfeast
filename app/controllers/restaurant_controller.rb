@@ -1,4 +1,5 @@
 class RestaurantController < ApplicationController
+  
   def new 
     @restaurant = Restaurant.new
     @address = @restaurant.addresses.build
@@ -18,7 +19,7 @@ class RestaurantController < ApplicationController
       Menu.create(:item_name=>item_name,:price=>item_price,:restaurant_id=>restaurant_id)
     end
 
-    @address = Address.create(:address_line => params[:restaurant][:address][:address_line],:latitude =>params[:restaurant][:address][:latitude],:longitude=>params[:restaurant][:address][:longitude],:restaurant_id=>@restaurant.id)
+    @address = Address.create(:address_line => params[:restaurant][:address][:address_line],:latitude =>params[:restaurant][:address][:latitude],:longitude=>params[:restaurant][:address][:longitude],:restaurant_id=>@restaurant.id,is_blacklisted=>false)
   	redirect_to :back
   end
 
@@ -66,6 +67,13 @@ class RestaurantController < ApplicationController
     end
     redirect_to :back      
   end
+  def index
+    respond_to do |format|
+      format.html
+      format.json { render json: RestaurantDatatable.new(view_context) }
+    end
+  end
+
 
  private
   def restaurant_params

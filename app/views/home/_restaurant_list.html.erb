@@ -18,7 +18,9 @@
           <td><%= r.operator %></td>
           <td><%= r.opening_time %>-<%= r.closing_time %></td>
           <td><%= r.closed_on %></td>
-          <td><%= r.addresses.first.address_line %></td>
+          <% if r.addresses.present? %>
+            <td><%= r.addresses.first.address_line %></td>
+          <% end %>
           <td><%= r.associated_blogs %></td>
         </tr>
       <%end%>

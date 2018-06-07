@@ -4,8 +4,6 @@
 <script type="text/javascript" charset="utf8" src="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.4/jquery.dataTables.min.js"></script>
 <div  style="padding: 10px;">
   <center><h4><b>Menu</b></h4></center>
-
-
 <table class="table table-hover" id="menu_list_datatable">
   <thead>
     <tr>
@@ -127,11 +125,9 @@
       data: $(this).serialize(),
       success: function(response) 
       { 
-        //console.log(response);
         $("#main_page").html(response); 
         $('#item_name').val('');
         $('#price').val('');
-
       } 
     }); 
     event.preventDefault(); 

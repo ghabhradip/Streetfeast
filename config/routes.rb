@@ -15,42 +15,60 @@ StreetFeast::Application.routes.draw do
   get 'test_email' => 'application#test_email'
 
   get 'home/blacklist' => 'home#blacklist'
+
   post 'home/blacklist' => 'home#blacklist'
 
   get 'home/analytics' => 'home#analytics'
+
   post 'home/analytics' => 'home#analytics'
 
   get 'home/undo_blacklist' => 'home#undo_blacklist'
+
   post 'home/undo_blacklist' => 'home#undo_blacklist'
+  
+  get '/users' => 'user#index'
 
   get 'home/dashboard' => 'home#dashboard', as: :dashboard
+
   get 'home/dashboard_user' => 'home#dashboard_user'
-  get 'home/:id/edit' => 'home#edit'
-  patch 'home/:id/update' => 'home#update'
+
+  get 'user/:id/edit' => 'user#edit'
+
+  get 'home/new_sms' => 'home#new_sms'
+
+  post 'home/send_sms' => 'home#send_sms'
+
+  patch 'user/:id/update' => 'user#update'
+
   post 'blog/create' => 'blog#create'
+
   post 'blog/create_blog_user' => 'blog#create_blog_user'
+
   get 'blog/new' => 'blog#new'
 
-  get 'blog/edit/:id' => 'blog#edit'
-  get 'blog/show/:id' => 'blog#show'
+  get '/blogs' => 'blog#index'
+
+  get 'blog/:id/edit' => 'blog#edit'
+
+  get 'blog/:id' => 'blog#show'
 
   patch 'blog/update/:id' => 'blog#update'
 
   post 'blog/add_picture_to_blog' => 'blog#add_picture_to_blog'
+
   get 'user/show/:id' => 'user#show'
+
   patch 'user/update/:id' => 'user#update'
 
   delete 'user/photo_remove/:id' => "user#photo_remove"
 
-
   patch 'blog/update_blog_user/:id' => 'blog#update_blog_user'
-
   
   get 'restaurant/new' => 'restaurant#new'
 
   post 'restaurant/create' => 'restaurant#create'
 
-  get 'restaurant/show/:id' => 'restaurant#show'
+  get 'restaurant/:id' => 'restaurant#show'
 
   get 'restaurant/show_for_user/:id' => 'restaurant#show_for_user'
 
@@ -64,7 +82,7 @@ StreetFeast::Application.routes.draw do
   
   get 'menu/:id' => "menu#show"
 
-
+  get "/restaurants" => "restaurant#index"
   get 'support_ticket/new' => "supportticket#new"
 
   post 'support_ticket/create' => 'supportticket#create'
@@ -81,6 +99,11 @@ StreetFeast::Application.routes.draw do
   post 'menu/create/:id' => 'menu#create'
 
   get '/menu/is_available/:id' => 'menu#is_available'
+
+  get '/subscriptions' => 'subscription#index'
+
+  get '/subscriptions/send_newsletter' => 'subscription#send_newsletter'
+
 
 
   # Example of regular route:

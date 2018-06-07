@@ -1,6 +1,6 @@
 <link href="//cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css"></link>
  <script src="//cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
-<div style="padding-top: : 10px;padding-left: 333px;" >
+<div style="margin-left:227px" >
   <div class="card bg-light mb-3" style="max-width: 40rem;">
     <div class="card-header"><h3><center><strong><%= @restaurant.name.capitalize %></strong></center></h3></div>
       <div class="card-body">
@@ -16,16 +16,20 @@
           <br>
 
           <div class="row">
-            <div class="col-sm-6">
+            <div class="col-sm-4">
               <div class="field">
                 Blacklist : <%= f.check_box :is_blacklisted %>
               </div>
             </div>
-            <div class="col-sm-6">
+            <div class="col-sm-4">
               <div class="field">
                 Deactivate: &nbsp;<%= f.check_box :is_deactive %>
               </div>
             </div>
+          </div>
+          <br>
+          <div class="field">
+            <%= f.text_field :cuisine,:class=>"form-control",:id=>"cuisine" %>
           </div>
           <br>
           <div class="row">
@@ -41,11 +45,13 @@
             </div>
           </div>
           <br>
-          <div class="field">
-            <%= f.fields_for @restaurant.addresses.first do |a|  %>
-              <%= a.text_area :address_line,:class=>"form-control" %>
-          </div>
+          <% if @restaurant.addresses.present? %>
+            <div class="field">
+              <%= f.fields_for @restaurant.addresses.first do |a|  %>
+                <%= a.text_area :address_line,:class=>"form-control" %>
+            </div>
           <br>
+          <% end %>
           <div class="row">
             <div class="col-sm-6">
               <div class="field">
@@ -78,16 +84,18 @@
             <%= button_tag "View menu",:id => "view_menu",:class=>"btn btn-success",:data=>{:toggle=>"modal",:target=> "#myModal2"} %>
           </div>
           <br>
-          <div class="field">
-            <% blogs = @restaurant.associated_blogs.split(',') %>
-            <% blogs.each do |i| %>
-              <% b = Blog.where("id =?",i.to_i).first %>
-                <% b.pictures.each do |p| %>
-                <img src = "<%= p.avatar %>" style="height: 100px;width: 100px;" class = "pic_show"  data-id = "<%= p.id %>" data-toggle="modal" data-target= "#myModal" data-remote = "true">
+          <% if @restaurant.associated_blogs.present? %>
+            <div class="field">
+              <% blogs = @restaurant.associated_blogs.split(',') %>
+              <% blogs.each do |i| %>
+                <% b = Blog.where("id =?",i.to_i).first %>
+                  <% b.pictures.each do |p| %>
+                  <img src = "<%= p.avatar %>" style="height: 100px;width: 100px;" class = "pic_show"  data-id = "<%= p.id %>" data-toggle="modal" data-target= "#myModal" data-remote = "true">
+                <% end %>
               <% end %>
-            <% end %>
-            <br>
-          </div>
+              <br>
+            </div>
+          <% end %>
           <br>
           <div id="geolocation" style="width: 300px; height: 300px;"></div>
           <br>
@@ -137,7 +145,13 @@
 
 
 <script type="text/javascript">
-
+  $('#cuisine').tokenfield({
+    autocomplete: {
+      source: ['Chinese','Moghlai','Desert','Indian','South Indian'],
+      delay: 100
+    },
+    showAutocompleteOnFocus: true
+  })
 
 
 

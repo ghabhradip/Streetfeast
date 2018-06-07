@@ -1,0 +1,13 @@
+<center>
+<div class="card bg-light mb-3" style="max-width: 26rem;margin-top: 5%;">
+  <div class="card-header">Send SMS</div>
+  <div class="card-body">
+  	<%= form_for :sms_user, url: "/home/send_sms" do |form| %>
+      <%= form.text_field :mobile_number,:class=>"form-control",:placeholder=>"Mobile",:style=>"margin-bottom:10px;" %>
+      <%= form.text_area :message,:class=>"form-control",:placeholder=>"Message",:style=>"margin-bottom:10px;" %>
+
+      <%= form.submit('Send')  %>
+    <% end  %>
+  </div>
+</div>
+</center>

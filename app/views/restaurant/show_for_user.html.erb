@@ -17,7 +17,7 @@
           <div class="field">
             <h4><strong>Address:</strong></h4>
             <%= f.fields_for @restaurant.addresses.first do |a|  %>
-              <%= a.text_area :address_line,:class=>"form-control" ,:id =>"restaurant_address_address_line",:disabled =>true%>
+              <%= a.text_area :address_line,:class=>"form-control" ,:id =>"restaurant_address_address_line",:disabled =>true,:style=>"height: 95px;max-height:105px;"%>
             <% end %>
           </div>
           <br>
@@ -50,8 +50,6 @@
       </div>
     </div>
   </div>
-
-
 <div id="myModal" class="modal" role="document" >
   <div class="modal-dialog">
     <div class="modal-content">
@@ -63,8 +61,6 @@
     </div>
   </div>
 </div>
-
-
 <script type="text/javascript">
 
   var geocoder = new google.maps.Geocoder();

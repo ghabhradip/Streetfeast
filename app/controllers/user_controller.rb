@@ -23,9 +23,6 @@ class UserController < ApplicationController
     flash[:notice] = "User details updated"
     redirect_to :back
   end
-
-
-
   def photo_remove
     @user = User.find_by_id(params[:id])
     @image = @user.picture
@@ -34,14 +31,36 @@ class UserController < ApplicationController
   end
 
   def index
-    @users = User.all
+    respond_to do |format|
+      format.html
+      format.json { render json: UserDatatable.new(view_context) }
+    end
   end
-  
+  def update
+
+    @user = User.find_by_id(params[:id])
+    @user.update_attributes(user_params)
+    @user_picture = Picture.create(:avatar=>params[:user][:picture][:avatar],:user_id=>params[:id])
+    state = params[:state]
+    @user.update_attribute(:state,state)
+    @user.save
+    flash[:notice] = "User details updated"
+    if @user.is_admin == true
+      redirect_to dashboard_path
+    else
+      redirect_to home_dashboard_user_path
+    end
+  end
+  def edit
+    @picture = Picture.new
+    @user = User.find_by_id(params[:id])
+  end
+
 
 
 
   private
     def user_params
-      params.require(:user).permit(:firstname, :lastname, :mobile_no,:city,:state)
+      params.require(:user).permit(:fullname,:mobile_no,:city,:state,:email)
     end
 end

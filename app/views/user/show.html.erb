@@ -1,34 +1,31 @@
 <center>
-  <div class="card bg-light mb-3" style="max-width: 26rem;">
+  <div class="card bg-light mb-3" style="max-width: 26rem; margin-top: 5%;">
     <div class="card-header">Profile</div>
     <div class="card-body">
       <%= form_for (@user), url: "/user/update/#{@user.id}", :html => {:class =>"my_form",multipart: true} do |f| %>
         <fieldset>
-          
             <div class="form-group upload-preview">
               <% if @user.picture.present? %>
-              <div>
-                <img src = "<%=@user.picture.avatar %>" style="height: 100px;width: 100px; border-radius: 50px;" class= "user_img">
+                <div>
+                  <img src = "<%=@user.picture.avatar %>" style="height: 100px;width: 100px; border-radius: 50px;" class= "user_img">
+                  <% if current_user.is_admin.eql? false %>
+                    <img class = "preview">
+                    <img src = "/assets/delete.png" style="height: 25px;width: 25px;" class = "remove_photo">
+                    <img src = "/assets/edit_icon.png" style="height: 25px;width: 25px;" class = "edit_photo" >
+                    <img src = "/assets/addpic.png" style="height: 25px;width: 25px;" class = "add_photo">
+                  <% end %>
+                </div> 
+              <% else %>
+              <div class="form-group upload-preview">
                 <img class = "preview">
-                <img src = "/assets/delete.png" style="height: 25px;width: 25px;" class = "remove_photo">
-                <img src = "/assets/edit_icon.png" style="height: 25px;width: 25px;" class = "edit_photo" >
+                <img src = "/assets/profile.png" style="height: 100px;width: 100px; border-radius: 50px;" class = "no_profile_img" >
                 <img src = "/assets/addpic.png" style="height: 25px;width: 25px;" class = "add_photo">
-              </div> 
-            <% else %>
-            <div class="form-group upload-preview">
-              <img class = "preview">
-              <img src = "/assets/profile.png" style="height: 100px;width: 100px; border-radius: 50px;" class = "no_profile_img" >
-              <img src = "/assets/addpic.png" style="height: 25px;width: 25px;" class = "add_photo">
+              </div>
             </div>
-          </div>
           <% end %>
           <br>
           <div class="form-group">
-            <%= f.text_field :firstname,:required => true,:class=>"form-control",placeholder: "Firstname" , autofocus: true %>
-          </div>
-
-          <div class="form-group">
-            <%= f.text_field :lastname,:required => true,:class=>"form-control",placeholder: "Lastname" %>
+            <%= f.text_field :fullname,:required => true,:class=>"form-control",placeholder: "Fullname" , autofocus: true %>
           </div>
 	        <div class="form-group">
 	          <%= f.text_field :email,:required => true,:class=>"form-control",placeholder: "Email"  %>
