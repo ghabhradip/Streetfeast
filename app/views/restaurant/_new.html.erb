@@ -1,13 +1,15 @@
+<script type="text/javascript" src="http://jonthornton.github.io/jquery-timepicker/jquery.timepicker.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tokenfield/0.12.0/bootstrap-tokenfield.js"></script>
 <style type="text/css">
   .ui-autocomplete{z-index: 9999999}
 </style>
 <%= form_for (@restaurant),url: "/restaurant/create" do |f| %>
   <div class="field">
-    <%= f.text_field :name,:class=>"form-control",:placeholder => "Name", autofocus: true %>
+    <%= f.text_field :name,:class=>"form-control",:placeholder => "Name", autofocus: true ,:required=>true%>
   </div>
   <br>
   <div class="field">
-    <%= f.text_area :description,:placeholder => "Description",:class=>"form-control" %>
+    <%= f.text_area :description,:placeholder => "Description",:class=>"form-control",:required=>true %>
   </div>
   <br>
   <div class="row">
@@ -18,7 +20,7 @@
     </div>
     <div class="col-sm-6">
       <div class="field">
-        <%= f.text_field :cost_for_two,:class=>"form-control" ,:placeholder => "Cost for two"%>
+        <%= f.text_field :cost_for_two,:class=>"form-control" ,:placeholder => "Cost for two",:required=>true%>
       </div>
     </div>
   </div>
@@ -39,29 +41,29 @@
   <div class="row">
     <div class="col-sm-6">
       <div class="field">
-        <%= f.text_field :associated_blogs,:class=>"form-control",:placeholder => "Associated Blogs" %>
+        <%= f.text_field :associated_blogs,:class=>"form-control",:placeholder => "Associated Blogs",:required=>true %>
       </div>
     </div>
     <div class="col-sm-6">
       <div class="field">
-        <%= f.text_field :cuisine,:class=>"form-control",:placeholder => "Cuisine",:id=>"cuisine" %>
+        <%= f.text_field :cuisine,:class=>"form-control",:placeholder => "Cuisine",:id=>"cuisine"%>
       </div>
     </div>
   </div>
   <br>
   <div class="field">
-    <%= f.text_field :operator,:class=>"form-control",:placeholder => "Operator" %>
+    <%= f.text_field :operator,:class=>"form-control",:placeholder => "Operator",:required=>true %>
   </div>
   <br>
   <%= f.fields_for @address do |a|  %>
     <div class="field">
-      <%= a.text_area :address_line,:class=>"form-control",:placeholder => "Address" %>
+      <%= a.text_area :address_line,:class=>"form-control",:placeholder => "Address"%>
     </div>
     <br>
     <div class="row">
       <div class="col-sm-6">
         <div class="field">
-          <%= a.text_field :latitude,:class=>"form-control",:placeholder => "Latitude",:id=>"latitude" %>
+          <%= a.text_field :latitude,:class=>"form-control",:placeholder => "Latitude",:id=>"latitude"%>
         </div>
       </div>
       <div class="col-sm-6">
@@ -71,14 +73,6 @@
       </div>
     </div>
   <% end %>
-
-
-
-
-
-
-
-
   <hr>
   <p><strong>Menu</strong></p>
   <div id="menu">
@@ -91,7 +85,7 @@
       <div class="row">
         <div class="col-sm-6">
             <div class="field">
-              <%= menu.text_field :item_name,:class=>"form-control",:placeholder => "Item name",:id=>"item_name" %>
+              <%= menu.text_field :item_name,:class=>"form-control",:placeholder => "Item name",:id=>"item_name"%>
             </div>
           </div>
           <div class="col-sm-6">

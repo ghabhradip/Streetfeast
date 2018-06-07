@@ -12,14 +12,19 @@ class RestaurantController < ApplicationController
     menu_item_name = params[:menu_item_name]
     menu_item_price = params[:menu_item_price]
     restaurant_id = @restaurant.id
-
-    menu_item_name.keys.each_with_index do |key, index|
-      item_name = menu_item_name.values[index]
-      item_price = menu_item_price.values[index]
-      Menu.create(:item_name=>item_name,:price=>item_price,:restaurant_id=>restaurant_id)
+    if params[:menu_item_name].present? && params[:menu_item_price].present?
+      menu_item_name.keys.each_with_index do |key, index|
+        item_name = menu_item_name.values[index]
+        item_price = menu_item_price.values[index]
+        if item_name.present? && item_price.present?
+          Menu.create(:item_name=>item_name,:price=>item_price,:restaurant_id=>restaurant_id)
+        end
+      end
     end
-
-    @address = Address.create(:address_line => params[:restaurant][:address][:address_line],:latitude =>params[:restaurant][:address][:latitude],:longitude=>params[:restaurant][:address][:longitude],:restaurant_id=>@restaurant.id,is_blacklisted=>false)
+    if params[:restaurant][:address][:address_line].present? && params[:restaurant][:address][:latitude].present? && params[:restaurant][:address][:longitude].present?
+      @address = Address.create(:address_line => params[:restaurant][:address][:address_line],:latitude =>params[:restaurant][:address][:latitude],:longitude=>params[:restaurant][:address][:longitude],:restaurant_id=>@restaurant.id)
+    end
+    flash[:notice] = "Restaurant has been created successfully!"
   	redirect_to :back
   end
 
@@ -56,15 +61,18 @@ class RestaurantController < ApplicationController
     @restaurant = Restaurant.find_by_id(params[:id])
     if @restaurant.present?
       @restaurant_address = Address.where("restaurant_id=?",@restaurant.id).first
-      restaurant_latitude = params[:restaurant][:address][:latitude]
-      restaurant_longitude = params[:restaurant][:address][:longitude]
-      restaurant_address_line = params[:restaurant][:address][:address_line]
-      @restaurant_address.update_attribute(:latitude,restaurant_latitude)  
-      @restaurant_address.update_attribute(:longitude,restaurant_longitude)  
-      @restaurant_address.update_attribute(:address_line,restaurant_address_line)
-      @restaurant_address.save
+      if params[:restaurant][:address].present?
+        restaurant_latitude = params[:restaurant][:address][:latitude]
+        restaurant_longitude = params[:restaurant][:address][:longitude]
+        restaurant_address_line = params[:restaurant][:address][:address_line]
+        @restaurant_address.update_attribute(:latitude,restaurant_latitude)  
+        @restaurant_address.update_attribute(:longitude,restaurant_longitude)  
+        @restaurant_address.update_attribute(:address_line,restaurant_address_line)
+        @restaurant_address.save
+      end
       @restaurant.update_attributes(restaurant_params)
     end
+    flash[:notice] = "Restaurant details has been updated successfully!"
     redirect_to :back      
   end
   def index

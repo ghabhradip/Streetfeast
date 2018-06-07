@@ -1,5 +1,7 @@
 <link href="//cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css"></link>
- <script src="//cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+<script src="//cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="http://jonthornton.github.io/jquery-timepicker/jquery.timepicker.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tokenfield/0.12.0/bootstrap-tokenfield.js"></script>
 <div style="margin-left:227px" >
   <div class="card bg-light mb-3" style="max-width: 40rem;">
     <div class="card-header"><h3><center><strong><%= @restaurant.name.capitalize %></strong></center></h3></div>
@@ -46,24 +48,24 @@
           </div>
           <br>
           <% if @restaurant.addresses.present? %>
-            <div class="field">
-              <%= f.fields_for @restaurant.addresses.first do |a|  %>
-                <%= a.text_area :address_line,:class=>"form-control" %>
-            </div>
-          <br>
-          <% end %>
-          <div class="row">
-            <div class="col-sm-6">
+            <%= f.fields_for @restaurant.addresses.first do |a|  %>
               <div class="field">
-                <%= a.text_field :latitude,:class=>"form-control",:placeholder => "Latitude",:id=>"latitude"  %>
+                  <%= a.text_area :address_line,:class=>"form-control" %>
               </div>
-            </div>
-            <div class="col-sm-6">
-              <div class="field">
-                <%= a.text_field :longitude,:class=>"form-control",:placeholder => "Longitude",:id=>"longitude"  %>
+              <br>
+              <div class="row">
+                <div class="col-sm-6">
+                  <div class="field">
+                    <%= a.text_field :latitude,:class=>"form-control",:placeholder => "Latitude",:id=>"latitude"  %>
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <div class="field">
+                    <%= a.text_field :longitude,:class=>"form-control",:placeholder => "Longitude",:id=>"longitude"  %>
+                  </div>
+                </div>
               </div>
-            </div>
-          </div>
+            <% end %>
           <% end %>
           <br>
           <div class="row">
@@ -83,22 +85,26 @@
           <div class="field">
             <%= button_tag "View menu",:id => "view_menu",:class=>"btn btn-success",:data=>{:toggle=>"modal",:target=> "#myModal2"} %>
           </div>
-          <br>
           <% if @restaurant.associated_blogs.present? %>
+            <br>
             <div class="field">
               <% blogs = @restaurant.associated_blogs.split(',') %>
               <% blogs.each do |i| %>
                 <% b = Blog.where("id =?",i.to_i).first %>
-                  <% b.pictures.each do |p| %>
-                  <img src = "<%= p.avatar %>" style="height: 100px;width: 100px;" class = "pic_show"  data-id = "<%= p.id %>" data-toggle="modal" data-target= "#myModal" data-remote = "true">
+                  <% if b.pictures.present? %>
+                    <% b.pictures.each do |p| %>
+                    <img src = "<%= p.avatar %>" style="height: 100px;width: 100px;" class = "pic_show"  data-id = "<%= p.id %>" data-toggle="modal" data-target= "#myModal" data-remote = "true">
+                    <% end %>
+                  <% end %>
                 <% end %>
-              <% end %>
               <br>
             </div>
           <% end %>
           <br>
-          <div id="geolocation" style="width: 300px; height: 300px;"></div>
+          <% if @restaurant.addresses.present? %>
+            <div id="geolocation" style="width: 300px; height: 300px;"></div>
           <br>
+          <% end %>
           <button type="submit" class="btn btn-primary btn_large" >Update</button>&nbsp;&nbsp;
         <% end %>
         <br>
@@ -153,11 +159,12 @@
     showAutocompleteOnFocus: true
   })
 
-
-
-
   var geocoder = new google.maps.Geocoder();
-  var add =$("#restaurant_address_address_line").val().replace(/"/g,"");
+  if($("#restaurant_address_address_line").val()!=undefined)
+  {
+    var add =$("#restaurant_address_address_line").val().replace(/"/g,"");
+  }
+
   geocoder.geocode( { 'address': add}, function(results, status) {
     if (status == google.maps.GeocoderStatus.OK) 
     {

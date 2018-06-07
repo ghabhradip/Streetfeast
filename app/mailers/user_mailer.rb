@@ -16,12 +16,12 @@ class UserMailer < ActionMailer::Base
     mail(to: "rahil.max41@gmail.com", subject: 'Issue raised')
   end
 
-  def email_newsletter(email,blog)
-    debugger
+  def email_newsletter email,blog
     @blog_for_newsletter = blog
-    # ac = ActionController::Base.new
-    # pdf = ac.render_to_string pdf: "email_newsletter", template: "/user_mailer/email_newsletter.html.erb"
-    # mail.attachments['Newsletter.pdf'] = pdf
+    debugger
+    ac = ActionController::Base.new
+    pdf = ac.render_to_string pdf: "email_newsletter", template: "/user_mailer/email_newsletter.html.erb",locals:{:blog => @blog_for_newsletter}
+    mail.attachments['Newsletter.pdf'] = pdf
     mail(to: email,subject: "Newsletter from Streetfeast")
   end
 end

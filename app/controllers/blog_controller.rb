@@ -21,6 +21,7 @@ class BlogController < ApplicationController
       flash[:notice] = "Title and Content are mandatory!!"
       redirect_to :back
     end
+    flash[:notice]= "Blog has been created successfully!"
   end
 
   def new
@@ -40,8 +41,10 @@ class BlogController < ApplicationController
       end
     end
     if current_user.is_admin == true
+      flash[:notice]= "Blog has been created successfully!"
       redirect_to dashboard_path
     else
+      flash[:notice]= "Blog has been created successfully!"
       redirect_to home_dashboard_user_path
     end
   end
@@ -57,9 +60,11 @@ class BlogController < ApplicationController
       end
     end
     if current_user.is_admin == true
-      redirect_to dashboard_path
+      flash[:notice]= "Blog details successfully updated!"
+      redirect_to :back
     else
-      redirect_to home_dashboard_user_path
+      flash[:notice]= "Blog details successfully updated!"
+      redirect_to :back
     end
   end
 
@@ -78,6 +83,7 @@ class BlogController < ApplicationController
   def update
     @blog = Blog.find_by_id(params[:id])
     @blog.update_attributes(blog_params)
+    flash[:notice]= "Blog details successfully updated!"
     render json: @blog
   end
 
@@ -102,11 +108,6 @@ class BlogController < ApplicationController
       format.json { render json: BlogDatatable.new(view_context) }
     end
   end
-
-  
-
-
-
 
   private
   def blog_params
