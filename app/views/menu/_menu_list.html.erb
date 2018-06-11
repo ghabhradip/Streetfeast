@@ -17,24 +17,36 @@
       <% end %>
     </tr>
   </thead>
-  <% @menu_for_restaurant.order('id ASC').each do |menu| %>
     <tbody>
-      <tr>
-        <td><%= menu.id %></td>
-        <td><%= menu.item_name %></td>
-        <td><%= menu.price %></td>
-        <% if user_signed_in? %>
-          <% if current_user.is_admin == true %>
-            <% if menu.is_available.eql? true %>
-              <td><span class="badge badge-success size-mid is_available" data-id="<%= menu.id %>"  style="cursor: pointer;">Available</span></td>
-            <% else %>
-              <td><span class="badge badge-danger size-mid is_available" data-id="<%= menu.id %>" style="cursor: pointer;">Not Available</span></td>
-            <% end %>
+      <% if user_signed_in? %>
+        <% if current_user.is_admin.eql? true %>
+          <% @menu_for_restaurant.order('id ASC').each do |menu| %>
+            <tr>
+              <td><%= menu.id %></td>
+              <td><%= menu.item_name %></td>
+              <td><%= menu.price %></td>
+              <% if user_signed_in? %>
+                <% if current_user.is_admin == true %>
+                  <% if menu.is_available.eql? true %>
+                    <td><span class="badge badge-success size-mid is_available" data-id="<%= menu.id %>"  style="cursor: pointer;">Available</span></td>
+                  <% else %>
+                    <td><span class="badge badge-danger size-mid is_available" data-id="<%= menu.id %>" style="cursor: pointer;">Not Available</span></td>
+                  <% end %>
+                <% end %>
+              <% end %>
+            </tr>
           <% end %>
         <% end %>
-      </tr>
-    </tbody>
-  <% end %>
+      <% else %>
+        <% @menu_for_restaurant.where("is_available=?",true).each do |menu| %>
+          <tr>
+            <td><%= menu.id %></td>
+            <td><%= menu.item_name %></td>
+            <td><%= menu.price %></td>
+          </tr>
+        <% end %>
+      <% end %>
+  </tbody>
 </table>
 
 

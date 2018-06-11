@@ -102,7 +102,7 @@
                 <% b = Blog.where("id =?",i.to_i).first %>
                   <% if b.pictures.present? %>
                     <% b.pictures.each do |p| %>
-                    <img src = "<%= p.avatar %>" style="height: 100px;width: 100px;" class = "pic_show"  data-id = "<%= p.id %>" data-toggle="modal" data-target= "#myModal" data-remote = "true">
+                    <img src = "<%= p.avatar %>" style="height: 100px;width: 100px;cursor: pointer;" class = "pic_show"  data-id = "<%= p.id %>" data-toggle="modal" data-target= "#myModal" data-remote = "true">
                     <% end %>
                   <% end %>
                 <% end %>
