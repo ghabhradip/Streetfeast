@@ -64,7 +64,7 @@ StreetFeast::Application.routes.draw do
 
   patch 'blog/update_blog_user/:id' => 'blog#update_blog_user'
   
-  get 'restaurant/new' => 'restaurant#new'
+  get 'restaurant/new/:id' => 'restaurant#new'
 
   post 'restaurant/create' => 'restaurant#create'
 

@@ -1,5 +1,5 @@
 class MenuController < ApplicationController
-
+skip_before_action :verify_authenticity_token
   def show
     @restaurant = Restaurant.find_by_id(params[:id])
     @menu_for_restaurant = Menu.where("restaurant_id=?",@restaurant.id)

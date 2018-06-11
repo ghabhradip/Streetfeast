@@ -4,6 +4,7 @@
   .ui-autocomplete{z-index: 9999999}
 </style>
 <%= form_for (@restaurant),url: "/restaurant/create" do |f| %>
+  <%= hidden_field_tag :blog_id, @blog_id %>
   <div class="field">
     <%= f.text_field :name,:class=>"form-control",:placeholder => "Name", autofocus: true ,:required=>true%>
   </div>
@@ -38,17 +39,8 @@
     </div>
   </div>
   <br>
-  <div class="row">
-    <div class="col-sm-6">
-      <div class="field">
-        <%= f.text_field :associated_blogs,:class=>"form-control",:placeholder => "Associated Blogs",:required=>true %>
-      </div>
-    </div>
-    <div class="col-sm-6">
-      <div class="field">
-        <%= f.text_field :cuisine,:class=>"form-control",:placeholder => "Cuisine",:id=>"cuisine"%>
-      </div>
-    </div>
+  <div class="field">
+    <%= f.text_field :cuisine,:class=>"form-control",:placeholder => "Cuisine",:id=>"cuisine"%>
   </div>
   <br>
   <div class="field">

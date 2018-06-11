@@ -1,6 +1,7 @@
 class RestaurantController < ApplicationController
-  
+
   def new 
+    @blog_id=params[:id]
     @restaurant = Restaurant.new
     @address = @restaurant.addresses.build
     @menu = Menu.new
@@ -8,7 +9,9 @@ class RestaurantController < ApplicationController
   end
 
   def create
+    blog_id=params[:blog_id]
   	@restaurant = Restaurant.create(restaurant_params)
+    @restaurant.update_attribute(:associated_blogs,blog_id)
     menu_item_name = params[:menu_item_name]
     menu_item_price = params[:menu_item_price]
     restaurant_id = @restaurant.id
@@ -25,7 +28,7 @@ class RestaurantController < ApplicationController
       @address = Address.create(:address_line => params[:restaurant][:address][:address_line],:latitude =>params[:restaurant][:address][:latitude],:longitude=>params[:restaurant][:address][:longitude],:restaurant_id=>@restaurant.id)
     end
     flash[:notice] = "Restaurant has been created successfully!"
-  	redirect_to :back
+    redirect_to :back
   end
 
   def show
@@ -58,6 +61,7 @@ class RestaurantController < ApplicationController
   end
   
   def update
+    blog_ids=[]
     @restaurant = Restaurant.find_by_id(params[:id])
     if @restaurant.present?
       @restaurant_address = Address.where("restaurant_id=?",@restaurant.id).first
@@ -70,6 +74,13 @@ class RestaurantController < ApplicationController
         @restaurant_address.update_attribute(:address_line,restaurant_address_line)
         @restaurant_address.save
       end
+      params[:restaurant][:associated_blogs].split(",").each do |check_blog_id|
+        blog = Blog.where("id=?",check_blog_id).first
+        if blog.present?
+          blog_ids << blog.id
+        end
+      end
+      params[:restaurant][:associated_blogs] = blog_ids.uniq.join(",")
       @restaurant.update_attributes(restaurant_params)
     end
     flash[:notice] = "Restaurant details has been updated successfully!"
@@ -85,6 +96,6 @@ class RestaurantController < ApplicationController
 
  private
   def restaurant_params
-    params.require(:restaurant).permit(:name,:cuisine,:cost_for_two,:contact_number, :description,:opening_time,:closing_time,:operator,:closed_on,:associated_blogs,:is_blacklisted,:is_deactive)
+    params.require(:restaurant).permit(:name,:cuisine,:cost_for_two,:contact_number, :description,:opening_time,:closing_time,:operator,:closed_on,:is_blacklisted,:is_deactive,:associated_blogs)
   end
 end

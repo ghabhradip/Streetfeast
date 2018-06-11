@@ -57,15 +57,15 @@
     e.preventDefault();
     var id = $(this).data('id');
     $.ajax({ 
-        async: true,
-        type: 'GET',
-        url: "/restaurant/new",
-        success: function(data)
-        {
-          $(".modal-body").html(data);  
-        }, 
-        error: function(data){ alert('error'); } 
-      })
+      async: true,
+      type: 'GET',
+      url: "/restaurant/new/"+id,
+      success: function(data)
+      {
+        $(".modal-body").html(data);  
+      }, 
+      error: function(data){ alert('error'); } 
+    })
   })
 
 

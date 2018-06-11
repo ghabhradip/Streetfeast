@@ -66,7 +66,9 @@
       <div class="card-body">
         <p><b>Description:</b> <%= r.description.truncate(70) %></p> 
         <p><b>Contact Number: </b><%= r.contact_number %></p>
-        <p><b>Address: </b><%= r.addresses.first.address_line %></p>
+        <% if r.addresses.present? %>
+          <p><b>Address: </b><%= r.addresses.first.address_line %></p>
+        <% end %>
         <p><b>Timings: </b><%= r.opening_time %>-<%= r.closing_time %></p>
         <p><b>Cost for two: </b>Rs.<%= r.cost_for_two %></p>
         <p><b>Get Route :</b><img src="/assets/map_icon.png" style="height: 30px;width: 30px;" data-id ="<%=r.id%>" class ="map_icon" data-toggle="modal" data-target= "#myModal" data-remote = "true"></p>

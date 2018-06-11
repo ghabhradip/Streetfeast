@@ -40,16 +40,14 @@ class UserController < ApplicationController
 
     @user = User.find_by_id(params[:id])
     @user.update_attributes(user_params)
-    @user_picture = Picture.create(:avatar=>params[:user][:picture][:avatar],:user_id=>params[:id])
+    if params[:user][:picture].present?
+      @user_picture = Picture.create(:avatar=>params[:user][:picture][:avatar],:user_id=>params[:id])
+    end
     state = params[:state]
     @user.update_attribute(:state,state)
     @user.save
     flash[:notice] = "User details updated"
-    if @user.is_admin == true
-      redirect_to dashboard_path
-    else
-      redirect_to home_dashboard_user_path
-    end
+    redirect_to :back
   end
   def edit
     @picture = Picture.new

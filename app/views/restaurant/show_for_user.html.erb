@@ -14,12 +14,14 @@
             <%= @restaurant.contact_number%>
           </div>
           <br>
-          <div class="field">
-            <h4><strong>Address:</strong></h4>
-            <%= f.fields_for @restaurant.addresses.first do |a|  %>
-              <%= a.text_area :address_line,:class=>"form-control" ,:id =>"restaurant_address_address_line",:disabled =>true,:style=>"height: 95px;max-height:105px;"%>
-            <% end %>
-          </div>
+          <% if @restaurant.addresses.present? %>
+            <div class="field">
+              <h4><strong>Address:</strong></h4>
+              <%= f.fields_for @restaurant.addresses.first do |a|  %>
+                <%= a.text_area :address_line,:class=>"form-control" ,:id =>"restaurant_address_address_line",:disabled =>true,:style=>"height: 95px;max-height:105px;"%>
+              <% end %>
+            </div>
+          <% end %>
           <br>
           <div class="field">
             <strong>Timings: </strong><%=@restaurant.opening_time %>-<%=@restaurant.closing_time %>
@@ -35,15 +37,22 @@
               <% blogs = @restaurant.associated_blogs.split(',') %>
               <% blogs.each do |i| %>
                 <% b = Blog.where("id =?",i.to_i).first %>
+                <% if b.pictures.present? %>
                   <% b.pictures.each do |p| %>
                     <img src = "<%= p.avatar %>" style="height: 100px;width: 100px;" class = "pic_show"  data-id = "<%= p.id %>" data-toggle="modal" data-target= "#myModal" data-remote = "true">
                   <% end %>
+                <% else %>
+                  <h3>No photos yet!</h3>
+                <% end %>
               <% end %>
               <br>
             </div>
           <% end %>
           <br>            
-          <div id="geolocation" style="width: 300px; height: 300px;"></div>
+          <% if @restaurant.addresses.present? %>
+            <div id="geolocation" style="width: 300px; height: 300px;"></div>
+            <br>
+          <% end %>
           <br>
         <% end %>
         <br>
@@ -64,7 +73,10 @@
 <script type="text/javascript">
 
   var geocoder = new google.maps.Geocoder();
-  var add = $("#restaurant_address_address_line").val().replace(/"/g,"");
+  if($("#restaurant_address_address_line").val()!=undefined)
+  {
+    var add =$("#restaurant_address_address_line").val().replace(/"/g,"");
+  }
   geocoder.geocode( { 'address': add}, function(results, status) {
     if (status == google.maps.GeocoderStatus.OK) 
     {

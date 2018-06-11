@@ -1,9 +1,9 @@
 <div id ="main_page">
-
 <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css" />
 <script type="text/javascript" charset="utf8" src="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.4/jquery.dataTables.min.js"></script>
 <div  style="padding: 10px;">
   <center><h4><b>Menu</b></h4></center>
+
 <table class="table table-hover" id="menu_list_datatable">
   <thead>
     <tr>
@@ -32,32 +32,31 @@
             <% end %>
           <% end %>
         <% end %>
-
       </tr>
     </tbody>
   <% end %>
 </table>
+
+
 <% if user_signed_in? %>
   <% if current_user.is_admin == true %>
     <%= form_for @menu,:url=>"/menu/create/#{@restaurant.id}"  do |menu| %>
       <div class="menu_list">
         <div class="row">
           <div class="col-sm-6">
-              <div class="field">
-                <%= menu.text_field :item_name,:class=>"form-control",:placeholder => "Item name",:id=>"item_name"%>
-              </div>
+            <div class="field">
+              <%= menu.text_field :item_name,:class=>"form-control",:placeholder => "Item name",:id=>"item_name",:required=> true%>
             </div>
-            <div class="col-sm-6">
-              <div class="field">
-                <%= menu.text_field :price,:class=>"form-control",:placeholder => "Price" ,:id =>"price" %>
-              </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="field">
+              <%= menu.text_field :price,:class=>"form-control",:placeholder => "Price" ,:id =>"price",:required=> true %>
             </div>
+          </div>
         </div>
         <br>
       </div>
     <% end %>
-
-
     <div class="field">
       <%= button_tag "Add more",:id => "add_more",:class=>"btn btn-danger" %>
     </div>
@@ -65,8 +64,6 @@
     <div class="field">
       <%= button_tag "Add to menu",:id => "add_to_menu",:class=>"btn btn-success" %>
     </div>
-
-
   <% end %>
 <% end %>
 
@@ -96,12 +93,14 @@
       } 
     }); 
   });
+  var field_len=1;
   $("#item_name").last().attr("name","menu_item_name[item_name1]");
   $("#price").last().attr("name","menu_item_price[price1]");
   x=1;
   $("#add_more").on("click",function(e){
     max_field = 100;
-    var field_len = $('.menu_list').length;
+    field_len = $('.menu_list').length;
+    //alert(field_len);
     if(x < max_field){
       x++;
       var html = $(".menu_list").first().clone();
@@ -113,24 +112,47 @@
     }
   });
 
+
   $("#add_to_menu").on("click",function(){
     $("#new_menu").submit();
   });
 
   $("#new_menu").on("submit", function(event)
-  { 
-    //alert(1);
-    $.ajax({ type: "POST", 
-      url: this.action, 
-      data: $(this).serialize(),
-      success: function(response) 
-      { 
-        $("#main_page").html(response); 
-        $('#item_name').val('');
-        $('#price').val('');
-      } 
-    }); 
-    event.preventDefault(); 
+  {
+    event.preventDefault();
+    $('.menu_list').each(function(index)
+    {
+      var item_price = $('[name="menu_item_price[price'+(index+1)+']"]').val();
+      var item_name =  $('[name="menu_item_name[item_name'+(index+1)+']"]').val();
+
+      if(item_name=="" && item_price==""){
+        alert("please write item name and price before submitting!!!");
+      }
+      else if (item_name!="" && item_price=="")
+      {
+        alert("Please put item price!!")
+      }
+      else if(item_price!="" && item_name==""){
+        alert("please put item name!!!");
+      }
+      else
+      {
+        
+        $.ajax({ 
+          type: "POST", 
+          url: $("#new_menu").attr('action'), 
+          data: $("#new_menu").serialize(),
+          success: function(response) 
+          { 
+            $("#main_page").html(response); 
+            $('#item_name').val('');
+            $('#price').val('');
+          } 
+        });
+        return false;
+      }
+    });
+
   });
 </script>
 </div>
