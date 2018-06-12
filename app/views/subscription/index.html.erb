@@ -11,7 +11,7 @@
     <tbody>  
     </tbody>
   </table> 
-  <a class="btn btn-success right-align subscribe_btn" >Send Newsletter</a>
+  <a class="btn btn-success right-align newsletter_btn" >Send Newsletter</a>
 </div>
 <script>
 
@@ -122,13 +122,15 @@
         }
       }
     });
-    $(".subscribe_btn").on("click",function(){
+
+    $(".newsletter_btn").click(function(){
       if(user_ids.length==0)
       {
         swal("Please select atleast one user","", "error");
       }
       else
       {
+        $(".loader").show();
         $.ajax({ 
           async: true,
           type: 'GET',
@@ -136,7 +138,8 @@
           data: {user_ids: user_ids},
           success: function(data)
           {
-            swal("Newsletters sent!!","", "success");
+            $(".loader").hide();
+            swal("Newsletters has been sent!!","Email has been sent to the select users...", "success");              
           }, 
           error: function(data){ alert('error'); } 
         })

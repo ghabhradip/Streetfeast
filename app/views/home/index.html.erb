@@ -49,7 +49,7 @@
 <%restaurant_lat_array=[]%>
 <%restaurant_long_array=[]%>
 
-<% Restaurant.all.each do |r| %>
+<% Restaurant.all.order('id DESC').each do |r| %>
   <%restaurant_id_array.push(r.id)%>
   <% if r.addresses.present? %>
     <%if r.addresses.first.latitude.present? && r.addresses.first.longitude.present? %>

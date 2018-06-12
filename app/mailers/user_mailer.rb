@@ -1,11 +1,9 @@
 class UserMailer < ActionMailer::Base
   default from: "support@streetfeast.in"
-
   def ticket_email_user user,ticket 
     @user = user.first
     @ticket_id = ticket.id
     mail(to: @user.email, subject: 'Issue raised')
-
   end
 
   def ticket_email_admin user,support_ticket
@@ -16,12 +14,11 @@ class UserMailer < ActionMailer::Base
     mail(to: "rahil.max41@gmail.com", subject: 'Issue raised')
   end
 
-  def email_newsletter email,blog
-    @blog_for_newsletter = blog
-    debugger
-    ac = ActionController::Base.new
-    pdf = ac.render_to_string pdf: "email_newsletter", template: "/user_mailer/email_newsletter.html.erb",locals:{:blog => @blog_for_newsletter}
-    mail.attachments['Newsletter.pdf'] = pdf
-    mail(to: email,subject: "Newsletter from Streetfeast")
+  def email_newsletter email
+    @blog_for_newsletter = Blog.first(:conditions => ["id>=?", rand(Blog.count)])    
+    attachments['Newsletter.pdf'] = WickedPdf.new.pdf_from_string(render_to_string(:pdf => "Newsletter.pdf",:template => '/user_mailer/email_newsletter.pdf.erb'))
+    mail(:to => email, :subject => "Newsletter from Streetfeast") do |format|
+      format.html
+    end
   end
 end
