@@ -59,7 +59,7 @@
           <% if @restaurant.addresses.present? %>
             <%= f.fields_for @restaurant.addresses.first do |a|  %>
               <div class="field">
-                  <%= a.text_area :address_line,:class=>"form-control" %>
+                  <%= a.text_area :address_line,:class=>"form-control" ,:style=>"min-height:120px;"%>
               </div>
               <br>
               <div class="row">
@@ -146,7 +146,7 @@
 
 <!-- Modal for menu_list -->
 <div id="myModal2" class="modal" role="document"> 
-  <div class="modal-dialog">
+  <div class="modal-dialog" style="max-width: 600px;" >
     <div class="modal-content" >
       <div class="modal-body2"  style="overflow-y: auto;max-height: 500px;">
       </div>
@@ -228,7 +228,7 @@
   $(".pic_show").on("click",function(){  // show picture in modal
 
     var id = $(this).data('id');
-    //alert(id); 
+
     $.ajax({ 
       async: true,
       type: 'GET',
@@ -252,8 +252,9 @@
     })
   });
 
-
-  $(".pic_like").on("click",function() // picture like functionality
+  $('#timepickeropen').timepicker();
+  $('#timepickerclose').timepicker();
+  $(".pic_like").on("click",function()
   {
     var pic_id = $(".pic_like").attr("id");
       $.ajax({ 
@@ -262,28 +263,23 @@
       url: "/like/pic_like/"+pic_id,
       success: function(data)
       {
-        // alert(data.is_liked);
-         if(data.is_liked == true)
+        if(data.is_liked == true)
         {
-          //alert(data.is_liked);
           $("#"+data.pic_id).attr("src","/assets/pic_unlike.png");
         }
          else
         {
-          //alert(data.is_liked);
           $("#"+data.pic_id).attr("src","/assets/pic_like.png");
         }
       }, 
       error: function(data){ alert('error'); } 
     })
-
   });
 
   $(function(){
     $('#toggle-event-black_list').change(function() {
     })
-  })
-
+  });
 
 </script>
 <style type="text/css">

@@ -60,4 +60,4 @@ gem 'jquery-ui-rails'
 gem 'will_paginate'
 gem 'wicked_pdf'
 gem 'wkhtmltopdf-binary'
-
+gem "braintree", "~> 2.89.0"

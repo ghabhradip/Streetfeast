@@ -52,6 +52,14 @@ class RestaurantDatatable
         @restaurants=Restaurant.where("is_blacklisted=?",false)
       end
     end
+    if params[:is_deactive].present?
+      if params[:is_deactive].eql? "true"
+        @restaurants=Restaurant.where("is_deactive=?",true)
+      end
+      if params[:is_deactive].eql? "false"
+        @restaurants=Restaurant.where("is_deactive=?",false)
+      end
+    end
     @restaurants = @restaurants.page(page).per_page(per_page)
     @restaurants
   end

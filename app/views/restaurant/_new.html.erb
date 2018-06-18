@@ -66,11 +66,8 @@
     </div>
   <% end %>
   <hr>
-  <p><strong>Menu</strong></p>
-  <div id="menu">
-    <br>
-    <%= button_tag "Add menu",:id => "add_menu",:class=>"btn btn-danger" %>
-  </div>
+
+  <strong>Menu</strong>
   <br>
   <div class="menu_list">
     <%= f.fields_for @menu do |menu|  %>
@@ -89,6 +86,7 @@
       <br>
     <% end %>
   </div>
+
   <div class="field">
     <%= button_tag "Add more",:id => "add_more",:class=>"btn btn-danger" %>
   </div>
@@ -98,7 +96,7 @@
   <div class="row">
     <div class="col-sm-10">
       <div class="field">
-        <input id="search-input" class="form-control" type="text" placeholder="Search Location">
+        <a><input id="search-input" class="form-control" type="text" placeholder="Search Location"></a>
       </div>
     </div>
     <div class="col-sm-2">
@@ -117,8 +115,6 @@
 <script type="text/javascript">
   $( document ).ready(function() {
     $(".map_location").hide(); 
-    $(".menu_list").hide();
-    $("#add_more").hide(); 
     $("#item_name").last().attr("name","menu_item_name[item_name1]");
     $("#price").last().attr("name","menu_item_price[price1]");
   });
@@ -141,7 +137,7 @@
     },
     showAutocompleteOnFocus: true
   })
-  //$("#closed_on").tokenInput();
+
 
   $("#search").on("click",function(){
     var geocoder = new google.maps.Geocoder();
@@ -210,5 +206,37 @@
       $("#price").last().attr("name","menu_item_price[price"+(field_len+1)+"]");
     }
   })
-  
+
+   $("#new_restaurant").on("submit", function(event)
+  {
+    event.preventDefault();
+    $('.menu_list').each(function(index)
+    {
+      var item_price = $('[name="menu_item_price[price'+(index+1)+']"]').val();
+      var item_name =  $('[name="menu_item_name[item_name'+(index+1)+']"]').val();
+      if(item_name=="" && item_price==""){
+        alert("Put item name and item price before submitting!!!");
+      }
+      else if (item_name!="" && item_price=="")
+      {
+        alert("Please put item price!!")
+      }
+      else if(item_price!="" && item_name==""){
+        alert("please put item name!!!");
+      }
+      else
+      {
+        $.ajax({ 
+          type: "POST", 
+          url: $("#new_restaurant").attr('action'), 
+          data: $("#new_restaurant").serialize(),
+          success: function(response) 
+          { 
+
+          } 
+        });
+        return false;
+      }
+    });
+  });
 </script>

@@ -32,4 +32,10 @@ skip_before_action :verify_authenticity_token
     render text: "success"
   end
 
+  def edit_price
+    @menu = Menu.first(conditions: ["id = ?", params[:menu_id]])
+    @menu.update_attribute(:price,params[:price])
+    render json: @menu
+  end
+
 end

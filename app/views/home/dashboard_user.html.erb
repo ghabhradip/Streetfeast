@@ -1,6 +1,14 @@
-
+<style type="text/css">
+  a:hover, a:visited, a:link, a:active
+  {
+    color: black;
+    text-decoration: none;
+  }
+</style>
+<script src="https://js.braintreegateway.com/web/dropin/1.11.0/js/dropin.min.js"></script>
 <div class="row">
   <div class="col-sm-9">
+    
     <% if current_user.fullname.present?&& current_user.mobile_no.present? && current_user.state.present? && current_user.city.present? %>
       <div class="btn btn-outline-primary">
         <%= link_to("Edit profile","/user/#{current_user.id}/edit") %>
@@ -18,17 +26,3 @@
     <a class="btn btn-warning right-align" href="/blog/new">Create a Blog</a>
   </div>
 </div>
-
-
-
-
-<style type="text/css">
-  a:hover, a:visited, a:link, a:active
-  {
-    color: black;
-    text-decoration: none;
-  }
-</style>
-<script>
-
-</script>

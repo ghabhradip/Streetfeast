@@ -11,17 +11,18 @@ class BlogController < ApplicationController
       @blog.save
       if params[:blog][:picture].nil?
         redirect_to :back
+        flash[:notice]= "Blog has been created successfully!"
       else
         params[:blog][:picture][:avatar].each do |c|
           Picture.create(:avatar=> c,:blog_id => @blog.id)
-          redirect_to :back
         end
+        flash[:notice]= "Blog has been created successfully!"
+        redirect_to :back
       end
     else
       flash[:notice] = "Title and Content are mandatory!!"
       redirect_to :back
     end
-    flash[:notice]= "Blog has been created successfully!"
   end
 
   def new
@@ -37,7 +38,7 @@ class BlogController < ApplicationController
     @blog.save
     unless params[:blog][:picture].nil?
       params[:blog][:picture][:avatar].each do |c|
-        Picture.create(:avatar=> c,:blog_id => @blog.id,:user_id => current_user.id)
+        Picture.create(:avatar=> c,:blog_id => @blog.id)
       end
     end
     if current_user.is_admin == true
@@ -56,7 +57,7 @@ class BlogController < ApplicationController
     @blog.save
     unless params[:blog][:picture].nil?
       params[:blog][:picture][:avatar].each do |c|
-        Picture.create(:avatar=> c,:blog_id => @blog.id,:user_id => current_user.id)
+        Picture.create(:avatar=> c,:blog_id => @blog.id)
       end
     end
     if current_user.is_admin == true
@@ -83,7 +84,6 @@ class BlogController < ApplicationController
   def update
     @blog = Blog.find_by_id(params[:id])
     @blog.update_attributes(blog_params)
-    flash[:notice]= "Blog details successfully updated!"
     render json: @blog
   end
 

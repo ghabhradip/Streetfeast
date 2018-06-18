@@ -9,9 +9,9 @@ class RestaurantController < ApplicationController
   end
 
   def create
-    blog_id=params[:blog_id]
+    params[:restaurant][:is_blacklisted] = false
   	@restaurant = Restaurant.create(restaurant_params)
-    @restaurant.update_attribute(:associated_blogs,blog_id)
+    @restaurant.update_attribute(:associated_blogs,params[:blog_id])
     menu_item_name = params[:menu_item_name]
     menu_item_price = params[:menu_item_price]
     restaurant_id = @restaurant.id

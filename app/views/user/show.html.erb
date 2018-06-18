@@ -4,27 +4,6 @@
     <div class="card-body">
       <%= form_for (@user), url: "/user/update/#{@user.id}", :html => {:class =>"my_form",multipart: true} do |f| %>
         <fieldset>
-            <div class="form-group upload-preview">
-              <% if @user.picture.present? %>
-                <div>
-                  <img src = "<%=@user.picture.avatar %>" style="height: 100px;width: 100px; border-radius: 50px;" class= "user_img">
-                  <% if current_user.is_admin.eql? false %>
-                    <img class = "preview">
-                    <img src = "/assets/delete.png" style="height: 25px;width: 25px;" class = "remove_photo">
-                    <img src = "/assets/edit_icon.png" style="height: 25px;width: 25px;" class = "edit_photo" >
-                    <img src = "/assets/addpic.png" style="height: 25px;width: 25px;" class = "add_photo">
-                  <% end %>
-                </div> 
-              <% else %>
-                <div class="form-group upload-preview">
-                  <img class = "preview">
-                  <img src = "/assets/profile.png" style="height: 100px;width: 100px; border-radius: 50px;" class = "no_profile_img" >
-                  <% if current_user.is_admin.eql? false %>
-                    <img src = "/assets/addpic.png" style="height: 25px;width: 25px;" class = "add_photo">
-                  <% end %>
-                </div>
-              <% end %>
-            </div>
           <br>
           <div class="form-group">
             <%= f.text_field :fullname,:required => true,:class=>"form-control",placeholder: "Fullname" , autofocus: true %>
@@ -89,13 +68,6 @@
             </div>
           </div>
           <br>
-          <center>
-	          <div class="form-group user_picture">
-	            <%= f.fields_for @picture do |a|  %>
-	              <%= a.file_field :avatar , :class=> "user_upload_image"%>
-	            <% end %>
-	          </div>
-	        </center>
           <div class="actions">
             <button type="submit" class="btn btn-primary btn_large">Update</button>
           </div>
@@ -104,72 +76,3 @@
     </div>
   </div>
 </center>
-<script type="text/javascript">
-
-
-
-
-  $(document).ready(function(){
-    $(".user_picture").css("display", "none");
-
-    <% if @user.picture.present? %>
-      $(".add_photo").hide();
-
-    <% end %>
-     //$(".upload-preview").css("display", "none");
-    
-  });
-
-
-
-  $(".remove_photo").on("click",function(){
-    //$(".preview").hide();
-    var id = <%= @user.id %>
-    $.ajax({ type: "DELETE",
-     url: "/user/photo_remove/"+id, 
-      success: function(response) 
-      {
-        $(".edit_photo").hide();
-        $(".remove_photo").hide();
-        $(".add_photo").show();
-        $(".user_img").attr("src","/assets/profile.png");
-      } 
-    }); 
-    event.preventDefault(); 
-  })
-
-
-  $(".edit_photo").on("click",function(){
-    $(".user_upload_image").trigger("click");
-    $(".user_img").hide();
-    //$(".user_img").attr("src","/assets/profile.png");
-  })
-
-
-
-  $(".add_photo").on("click",function(){
-    $(".user_upload_image").trigger("click");
-    $(".upload-preview").show();
-  })
-
-    //var preview = $(".upload-preview img");
-
-    $(".user_upload_image").change(function(event){
-      var input = $(event.currentTarget);
-      var file = input[0].files[0];
-      var reader = new FileReader();
-      reader.onload = function(e)
-        {
-          image_base64 = e.target.result;
-          $(".upload-preview").show();
-          $('.upload-preview .no_profile_img').remove();
-          $(".user_img").hide();
-          $(".preview").attr("src", image_base64);
-          $('.preview').css({"height":"100px","border-radius":"50px","width":"100px"});
-        };
-      reader.readAsDataURL(file);
-    });
-
-
-
-</script>

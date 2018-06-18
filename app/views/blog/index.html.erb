@@ -101,8 +101,7 @@ function initialize_script()
 {
   $(".blog_edit").click(function(e)
   { 
-    var id = $(this).attr('id'); 
-    // alert(id);
+    var id = $(this).attr('id');
     $.ajax({ 
       async: true,
       type: 'GET',
@@ -115,6 +114,7 @@ function initialize_script()
       error: function(data){ alert('error'); } 
     })
   });
+  
   $(".close").on("click",function(){
     $(".modal").hide();  
   })

@@ -14,20 +14,18 @@ class UserDatatable
     }
   end
 
-  private
+private
 
   def data
     users.map do |user|
       [ 
-        "<a href='/user/show/#{user.id}' class='user_link'><img id='#{user.id}show' src=\"#{user.picture.present? ? user.picture.avatar : '/assets/profile.png' }\" class='user_picture' style ='height:20px;width:20px; border-radius: 50px;'><span class=\"user_name\">#{user.fullname}</span></span></a>",
+        "<a href='/user/#{user.id}/edit'>#{user.fullname}</a>",
         user.email,
         user.mobile_no,
         user.city,
         user.state,
         user.blogs.count,
-
         "<a href='/user/#{user.id}/edit'><span  class='user_edit' style='cursor: pointer;'><img id='#{user.id}edit' src='/assets/edit_icon.png' class='user_edit' style ='height:20px;width:20px;'></span></a>",
-
         "<span class='user_ban' style='cursor: pointer;'><img id='#{user.id}ban' data-id='#{user.id}' src='/assets/ban_icon.png' class=\"#{user.is_blocked == true ? 'unblock' : 'block' } is_block_test\" style ='height:20px;width:20px;'></span>"
       ]
     end
@@ -49,7 +47,7 @@ class UserDatatable
     @users
   end
  
- def page
+  def page
     params[:start].to_i/per_page + 1
   end
   def per_page

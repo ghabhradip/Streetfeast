@@ -1,5 +1,6 @@
 <link href="//cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css"></link>
 <script src="//cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+
 <div style="padding: 10px;">
   <table id="subsriptions_datatable" class="table table-hover display responsive no-wrap" data-source="<%= subscriptions_path(format: :json) %>">
     <thead>
@@ -11,7 +12,7 @@
     <tbody>  
     </tbody>
   </table> 
-  <a class="btn btn-success right-align newsletter_btn" >Send Newsletter</a>
+  <button class="btn btn-success right-align newsletter_btn" >Send Newsletter</button>
 </div>
 <script>
 
@@ -124,9 +125,12 @@
     });
 
     $(".newsletter_btn").click(function(){
+      $(".newsletter_btn").attr("disabled","true");
       if(user_ids.length==0)
       {
         swal("Please select atleast one user","", "error");
+        $(".newsletter_btn").removeAttr("disabled");
+
       }
       else
       {
@@ -139,7 +143,9 @@
           success: function(data)
           {
             $(".loader").hide();
-            swal("Newsletters has been sent!!","Email has been sent to the select users...", "success");              
+            swal("Newsletters has been sent!!","Email has been sent to the select users...", "success");
+            $(".newsletter_btn").removeAttr("disabled");
+
           }, 
           error: function(data){ alert('error'); } 
         })

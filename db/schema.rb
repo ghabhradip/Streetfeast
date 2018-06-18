@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180530105650) do
+ActiveRecord::Schema.define(version: 20180614043844) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -35,6 +35,18 @@ ActiveRecord::Schema.define(version: 20180530105650) do
     t.datetime "updated_at"
     t.string   "email"
     t.string   "fullname"
+  end
+
+  create_table "feedback", id: false, force: true do |t|
+    t.integer "rating"
+    t.text    "description"
+  end
+
+  create_table "feedbacks", force: true do |t|
+    t.integer  "rating"
+    t.text     "description"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "issue_types", force: true do |t|
@@ -66,7 +78,6 @@ ActiveRecord::Schema.define(version: 20180530105650) do
     t.integer  "avatar_file_size"
     t.datetime "avatar_updated_at"
     t.integer  "blog_id"
-    t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "restaurant_id"

@@ -1,6 +1,5 @@
 class User < ActiveRecord::Base
   has_many :blogs
-  has_one :picture
   has_many :support_tickets
   require "rubygems"
   require "net/https"
@@ -20,7 +19,6 @@ class User < ActiveRecord::Base
       uri = URI.parse(requested_url) #hash
       http = Net::HTTP.start(uri.host, uri.port) #new connection TCP & http  
       request = Net::HTTP::Get.new(uri.request_uri) 
-      res = Net::HTTP.post_form(uri, 'apikey' => 'mve1n+0ecp4-VQPne3KkGkXWJ7cR2zzoowr1evMcU1', 'message' => message, 'sender' => 'TXTLCL', 'numbers' => number)  #post url
-
+      res = Net::HTTP.post_form(uri, 'apikey' => 'mve1n+0ecp4-VQPne3KkGkXWJ7cR2zzoowr1evMcU1', 'message' => message, 'sender' => 'TXTLCL', 'numbers' => number)
     end
 end

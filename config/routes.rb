@@ -104,7 +104,9 @@ StreetFeast::Application.routes.draw do
 
   get '/subscriptions/send_newsletter' => 'subscription#send_newsletter'
 
+  post '/menu/edit_price' => 'menu#edit_price'
 
+  post '/home/feedback' => 'home#create_feedback'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

@@ -23,6 +23,12 @@
   <option value="true">Blacklisted</option>
   <option value="false">Not Blacklisted</option>
 </select>
+<select name="filters" id="deactive_filter">
+  <option value="" selected="selected">Deactive Filter</option>
+  <option value="true">Deactive</option>
+  <option value="false">Not Deactive</option>
+</select>
+
 
 <div style="padding: 10px;">
   <table id="restaurants_datatable" class="table table-hover display responsive no-wrap" data-source="<%= restaurants_path(format: :json) %>">
@@ -64,7 +70,7 @@
           d.cuisine = $("#cuisine_filter option:selected").val();
           d.closed_on = $("#closed_on_filter option:selected").val();
           d.is_blacklisted = $("#blacklisted_filter option:selected").val();
-
+          d.is_deactive = $("#deactive_filter option:selected").val();
         }
       },
       "preDrawCallback": function(settings) 
@@ -76,6 +82,7 @@
         $("#cuisine_filter").insertBefore('#restaurants_datatable_filter input[type="search"]');
         $("#closed_on_filter").insertBefore('#restaurants_datatable_filter');
         $("#blacklisted_filter").insertBefore('#restaurants_datatable_filter');
+        $("#deactive_filter").insertBefore('#restaurants_datatable_filter');
 
       },
       "drawCallback": function(settings) 
@@ -90,6 +97,9 @@
       $('#restaurants_datatable').DataTable().ajax.reload(null,false);
     });
     $("#blacklisted_filter").on("change",function(){
+      $('#restaurants_datatable').DataTable().ajax.reload(null,false);
+    });
+    $("#deactive_filter").on("change",function(){
       $('#restaurants_datatable').DataTable().ajax.reload(null,false);
     });
   });
@@ -108,7 +118,7 @@
     margin-right: 16px;
 }
 #cuisine_filter{
-  margin-right: 322px;
+  margin-right: 192px;
   float: left;
 }
 #closed_on_filter{
@@ -120,5 +130,8 @@
 }
 #restaurants_datatable_length{
   margin-left: 10px;
+}
+#deactive_filter{
+      margin-left: 25px;
 }
 </style>

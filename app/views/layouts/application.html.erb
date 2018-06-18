@@ -60,15 +60,16 @@
     <div class="loader">
       <img src="/assets/source.gif" height="50">
     </div>
+
     <% if user_signed_in? %>
       <% if current_user.is_admin.eql? true %>
         <div class="sidenav">
           <a href="/home/dashboard" class="active home"><b>Home</b></a>
           <a href="/blogs" class="active blogs"><b>Blogs</b> <span class="badge badge-primary badge-pill"><%=Blog.all.count %></span></a>
           <a href="/restaurants" class="active restaurants"><b>Restaurants</b> <span class="badge badge-primary badge-pill"><%=Restaurant.all.count %></span></a>
-          <a href="/support_tickets" class="active support_tickets"  ><b>Issues</b> <span class="badge badge-primary badge-pill"><%=SupportTicket.all.count %></span></a>
-          <a href="/users" class="active users"  ><b>Users</b> <span class="badge badge-primary badge-pill"><%=User.all.count %></span></a>
-          <a href="/subscriptions" class="active subscriptions"  ><b>Subscription</b> <span class="badge badge-primary badge-pill"><%=Subscription.all.count %></span></a>
+          <a href="/support_tickets" class="active support_tickets"><b>Issues</b> <span class="badge badge-primary badge-pill"><%=SupportTicket.all.count %></span></a>
+          <a href="/users" class="active users"  ><b>Users</b><span class="badge badge-primary badge-pill"><%=User.all.count %></span></a>
+          <a href="/subscriptions" class="active subscriptions"><b>Subscription</b> <span class="badge badge-primary badge-pill"><%=Subscription.all.count %></span></a>
         </div>
 
 
@@ -87,7 +88,11 @@
           <% end %>
           <%= yield %>
         </div>
+
+
       <% else %>
+
+
         <div style="padding: 10px;">
           <% if notice %>
             <div class="alert alert-dismissible alert-info">
@@ -103,6 +108,8 @@
           <% end %>
           <%= yield %>
         </div>
+
+
       <% end %>
     <%end%>
   <% else %>
@@ -240,6 +247,7 @@ a{
   function blogs_category(){
     $(".blogs_category").slideToggle();
   }
+
 </script>
 </html>
 

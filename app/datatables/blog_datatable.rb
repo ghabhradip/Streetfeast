@@ -21,8 +21,8 @@ class BlogDatatable
     blogs.map do |blog|
       [ 
         blog.id,
-        "<span onclick='show(#{blog.id})' style='cursor:pointer;'>#{blog.title}</span>",
-        blog.content.truncate(30).html_safe,
+        "<div onclick='show(#{blog.id})' style='cursor:pointer;' class='blog_title_#{blog.id}'>#{blog.title}</div>",
+        "<div class='blog_content_#{blog.id}'>#{blog.content.truncate(30).html_safe}<div>",
         blog.user_id.present? ? blog.user.email : blog.email,
         blog.pictures.count,
         blog.created_at,
