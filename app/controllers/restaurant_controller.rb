@@ -35,6 +35,7 @@ class RestaurantController < ApplicationController
     @restaurant = Restaurant.find_by_id(params[:id])
     @pictures_res = @restaurant.pictures
     @menu_for_restaurant = Menu.where("restaurant_id=?",@restaurant.id)
+    
   end
 
 

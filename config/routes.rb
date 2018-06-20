@@ -106,7 +106,7 @@ StreetFeast::Application.routes.draw do
 
   post '/menu/edit_price' => 'menu#edit_price'
 
-  post '/home/feedback' => 'home#create_feedback'
+  get '/feedback/create' => 'feedback#create'
 
   get "payment/new" => "payment#new"
 

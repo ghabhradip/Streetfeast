@@ -28,6 +28,7 @@
     button.addEventListener('click', function () {
       instance.requestPaymentMethod(function (requestPaymentMethodErr, payload)
       {
+
         $(".loader").show();
         var amount = $("#amount").val();
         $.ajax({

@@ -39,6 +39,14 @@
               <% end %>
             </tr>
           <% end %>
+        <% else %>
+          <% @menu_for_restaurant.where("is_available=?",true).each do |menu| %>
+            <tr>
+              <td><%= menu.id %></td>
+              <td><%= menu.item_name %></td>
+              <td><%= menu.price %></td>
+            </tr>
+          <% end %>
         <% end %>
       <% else %>
         <% @menu_for_restaurant.where("is_available=?",true).each do |menu| %>
