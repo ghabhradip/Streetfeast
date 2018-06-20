@@ -6,3 +6,4 @@ StreetFeast::Application.initialize!
 
 ENV['ADMIN_EMAIL']="abhradip@streetfeast.in"
 ENV['ADMIN_PASSWORD']="goodbyegod@1"
+

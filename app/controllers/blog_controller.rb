@@ -2,10 +2,15 @@ class BlogController < ApplicationController
   skip_before_action :verify_authenticity_token
 
   def create
+    debugger
     if blog_params[:title].present? && blog_params[:content].present?
       @blog  = Blog.create(blog_params)
-      @blog.email = "Annonymus"
-      @blog.fullname = "Annonymus"
+      if blog_params[:fullname].nil?
+        @blog.fullname = "Annonymus"
+      end
+      if blog_params[:email].nil?
+        @blog.email = "Annonymus"
+      end
       @blog.is_reviewed = false
       @blog.is_blocked = false
       @blog.save
@@ -33,6 +38,8 @@ class BlogController < ApplicationController
   def create_blog_user
     @blog  = Blog.create(blog_params)
     @blog.user_id = current_user.id
+    @blog.fullname = current_user.fullname
+    @blog.email = current_user.email
     @blog.is_reviewed = false
     @blog.is_blocked = false
     @blog.save

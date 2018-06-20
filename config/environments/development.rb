@@ -44,4 +44,5 @@ StreetFeast::Application.configure do
     :password       => 'Streetfeastsupport@123',
     :authentication => :login,
   }
+
 end

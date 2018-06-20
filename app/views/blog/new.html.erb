@@ -1,8 +1,8 @@
-<div class="container-fluid">
-  <div class="row ">
-    <div class="col-sm-3 col-md-6">
+<div style="padding: 20px;">
+  <div class="card" style="padding: 10px;">
+    <div class="container-fluid">
       <div class ="new_blog">
-        <h2>Create a new blog</h2>
+        <h1>Create a new blog</h1>
         <%= form_for (@blog),url: "/blog/create_blog_user", :html => { :multipart => true } do |f| %>
           <div class="field">
             <%= f.text_field :title,:class=>"form-control",:placeholder => "Title" %>
@@ -26,7 +26,14 @@
         <% end %>
       </div>
     </div>
-    <div class="col-sm-9 col-md-6">
-    </div>
   </div>
 </div>
+<style type="text/css">
+  .card {
+    box-shadow: 0 10px 20px 0 rgba(0,0,0,0.2);
+    transition: 0.3s;
+    border: 1px solid;
+    border-radius: 5px;
+    height: auto;
+}
+</style>

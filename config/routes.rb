@@ -108,6 +108,10 @@ StreetFeast::Application.routes.draw do
 
   post '/home/feedback' => 'home#create_feedback'
 
+  get "payment/new" => "payment#new"
+
+  post '/payment/create' => 'payment#create'
+
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 
