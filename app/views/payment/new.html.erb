@@ -16,6 +16,7 @@
   </div>
 
 <script>
+
   var button = document.querySelector('#submit-button');
   braintree.dropin.create({
     authorization: '<%= @client_token %>',
@@ -39,9 +40,10 @@
           { 
             $(".loader").hide();
             $("#amount").val("");
+
             if (response == "success") 
             {
-              $('#checkout-message').html("<div class='alert alert-dismissible alert-warning'><button type='button' class='close' data-dismiss='alert'>&times;</button><strong>Success!Yout transaction has been completed successfully.Please refresh the page for another transaction with the same card!!<a href='/payment/new'>Click here to refresh</span></strong></div>");
+              $('#checkout-message').html("<div class='alert alert-dismissible alert-info'><button type='button' class='close' data-dismiss='alert'>&times;</button><strong>Success!Yout transaction has been completed successfully.Please refresh the page for another transaction with the same card!!<a href='/payment/new'>Click here to refresh</span></strong></div>");
             }
           } 
         });

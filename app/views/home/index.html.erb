@@ -157,11 +157,11 @@ a:hover{
             </div>
             <br/>
             <div class="field">
-              <%= f.text_field :email,:placeholder => "Email",:class=>"form-control" %>
+              <%= f.email_field :email,:placeholder => "Email(Optional)",:class=>"form-control" %>
             </div>
             <br>
             <div class="field">
-              <%= f.text_field :fullname,:placeholder => "Fullname",:class=>"form-control" %>
+              <%= f.text_field :fullname,:placeholder => "Fullname(Optional)",:class=>"form-control" %>
             </div>
             <br>
             <div class="field">
@@ -196,7 +196,7 @@ a:hover{
     </div>
   </div>
 </div>
-
+<!-- modal for feedback -->
 <div id="feedback_modal" class="modal" role="document" >
   <div class="modal-dialog">
     <div class="modal-content" >

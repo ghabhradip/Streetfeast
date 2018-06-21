@@ -16,10 +16,8 @@ class FeedbackController < ApplicationController
     feedback.viewers_longitude = feedback_form_field_array[8]
     feedback.viewers_internet_service_provider = feedback_form_field_array[9]
     feedback.save
-
     respond_to do |format|
       format.js {render :nothing => true}
     end
-    
   end
 end

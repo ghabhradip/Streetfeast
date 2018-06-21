@@ -36,44 +36,54 @@ class BlogController < ApplicationController
   end
 
   def create_blog_user
-    @blog  = Blog.create(blog_params)
-    @blog.user_id = current_user.id
-    @blog.fullname = current_user.fullname
-    @blog.email = current_user.email
-    @blog.is_reviewed = false
-    @blog.is_blocked = false
-    @blog.save
-    unless params[:blog][:picture].nil?
-      params[:blog][:picture][:avatar].each do |c|
-        Picture.create(:avatar=> c,:blog_id => @blog.id)
+    if blog_params[:title].present? && blog_params[:content].present?
+      @blog  = Blog.create(blog_params)
+      @blog.user_id = current_user.id
+      @blog.fullname = current_user.fullname
+      @blog.email = current_user.email
+      @blog.is_reviewed = false
+      @blog.is_blocked = false
+      @blog.save
+      unless params[:blog][:picture].nil?
+        params[:blog][:picture][:avatar].each do |c|
+          Picture.create(:avatar=> c,:blog_id => @blog.id)
+        end
       end
-    end
-    if current_user.is_admin == true
-      flash[:notice]= "Blog has been created successfully!"
-      redirect_to dashboard_path
+      if current_user.is_admin == true
+        flash[:notice]= "Blog has been created successfully!"
+        redirect_to dashboard_path
+      else
+        flash[:notice]= "Blog has been created successfully!"
+        redirect_to home_dashboard_user_path
+      end
     else
-      flash[:notice]= "Blog has been created successfully!"
-      redirect_to home_dashboard_user_path
+      redirect_to :back
+      flash[:notice] = "Title and Content are mandatory!!"
     end
   end
 
   def update_blog_user
-    @blog = Blog.find_by_id(params[:id])
-    @blog.update_attributes(blog_params)
-    @blog.user_id = current_user.id
-    @blog.save
-    unless params[:blog][:picture].nil?
-      params[:blog][:picture][:avatar].each do |c|
-        Picture.create(:avatar=> c,:blog_id => @blog.id)
+    if blog_params[:title].present? && blog_params[:content].present?
+      @blog = Blog.find_by_id(params[:id])
+      @blog.update_attributes(blog_params)
+      @blog.user_id = current_user.id
+      @blog.save
+      unless params[:blog][:picture].nil?
+        params[:blog][:picture][:avatar].each do |c|
+          Picture.create(:avatar=> c,:blog_id => @blog.id)
+        end
       end
-    end
-    if current_user.is_admin == true
-      flash[:notice]= "Blog details successfully updated!"
-      redirect_to :back
+      if current_user.is_admin == true
+        flash[:notice]= "Blog details successfully updated!"
+        redirect_to :back
+      else
+        flash[:notice]= "Blog details successfully updated!"
+        redirect_to :back
+      end
     else
-      flash[:notice]= "Blog details successfully updated!"
       redirect_to :back
-    end
+      flash[:notice] = "Title and Content are mandatory!!"
+    end  
   end
 
   def edit

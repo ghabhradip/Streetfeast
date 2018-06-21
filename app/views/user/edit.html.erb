@@ -13,10 +13,18 @@
     </ul>
   </div>
 <% end %>
-
+<style type="text/css">
+    .card {
+    box-shadow: 0 10px 20px 0 rgba(0,0,0,0.2);
+    transition: 0.3s;
+    border: 1px solid;
+    border-radius: 5px;
+    height: auto;
+}
+</style>
 <center>
   <div class="card bg-light mb-3" style="max-width: 26rem;margin-top: 5%;">
-    <div class="card-header">Update Profile</div>
+    <div class="card-header"><b>Update Profile</b></div>
     <div class="card-body">
       <%= form_for (@user), url: "/user/#{@user.id}/update", :html => {:class =>"my_form",multipart: true} do |f| %>
         <fieldset>

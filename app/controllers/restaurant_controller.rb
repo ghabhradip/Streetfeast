@@ -9,26 +9,32 @@ class RestaurantController < ApplicationController
   end
 
   def create
-    params[:restaurant][:is_blacklisted] = false
-  	@restaurant = Restaurant.create(restaurant_params)
-    @restaurant.update_attribute(:associated_blogs,params[:blog_id])
-    menu_item_name = params[:menu_item_name]
-    menu_item_price = params[:menu_item_price]
-    restaurant_id = @restaurant.id
-    if params[:menu_item_name].present? && params[:menu_item_price].present?
-      menu_item_name.keys.each_with_index do |key, index|
-        item_name = menu_item_name.values[index]
-        item_price = menu_item_price.values[index]
-        if item_name.present? && item_price.present?
-          Menu.create(:item_name=>item_name,:price=>item_price,:restaurant_id=>restaurant_id)
+    @restaurant = Restaurant.where("associated_blogs LIKE ?","%#{params[:blog_id]}%")
+    if @restaurant.nil?
+      params[:restaurant][:is_blacklisted] = false
+      @restaurant = Restaurant.create(restaurant_params)
+      @restaurant.update_attribute(:associated_blogs,params[:blog_id])
+      menu_item_name = params[:menu_item_name]
+      menu_item_price = params[:menu_item_price]
+      restaurant_id = @restaurant.id
+      if params[:menu_item_name].present? && params[:menu_item_price].present?
+        menu_item_name.keys.each_with_index do |key, index|
+          item_name = menu_item_name.values[index]
+          item_price = menu_item_price.values[index]
+          if item_name.present? && item_price.present?
+            Menu.create(:item_name=>item_name,:price=>item_price,:restaurant_id=>restaurant_id)
+          end
         end
       end
+      if params[:restaurant][:address][:address_line].present? && params[:restaurant][:address][:latitude].present? && params[:restaurant][:address][:longitude].present?
+        @address = Address.create(:address_line => params[:restaurant][:address][:address_line],:latitude =>params[:restaurant][:address][:latitude],:longitude=>params[:restaurant][:address][:longitude],:restaurant_id=>@restaurant.id)
+      end
+      flash[:notice] = "Restaurant has been created successfully!"
+      redirect_to :back
+    else
+      flash[:notice] = "Restaurant already exists for this blog!"
+      redirect_to :back
     end
-    if params[:restaurant][:address][:address_line].present? && params[:restaurant][:address][:latitude].present? && params[:restaurant][:address][:longitude].present?
-      @address = Address.create(:address_line => params[:restaurant][:address][:address_line],:latitude =>params[:restaurant][:address][:latitude],:longitude=>params[:restaurant][:address][:longitude],:restaurant_id=>@restaurant.id)
-    end
-    flash[:notice] = "Restaurant has been created successfully!"
-    redirect_to :back
   end
 
   def show

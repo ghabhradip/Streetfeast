@@ -15,7 +15,6 @@ class PaymentController < ApplicationController
   end
 
   def create
-    
     gateway = Braintree::Gateway.new(
       :environment => :sandbox,
       :merchant_id => "jfbrrxtxkjt674zy",
@@ -34,9 +33,8 @@ class PaymentController < ApplicationController
       render text: "success"
     else
       redirect_to :back
-      flash[:notice] = "Error!Please try again!#{result.message}"
+      flash[:alert] = "Error!#{result.message}Try again!"
     end
-    #result = gateway.transaction.refund("the_transaction_id")
   end
 
 end

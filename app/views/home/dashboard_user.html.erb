@@ -15,7 +15,7 @@
 <script src="https://js.braintreegateway.com/web/dropin/1.11.0/js/dropin.min.js"></script>
 <div class="row">
   <div class="col-sm-9">
-    <a class="btn btn-warning" href="/payment/new" style="    margin-top: 0px;">Payment</a>
+    <a class="btn btn-warning" href="/payment/new" style="margin-top: 0px;">Payment</a>
     
     <% if current_user.fullname.present?&& current_user.mobile_no.present? && current_user.state.present? && current_user.city.present? %>
       <div class="btn btn-outline-primary">
@@ -39,8 +39,10 @@
 <%restaurant_lat_array=[]%>
 <%restaurant_long_array=[]%>
 
+
 <% Restaurant.all.order('id DESC').each do |restaurant| %>
   <%restaurant_id_array.push(restaurant.id)%>
+  
   <% if restaurant.addresses.present? %>
     <%if restaurant.addresses.first.latitude.present? && restaurant.addresses.first.longitude.present? %>
       <%restaurant_lat_array.push(restaurant.addresses.first.latitude.to_f)%>
@@ -50,6 +52,7 @@
       <%restaurant_long_array.push(0)%>
     <%end%>
   <% end %>
+
   <div class="col-md-4 fl">
     <div class="card bg-light mb-4">
       <div class="card-header"><h4><b><%= link_to("#{restaurant.name.capitalize}","/restaurant/show_for_user/#{restaurant.id}") %></b></h4> </div>
@@ -68,7 +71,10 @@
       </div>
     </div>
   </div>
+
+
 <% end %>
+
 
 <div class="clearfix"></div>
 
