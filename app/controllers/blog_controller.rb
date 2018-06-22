@@ -2,7 +2,6 @@ class BlogController < ApplicationController
   skip_before_action :verify_authenticity_token
 
   def create
-    debugger
     if blog_params[:title].present? && blog_params[:content].present?
       @blog  = Blog.create(blog_params)
       if blog_params[:fullname].nil?
@@ -25,7 +24,7 @@ class BlogController < ApplicationController
         redirect_to :back
       end
     else
-      flash[:notice] = "Title and Content are mandatory!!"
+      flash[:alert] = "Title and Content are mandatory!!"
       redirect_to :back
     end
   end

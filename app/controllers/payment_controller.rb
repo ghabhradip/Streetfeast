@@ -34,7 +34,7 @@ class PaymentController < ApplicationController
       render text: "success"
     else
       redirect_to :back
-      flash[:notice] = "Error!Please try again!#{result.message}"
+      flash[:alert] = "Error!Please try again!#{result.message}"
     end
     #result = gateway.transaction.refund("the_transaction_id")
   end

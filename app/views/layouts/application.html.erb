@@ -24,16 +24,21 @@
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/sweetalert2/6.6.2/sweetalert2.min.css">
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-118277087-1"></script>
+ <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
 
   gtag('config', 'UA-118277087-1');
+  
 </script>
 
 
-<body style="margin-top: 69px;">
+<body>
   <% if user_signed_in? %>
    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <% if current_user.is_admin.nil? %>
@@ -68,11 +73,9 @@
           <a href="/blogs" class="active blogs"><b>Blogs</b> <span class="badge badge-primary badge-pill"><%=Blog.all.count %></span></a>
           <a href="/restaurants" class="active restaurants"><b>Restaurants</b> <span class="badge badge-primary badge-pill"><%=Restaurant.all.count %></span></a>
           <a href="/support_tickets" class="active support_tickets"><b>Issues</b> <span class="badge badge-primary badge-pill"><%=SupportTicket.all.count %></span></a>
-          <a href="/users" class="active users"  ><b>Users</b><span class="badge badge-primary badge-pill"><%=User.all.count %></span></a>
+          <a href="/users" class="active users"><b>Users</b><span class="badge badge-primary badge-pill"><%=User.all.count %></span></a>
           <a href="/subscriptions" class="active subscriptions"><b>Subscription</b> <span class="badge badge-primary badge-pill"><%=Subscription.all.count %></span></a>
         </div>
-
-
         <div class="main">
           <% if notice %>
             <div class="alert alert-dismissible alert-info alert_admin">
@@ -88,12 +91,8 @@
           <% end %>
           <%= yield %>
         </div>
-
-
       <% else %>
-
-
-        <div style="padding: 10px;">
+        <div style="margin-top:80px; padding: 10px;overflow-x: hidden;">
           <% if notice %>
             <div class="alert alert-dismissible alert-info">
               <button type="button" class="close" data-dismiss="alert">&times;</button>
@@ -108,11 +107,12 @@
           <% end %>
           <%= yield %>
         </div>
-
-
       <% end %>
     <%end%>
   <% else %>
+
+
+
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
       <a class="navbar-brand" href="#">Navbar</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
@@ -132,24 +132,39 @@
       </div>
     </nav>
     <br>
-      <% if notice %>
-        <div class="alert alert-dismissible alert-info">
-          <button type="button" class="close" data-dismiss="alert">&times;</button>
-          <strong><%= notice %></strong>
-       </div>
-      <% end %>
-      <% if alert %>
-        <div class="alert alert-dismissible alert-warning">
-          <button type="button" class="close" data-dismiss="alert">&times;</button>
-          <strong><%= alert %></strong>
-       </div>
-      <% end %>
-    <%= yield %>
+      <div style="margin-top:40px;">
+          <% if notice %>
+            <div class="alert alert-dismissible alert-info">
+              <button type="button" class="close" data-dismiss="alert">&times;</button>
+              <strong><%= notice %></strong>
+            </div>
+          <% end %>
+          <% if alert %>
+            <div class="alert alert-dismissible alert-warning">
+              <button type="button" class="close" data-dismiss="alert">&times;</button>
+              <strong><%= alert %></strong>
+           </div>
+          <% end %>
+          <%= yield %>
+        </div>
   <% end %>
-  <br>
+
+
+
+
   <%= tinymce %>
 </body>
 <style type="text/css">
+.alert-warning{
+  color: red;
+}
+.alert{
+      z-index: 9999;
+    display: inline-block;
+    position: fixed;
+    right: 40px;
+    top: 50px;
+}
 .loader {
   position: fixed;
   height: 100%;
@@ -166,19 +181,52 @@
   margin: auto;
 }
 .sidenav {
-    width: 180px;
+    width: 195px;
     position:  fixed;
     top: 69px;
-    background: #00000014;
+    background: #343a40;
     overflow-x: hidden;
     height:100%;
+}
+::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+::-webkit-scrollbar-button {
+  width: 0px;
+  height: 0px;
+}
+::-webkit-scrollbar-thumb {
+  background: #636269;
+  border: 0px none #ffffff;
+  border-radius: 50px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #636269;
+}
+::-webkit-scrollbar-thumb:active {
+  background: #636269;
+}
+::-webkit-scrollbar-track {
+  background: #333238;
+  border: 0px none #ffffff;
+  border-radius: 50px;
+}
+::-webkit-scrollbar-track:hover {
+  background: #333238;
+}
+::-webkit-scrollbar-track:active {
+  background: #333238;
+}
+::-webkit-scrollbar-corner {
+  background: transparent;
 }
 
 .sidenav a {
     padding: 6px 0px 6px 16px;
     text-decoration: none;
     font-size: 15px;
-    color: #000;
+    color: white;
     display: block;
 }
 
@@ -187,9 +235,7 @@
     .sidenav a {font-size: 18px;}
 }
 .main{
-  margin-left: 174px;
-  overflow-x: hidden;
-  margin-top: 75px;
+  padding: 70px 20px 0 195px;
 }
 .alert_admin{
   margin-top: 3px;
@@ -198,14 +244,14 @@
 }
 a{
   cursor: pointer;
-  margin-top: 5px;
+  margin-top: 1px;
 }
 .sidenav a:hover{
   border-left: 5px solid #000;
-  background-color: #00000030; 
+  background-color: #1cd2b9; 
 }
 .on_click_active{
-  background: #00000030;
+  background: #1cd2b9;
   border-left: 5px solid #000;
 }
 .line{
@@ -214,6 +260,12 @@ a{
   height: 54px;
 }
 
+.navbar{
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 999;
+}
 
 </style>
 <script>
@@ -250,4 +302,3 @@ a{
 
 </script>
 </html>
-

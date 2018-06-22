@@ -59,7 +59,7 @@ class HomeController < ApplicationController
   def send_sms
     number = params[:sms_user][:mobile_number]
     if number.length < 10 || number.length >10
-      flash[:notice]="Enter correct number"
+      flash[:alert]="Enter correct number"
       redirect_to :back
     else
       message = params[:sms_user][:message]

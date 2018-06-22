@@ -63,7 +63,7 @@
         $(".loader").show();
       },
       "initComplete": function(settings, json) {
-        $("#input_filter").insertBefore('#tickets_datatable_filter input[type="search"]');
+        $("#input_filter").insertBefore('#tickets_datatable_filter');
 
       },
       "drawCallback": function(settings) 
@@ -214,11 +214,9 @@
     margin-right: 16px;
 }
 #input_filter{
-  margin-right: 30px;
+  margin-left: 20px;
 }
-#tickets_datatable_length{
-  margin-left: 10px;
-}
+
 table.dataTable th.select-checkbox:before { border-color: white; }
 table.dataTable tr.selected th.select-checkbox:after { text-shadow: none; font-weight: normal;}
 

@@ -27,7 +27,7 @@ class BlogDatatable
         blog.pictures.count,
         blog.created_at,
         blog.updated_at,
-        "<a href='javascript:void(0)' class='blog_edit' id='#{blog.id}' 'data-toggle'='modal' 'data-target'='#myModal' 'data-remote'='true'><span><img src='/assets/edit_icon.png' style ='height:20px;width:20px;cursor: pointer;'></span></a>"  
+        "<a href='javascript:void(0)' class='blog_edit' id='#{blog.id}' 'data-toggle'='modal' 'data-target'='#edit_blog_modal' 'data-remote'='true'><span><img src='/assets/edit_icon.png' style ='height:20px;width:20px;cursor: pointer;'></span></a>"  
       ]
     end
   end

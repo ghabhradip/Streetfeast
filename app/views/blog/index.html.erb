@@ -1,5 +1,6 @@
 <link href="//cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css"></link>
 <script src="//cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+
 <select name="filters" id="reviewed_filter">
   <option value="" selected="selected">Review Filter</option>
   <option value="true">Reviewed</option>
@@ -10,8 +11,6 @@
   <option value="true">Blocked</option>
   <option value="false">Not Blocked</option>
 </select>
-
-
 
 <div style="padding: 10px;">
   <table id="blog_datatable" class="table table-hover display responsive no-wrap" data-source="<%= blogs_path(format: :json) %>">
@@ -32,21 +31,31 @@
     </tbody>
   </table> 
 </div>
-<div id="myModal" class="modal" role="document">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h4 class="modal-title">Modal Header</h4>
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-      </div>
-      <div class="modal-body">
-        
+
+
+  <div class="modal modal-fade-in" id="edit_blog_modal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Modal Heading</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        <div class="modal-body">          
+        </div>
       </div>
     </div>
   </div>
-</div>
+
+
+
+
+
+
+
+
 <%= tinymce %>
 <script>
+
   jQuery(document).ready(function() 
   {
     $('#blog_datatable').dataTable({
@@ -109,7 +118,7 @@ function initialize_script()
       success: function(data)
       {
         $(".modal-body").html(data);
-        $(".modal").show();  
+        $(".modal-fade-in").fadeIn("slow"); 
       }, 
       error: function(data){ alert('error'); } 
     })
@@ -122,23 +131,23 @@ function initialize_script()
 </script>
 
 <style>
+div#edit_blog_modal {
 
+    background: rgba(9, 9, 9, 0.65);
+}
 .modal-backdrop {
-  position: absolute;
-  right: 0;
-  left: 0;
-  opacity: 0.5;
-  height:100% 
-  }
-  #example_wrapper .row:first-child{
-    margin-bottom: 24px;
-  }
+  
+}
+
+#example_wrapper .row:first-child{
+  margin-bottom: 24px;
+}
 #blog_datatable_filter input[type="search"] {
-    border: 1px solid #aaa;
-    border-radius: 15px;
-    padding: 5px;
-    outline: none;
-    margin-right: 16px;
+  border: 1px solid #aaa;
+  border-radius: 15px;
+  padding: 5px;
+  outline: none;
+  margin-right: 16px;
 }
 #reviewed_filter{
   float: left;

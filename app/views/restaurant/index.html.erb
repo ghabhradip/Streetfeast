@@ -30,7 +30,7 @@
 </select>
 
 
-<div style="padding: 10px;">
+<div style="padding: 5px;">
   <table id="restaurants_datatable" class="table table-hover display responsive no-wrap" data-source="<%= restaurants_path(format: :json) %>">
     <thead>
       <tr>
@@ -79,7 +79,7 @@
         $(".loader").show();
       },
       "initComplete": function(settings, json) {
-        $("#cuisine_filter").insertBefore('#restaurants_datatable_filter input[type="search"]');
+        $("#cuisine_filter").insertBefore('#restaurants_datatable_filter');
         $("#closed_on_filter").insertBefore('#restaurants_datatable_filter');
         $("#blacklisted_filter").insertBefore('#restaurants_datatable_filter');
         $("#deactive_filter").insertBefore('#restaurants_datatable_filter');
@@ -115,15 +115,13 @@
     border-radius: 15px;
     padding: 5px;
     outline: none;
-    margin-right: 16px;
+    /*margin-right: 16px;*/
 }
 #cuisine_filter{
-  margin-right: 192px;
-  float: left;
+  margin-left: 30px;
 }
 #closed_on_filter{
-  margin-left: 17px;
-  float: left;
+  margin-left:22px;
 }
 #blacklisted_filter{
   margin-left: 25px;
@@ -132,6 +130,6 @@
   margin-left: 10px;
 }
 #deactive_filter{
-      margin-left: 25px;
+  margin-left: 25px;
 }
 </style>

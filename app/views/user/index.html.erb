@@ -7,7 +7,9 @@
   <option value="false">Not Blocked</option>
 </select>
 
+
 <div style="padding: 10px;">
+  
   <table id="users_datatable" class="table table-hover display responsive no-wrap" data-source="<%= users_path(format: :json) %>">
     <thead>
       <tr>
@@ -25,25 +27,6 @@
         
     </tbody>
   </table>
-</div>
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        ...
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
-      </div>
-    </div>
-  </div>
 </div>
 
 <script>
@@ -70,7 +53,7 @@
         $(".loader").show();
       },
       "initComplete": function(settings, json) {
-        $("#blocked_user_filter").insertBefore('#users_datatable_filter input[type="search"]');
+        $("#blocked_user_filter").insertBefore('#users_datatable_filter');
         
         $('.is_block_test').each(function() {
           if($(this).hasClass("unblock")){
@@ -87,7 +70,8 @@
         initialize_script();
       }
     });
-    $("#users_datatable_filter").on("change",function(){
+    $("#blocked_user_filter").on("change",function(){
+
       $('#users_datatable').DataTable().ajax.reload(null,false);
     });
   });
@@ -153,8 +137,7 @@ function initialize_script(){
     margin-right: 16px;
 }
 #blocked_user_filter{
-  margin-right: 576px;
-  float: left;
+  margin-left: 20px;
 }
 span.user_name {
   margin-left: 5px;

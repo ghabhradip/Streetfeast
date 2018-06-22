@@ -9,7 +9,6 @@
 <div class="row">
   <div class="col-sm-9">
     <a class="btn btn-warning" href="/payment/new">Payment</a>
-    
     <% if current_user.fullname.present?&& current_user.mobile_no.present? && current_user.state.present? && current_user.city.present? %>
       <div class="btn btn-outline-primary">
         <%= link_to("Edit profile","/user/#{current_user.id}/edit") %>
