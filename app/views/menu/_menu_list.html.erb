@@ -8,7 +8,7 @@
 <table class="table table-hover" id="menu_list_datatable">
   <thead>
     <tr class="table-info">
-      <th scope="col">id</th>
+      <th scope="col"><h5>Item No</h5></th>
       <th scope="col"><h5>Item Name</h5></th>
       <th scope="col"><h5>Price(rs)</h5></th>
       <% if user_signed_in? %>
@@ -37,6 +37,14 @@
                   <% end %>
                 <% end %>
               <% end %>
+            </tr>
+          <% end %>
+        <% else %>
+          <% @menu_for_restaurant.where("is_available=?",true).each do |menu| %>
+            <tr>
+              <td><%= menu.id %></td>
+              <td><%= menu.item_name %></td>
+              <td><%= menu.price %></td>
             </tr>
           <% end %>
         <% end %>

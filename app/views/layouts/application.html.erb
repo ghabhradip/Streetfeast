@@ -24,10 +24,9 @@
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/sweetalert2/6.6.2/sweetalert2.min.css">
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-118277087-1"></script>
- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
@@ -92,7 +91,12 @@
           <%= yield %>
         </div>
       <% else %>
-        <div style="margin-top:80px; padding: 10px;overflow-x: hidden;">
+        <div class="sidenav">
+          <a href="/home/dashboard_user" class="active home_user"><b>Home</b></a>
+          <a href="#" class="active blogs"><b>Blogs</b> <span class="badge badge-primary badge-pill"><%=Blog.all.count %></span></a>
+          <a href="" class="active restaurants"><b>Restaurants</b> <span class="badge badge-primary badge-pill"><%=Restaurant.all.count %></span></a>
+        </div>
+        <div class="main" style="margin: 10px;">
           <% if notice %>
             <div class="alert alert-dismissible alert-info">
               <button type="button" class="close" data-dismiss="alert">&times;</button>
@@ -132,21 +136,21 @@
       </div>
     </nav>
     <br>
-      <div style="margin-top:40px;">
-          <% if notice %>
-            <div class="alert alert-dismissible alert-info">
-              <button type="button" class="close" data-dismiss="alert">&times;</button>
-              <strong><%= notice %></strong>
-            </div>
-          <% end %>
-          <% if alert %>
-            <div class="alert alert-dismissible alert-warning">
-              <button type="button" class="close" data-dismiss="alert">&times;</button>
-              <strong><%= alert %></strong>
-           </div>
-          <% end %>
-          <%= yield %>
-        </div>
+      <div style="margin-top:40px;overflow-x: hidden;">
+        <% if notice %>
+          <div class="alert alert-dismissible alert-info">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <strong><%= notice %></strong>
+          </div>
+        <% end %>
+        <% if alert %>
+          <div class="alert alert-dismissible alert-warning">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <strong><%= alert %></strong>
+         </div>
+        <% end %>
+        <%= yield %>
+      </div>
   <% end %>
 
 
@@ -158,6 +162,7 @@
 .alert-warning{
   color: red;
 }
+
 .alert{
       z-index: 9999;
     display: inline-block;
@@ -165,6 +170,7 @@
     right: 40px;
     top: 50px;
 }
+
 .loader {
   position: fixed;
   height: 100%;
@@ -294,6 +300,9 @@ a{
     else if(x=="/subscriptions")
     {
       $(".subscriptions").addClass("on_click_active"); 
+    }
+    else if(x=="/home/dashboard_user"){
+      $(".home_user").addClass("on_click_active");
     }
   });
   function blogs_category(){

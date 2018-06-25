@@ -5,6 +5,21 @@
 
 <style>
 
+.card {
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    transition: 0.3s;
+    border: 1px solid;
+    border-radius: 5px;
+    height: 450px;
+}
+.card_for_restaurant{
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    transition: 0.3s;
+    border: 1px solid;
+    border-radius: 5px;
+    height: 450px;
+}
+
 .col-md-4.fl {
   float: left;
 }
@@ -67,16 +82,6 @@ a:hover{
 </style>
 
 <div class="row" style="padding-left:20px;">
-  <div class="col-sm-10">
-    <input id="search-input" class="form-control" type="text" placeholder="Search Restaurant">
-  </div>
-  <div class="col-sm-2">
-      <img src="/assets/search.png" style="height: 25px;width: 25px;" id="search">
-  </div>
-</div>
-<br>
-
-<div class="row" style="padding-left:20px;">
   <div class="col-md-1">
     <button class="btn btn-warning btn_large" id = "subscribe_btn" >Subscribe</button>
   </div>
@@ -94,30 +99,32 @@ a:hover{
 <%restaurant_lat_array=[]%>
 <%restaurant_long_array=[]%>
 
-<% Restaurant.all.order('id DESC').each do |r| %>
-  <%restaurant_id_array.push(r.id)%>
-  <% if r.addresses.present? %>
-    <%if r.addresses.first.latitude.present? && r.addresses.first.longitude.present? %>
-      <%restaurant_lat_array.push(r.addresses.first.latitude.to_f)%>
-      <%restaurant_long_array.push(r.addresses.first.longitude.to_f)%>
+<% Restaurant.all.order('id DESC').each do |restaurant| %>
+  <%restaurant_id_array.push(restaurant.id)%>
+  <% if restaurant.addresses.present? %>
+    <%if restaurant.addresses.first.latitude.present? && restaurant.addresses.first.longitude.present? %>
+      <%restaurant_lat_array.push(restaurant.addresses.first.latitude.to_f)%>
+      <%restaurant_long_array.push(restaurant.addresses.first.longitude.to_f)%>
     <%else%>
       <%restaurant_lat_array.push(0)%>
       <%restaurant_long_array.push(0)%>
     <%end%>
   <% end %>
   <div class="col-md-4 fl">
-    <div class="card bg-light mb-4">
-      <div class="card-header"><h4><b><%= link_to("#{r.name.capitalize}","/restaurant/show_for_user/#{r.id}") %></b></h4> </div>
+    <div class="card_for_restaurant bg-light mb-4">
+      <div class="card-header"><h4><b><%= link_to("#{restaurant.name.capitalize}","/restaurant/show_for_non_user/#{restaurant.id}") %></b></h4> </div>
       <div class="card-body">
-        <p><b>Description:</b> <%= r.description.truncate(70) %></p> 
-        <p><b>Contact Number: </b><%= r.contact_number %></p>
-        <% if r.addresses.present? %>
-          <p><b>Address: </b><%= r.addresses.first.address_line %></p>
+        <p><b>Description:</b> <%= restaurant.description.truncate(70) %></p> 
+        <p><b>Contact Number: </b><%= restaurant.contact_number %></p>
+        <% if restaurant.addresses.present? %>
+          <p><b>Address: </b><%= restaurant.addresses.first.address_line %></p>
         <% end %>
-        <p><b>Timings: </b><%= r.opening_time %>-<%= r.closing_time %></p>
-        <p><b>Cost for two: </b>Rs.<%= r.cost_for_two %></p>
-        <p><b>Get Route :</b><img src="/assets/map_icon.png" style="height: 30px;width: 30px;" data-id ="<%=r.id%>" class ="map_icon" data-toggle="modal" data-target= "#map_modal" data-remote = "true"></p>
-        <p><b>Distance: </b><span id = "distance_<%= r.id %>"></span></p>
+        <p><b>Timings: </b><%= restaurant.opening_time %>-<%= restaurant.closing_time %></p>
+        <p><b>Cost for two: </b>Rs.<%= restaurant.cost_for_two %></p>
+        <% if restaurant.addresses.present? %>
+          <p><b>Get Route :</b><img src="/assets/map_icon.png" style="height: 30px;width: 30px;cursor: pointer;" data-id ="<%=restaurant.id%>" class ="map_icon" data-toggle="modal" data-target= "#map_modal" data-remote = "true"></p>
+          <p><b>Distance: </b><span id = "distance_<%= restaurant.id %>" ></span></p>
+        <% end %>
       </div>
     </div>
   </div>
@@ -125,48 +132,58 @@ a:hover{
 
 <div class="clearfix"></div>
 
-<div style="padding: 20px;">
-  <div class="card bg-light mb-4 new_blog" style="padding: 10px;">
-    <h2>Write a new blog</h2>
-    <%= form_for (@blog),url: "/blog/create", :html => { :multipart => true } do |f| %>
-      <div class="field">
-        <%= f.text_field :title,:class=>"form-control",:placeholder => "Title" %>
-      </div>
-      <br>
 
-      <div class="field">
-        <%= f.text_area :content, :class => "tinymce",:placeholder => "Content" %>
-      </div>
-      <br/>
-      <div class="field">
-        <%= f.text_field :email,:placeholder => "Email",:class=>"form-control" %>
-      </div>
-      <br>
-      <div class="field">
-        <%= f.text_field :fullname,:placeholder => "Fullname",:class=>"form-control" %>
-      </div>
-      <br>
-      <div class="field">
-        <%= f.fields_for @picture do |a|  %>
-          <b> Upload Images : </b>
-          <%= a.file_field :avatar , multiple: true %>
-        <% end %>
-      </div>
-      <br/>
-      <div class="actions">
-        <button type="submit" class="btn btn-primary btn_large" >Create</button>
-        <button class="btn btn-primary btn_large" id = "cancel_btn" >Cancel</button>
-      </div>
-    <% end %>
+
+
+
+<!-- form for creating blog for not signed in users -->
+<div style="padding: 20px;">
+  <div class="card" style="padding: 10px;height: auto;">
+    <div class="container-fluid">          
+        <div class ="new_blog">
+          <h2>Write a new blog</h2>
+          <%= form_for (@blog),url: "/blog/create", :html => { :multipart => true } do |f| %>
+            <div class="field">
+              <%= f.text_field :title,:class=>"form-control",:placeholder => "Title" %>
+            </div>
+            <br>
+
+            <div class="field">
+              <%= f.text_area :content, :class => "tinymce",:placeholder => "Content" %>
+            </div>
+            <br/>
+            <div class="field">
+              <%= f.email_field :email,:placeholder => "Email(Optional)",:class=>"form-control" %>
+            </div>
+            <br>
+            <div class="field">
+              <%= f.text_field :fullname,:placeholder => "Fullname(Optional)",:class=>"form-control" %>
+            </div>
+            <br>
+            <div class="field">
+              <%= f.fields_for @picture do |a|  %>
+                <b> Upload Images : </b>
+                <%= a.file_field :avatar , multiple: true %>
+              <% end %>
+            </div>
+            <br/>
+            <div class="actions">
+              <button type="submit" class="btn btn-primary btn_large" >Create</button>
+              <button class="btn btn-primary btn_large" id = "cancel_btn" >Cancel</button>
+            </div>
+          <% end %>
+        </div>
+    </div>
   </div>
 </div>
 
-<!-- modal for route map -->
-<div id="map_modal" class="modal fade" role="document" >
+<!-- modal for map -->
+<div id="map_modal" class="modal modal-fade-in" role="document" >
+
   <div class="modal-dialog">
     <div class="modal-content" >
       <div class="modal-body">
-        <div id="geolocation" style="width: 467px; height: 400px;"></div>
+        <div id="geolocation" style="max-width: 467px; height: 400px;"></div>
         <br>
         <p><b>Distance: </b><span id = "distance" ></span></p>
       </div>
@@ -270,19 +287,19 @@ if (navigator.geolocation)
   $(document).ready(function()
   {
 
-    $(".new_blog").hide();
+    $(".card").hide();
     $("#cancel_btn").hide();
   });
   $("#blog_btn").click(function()
   {
     $(this).hide();
-    $(".new_blog").show();
+    $(".card").show();
     $("#cancel_btn").show();
   })
   $("#cancel_btn").click(function(e)
   {
     e.preventDefault();
-    $(".new_blog").hide();
+    $(".card").hide();
     $("#blog_btn").show();
   })
 
@@ -315,6 +332,7 @@ if (navigator.geolocation)
       success: function(data)
       {
         $(".modal-body").show();
+        $(".modal-fade-in").fadeIn();
         navigator.geolocation.getCurrentPosition(showPosition); //function to get current location
         function showPosition(position) 
         {
@@ -386,40 +404,37 @@ if (navigator.geolocation)
      })
   });
 
+
   $("#submit_feedback_btn").click(function(){
-    var rating = $("input[name='rating']:checked").val();
-    var description = $("#feedback_description").val();
-    if(rating==undefined && description!="")
+
+  // We are using ipdata API to obtain the IP and other geolocation data of the person who is submiting feedback
+
+  $.get("https://api.ipdata.co", function (response) 
+  {
+    var api_response = JSON.stringify(response, null, 4);
+    var viewers_ip = response["ip"];
+    var viewers_city = response["city"];
+    var viewers_region = response["region"];
+    var viewers_country = response["country_name"];
+    var viewers_continent = response["continent_name"];
+    var viewers_latitude = response["latitude"];
+    var viewers_longitude = response["longitude"];
+    var viewers_internet_service_provider = response["organisation"];
+    var feedback_description= $("#feedback_description").val();
+    var final_feedback_rating = $("input[name='rating']:checked").val();
+    if(final_feedback_rating==undefined){
+      final_feedback_rating=0;
+    }
+
+    if(feedback_description == null || feedback_description == "")
     {
-      $.ajax({ 
-        async: true,
-        type: 'POST',
-        url: "/home/feedback",
-        data: {rating: rating,desc: description},
-        success: function(data)
-        {
-          $(".close").trigger("click");
-          swal("Successfull!","Thank you for your feedback!", "success"); 
-        }, 
-        error: function(data){ alert('error'); } 
-      });
+      feedback_description = "nothing";
     }
-    else if(rating!=undefined && description==""){
-      $.ajax({ 
-        async: true,
-        type: 'POST',
-        url: "/home/feedback",
-        data: {rating: rating,desc: description},
-        success: function(data)
-        {
-          $(".close").trigger("click");
-        }, 
-        error: function(data){ alert('error'); } 
-      });
-    }
-    else
-    {
-      $(".close").trigger("click");
-    }
+    $.getScript("/feedback/create.js?pt=" + feedback_description +"@@@"+final_feedback_rating+"@@@"+viewers_ip+"@@@"+viewers_city+"@@@"+viewers_region+"@@@"+viewers_country+"@@@"+viewers_continent+"@@@"+viewers_latitude+"@@@"+viewers_longitude+"@@@"+viewers_internet_service_provider);
+  }, "jsonp");
+
+    $(".close").trigger("click");
+    swal("Thank you for submitting your feedback");
   });
+
 </script>

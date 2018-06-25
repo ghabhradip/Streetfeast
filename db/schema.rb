@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180614043844) do
+ActiveRecord::Schema.define(version: 20180620111932) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -37,14 +37,17 @@ ActiveRecord::Schema.define(version: 20180614043844) do
     t.string   "fullname"
   end
 
-  create_table "feedback", id: false, force: true do |t|
-    t.integer "rating"
-    t.text    "description"
-  end
-
   create_table "feedbacks", force: true do |t|
-    t.integer  "rating"
+    t.string   "rating"
     t.text     "description"
+    t.string   "viewers_ip"
+    t.string   "viewers_city"
+    t.string   "viewers_region"
+    t.string   "viewers_country"
+    t.string   "viewers_continent"
+    t.string   "viewers_latitude"
+    t.string   "viewers_longitude"
+    t.string   "viewers_internet_service_provider"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -133,10 +136,6 @@ ActiveRecord::Schema.define(version: 20180614043844) do
     t.boolean  "is_blocked",             default: false
     t.boolean  "is_admin"
     t.string   "state"
-    t.string   "provider"
-    t.string   "uid"
-    t.string   "name"
-    t.text     "image"
     t.string   "invitation_token"
     t.datetime "invitation_created_at"
     t.datetime "invitation_sent_at"

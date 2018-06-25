@@ -1,7 +1,7 @@
 <center>
-	<h2>Forgot your password?</h2>
+	
 	<div class="card bg-light mb-3" style="max-width: 26rem;">
-	  <div class="card-header">Header</div>
+	  <div class="card-header"><h2>Forgot your password?</h2></div>
 	  <div class="card-body">
 	    <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
 	  	<%= devise_error_messages! %>
@@ -28,7 +28,13 @@
 
 
 <style>
-
+  .card {
+    box-shadow: 0 10px 20px 0 rgba(0,0,0,0.2);
+    transition: 0.3s;
+    border: 1px solid;
+    border-radius: 5px;
+    height: auto;
+}
 .link{
   font-size: 12px;
 }

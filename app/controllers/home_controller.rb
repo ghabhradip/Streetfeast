@@ -67,12 +67,4 @@ class HomeController < ApplicationController
       redirect_to dashboard_path
     end
   end
-  def create_feedback
-    if params[:rating].nil?
-      params[:rating]= 0
-    end
-    Feedback.create(rating: params[:rating],description: params[:desc])
-    render text: "success"
-  end
-
 end

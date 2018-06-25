@@ -70,7 +70,7 @@ StreetFeast::Application.routes.draw do
 
   get 'restaurant/:id' => 'restaurant#show'
 
-  get 'restaurant/show_for_user/:id' => 'restaurant#show_for_user'
+  get 'restaurant/show_for_non_user/:id' => 'restaurant#show_for_non_user'
 
   get 'restaurant/pic/show/:id' => 'restaurant#show_pic'
 
@@ -106,7 +106,7 @@ StreetFeast::Application.routes.draw do
 
   post '/menu/edit_price' => 'menu#edit_price'
 
-  post '/home/feedback' => 'home#create_feedback'
+  get '/feedback/create' => 'feedback#create'
 
   get "payment/new" => "payment#new"
 
