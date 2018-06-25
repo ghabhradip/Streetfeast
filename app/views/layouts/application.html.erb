@@ -7,8 +7,8 @@
 
   <%= csrf_meta_tags %>
 </head>
-<link href="//cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css"></link>
-<script src="//cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+<!-- <link href="//cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css"></link>
+<script src="//cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script> -->
 <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css" />
 <script type="text/javascript" charset="utf8" src="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.4/jquery.dataTables.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -24,9 +24,13 @@
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/sweetalert2/6.6.2/sweetalert2.min.css">
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-118277087-1"></script>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
 
+
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+
+
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
@@ -152,10 +156,6 @@
         <%= yield %>
       </div>
   <% end %>
-
-
-
-
   <%= tinymce %>
 </body>
 <style type="text/css">

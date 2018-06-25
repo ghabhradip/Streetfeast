@@ -13,23 +13,25 @@
 </select>
 
 <div style="padding: 10px;">
-  <table id="blog_datatable" class="table table-hover display responsive no-wrap" data-source="<%= blogs_path(format: :json) %>">
-    <thead>
-      <tr>
-        <th scope="col">ID</th>
-        <th scope="col">Title</th>
-        <th scope="col">Content</th>
-        <th scope="col">Email</th>
-        <th scope="col">Pictures</th>
-        <th scope="col">Created at</th>
-        <th scope="col">Updated At </th>
-        <th scope="col"></th>
-      </tr>
-    </thead>
-    <tbody>
-      
-    </tbody>
-  </table> 
+  <div class="table-responsive">
+    <table id="blog_datatable" class="table table-striped table-hover dt-responsive display nowrap" data-source="<%= blogs_path(format: :json) %>">
+      <thead>
+        <tr>
+          <th scope="col">ID</th>
+          <th scope="col">Title</th>
+          <th scope="col">Content</th>
+          <th scope="col">Email</th>
+          <th scope="col">Pictures</th>
+          <th scope="col">Created at</th>
+          <th scope="col">Updated At </th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        
+      </tbody>
+    </table> 
+  </div>
 </div>
 
 
@@ -58,7 +60,9 @@
 
   jQuery(document).ready(function() 
   {
+    
     $('#blog_datatable').dataTable({
+      "responsive": true,
       "serverSide": true,
       "pagingType": "full_numbers",
       "oLanguage": { "sSearch": ""},
