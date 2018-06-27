@@ -9,7 +9,6 @@ class RestaurantController < ApplicationController
   end
 
   def create
-    debugger
     @restaurant = Restaurant.where("associated_blogs LIKE ?","%#{params[:blog_id]}%").first
     if @restaurant.nil?
       params[:restaurant][:is_blacklisted] = false

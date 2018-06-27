@@ -13,18 +13,10 @@
     </ul>
   </div>
 <% end %>
-<style type="text/css">
-    .card {
-    box-shadow: 0 10px 20px 0 rgba(0,0,0,0.2);
-    transition: 0.3s;
-    border: 1px solid;
-    border-radius: 5px;
-    height: auto;
-}
-</style>
+
 <center>
-  <div class="card bg-light mb-3" style="max-width: 26rem;margin-top: 5%;">
-    <div class="card-header"><b>Update Profile</b></div>
+  <div class="card bg-light mb-3" style="max-width: 46rem;margin-top: 70px;">
+    <div class="card-header"><h3><b>Update Profile</b></h3></div>
     <div class="card-body">
       <%= form_for (@user), url: "/user/#{@user.id}/update", :html => {:class =>"my_form",multipart: true} do |f| %>
         <fieldset>
@@ -107,19 +99,13 @@
           </div>
           <br>
           <div class="actions">
-            <button type="submit" class="btn btn-primary btn_large">Update</button>
+            <button type="submit" class="btn btn-primary">Update</button>
           </div>
         </fieldset>
       <% end %>
     </div>
   </div>
 </center>
-<style type="text/css">
-  .btn_large
-{
-  width: 200px;
-}
-</style>
 <script>
   $( function() {
     var availableTags = ["Mumbai","Delhi","Bangalore","Hyderabad","Ahmedabad","Chennai","Kolkata","Surat","Pune","Jaipur","Lucknow","Kanpur","Nagpur","Visakhapatnam","Indore"];

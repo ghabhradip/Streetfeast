@@ -10,7 +10,7 @@
 </style>
 
 <center>
-  <div class="card bg-light mb-3" style="max-width: 26rem; margin-top: 5%;">
+  <div class="card bg-light mb-3" style="max-width: 46rem; margin-top: 5%;">
     <div class="card-header"><b>Profile</b></div>
     <div class="card-body">
       <%= form_for (@user), url: "/user/update/#{@user.id}", :html => {:class =>"my_form",multipart: true} do |f| %>
@@ -80,7 +80,7 @@
           </div>
           <br>
           <div class="actions">
-            <button type="submit" class="btn btn-primary btn_large">Update</button>
+            <button type="submit" class="btn btn-primary">Update</button>
           </div>
         </fieldset>
       <% end %>

@@ -21,7 +21,17 @@
     -moz-box-shadow:    1px 0px 9px 0px rgba(50, 50, 50, 0.4);
     box-shadow:         1px 0px 9px 0px rgba(50, 50, 50, 0.4);
   }
+  .btn-others{
+    border:1px solid #4dba4d;
+    background: #4dba4d;
+    color: white;
+    border-radius: 6px;
+  }
+  .btn-others a{
 
+    color: white;
+
+  }
 
 #features p {
   font-weight: 300;

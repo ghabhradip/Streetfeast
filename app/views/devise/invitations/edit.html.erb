@@ -1,5 +1,5 @@
 <center>
-  <div class="card bg-light mb-3" style="max-width: 26rem;">
+  <div class="card bg-light mb-3" style="max-width: 46rem;">
     <div class="card-header">SET YOUR PASSWORD</div>
       <div class="card-body">
           <%= form_for resource, :as => resource_name, :url => invitation_path(resource_name), :html => { :method => :put } do |f| %>
@@ -30,13 +30,4 @@
   width: 200px;
 }
   
-</style>
-<style type="text/css">
-    .card {
-    box-shadow: 0 10px 20px 0 rgba(0,0,0,0.2);
-    transition: 0.3s;
-    border: 1px solid;
-    border-radius: 5px;
-    height: auto;
-}
 </style>

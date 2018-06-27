@@ -1,8 +1,9 @@
 <link href="//cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css"></link>
 <script src="//cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
 
-<div style="padding: 10px;">
-  <table id="subsriptions_datatable" class="table table-hover display responsive no-wrap" data-source="<%= subscriptions_path(format: :json) %>">
+<div style="padding-left: 20px;">
+  <div class="table-responsive">
+  <table id="subsriptions_datatable" class="table table-striped table-hover display nowrap" data-source="<%= subscriptions_path(format: :json) %>">
     <thead>
       <tr>
         <th scope="col"><input type="checkbox" name="select_all_checkbox" id="select_all"></th>
@@ -14,12 +15,14 @@
   </table> 
   <button class="btn btn-success right-align newsletter_btn" >Send Newsletter</button>
 </div>
+</div>
 <script>
 
   jQuery(document).ready(function() 
   {
     $('#subsriptions_datatable').dataTable({
       "serverSide": true,
+      "responsive": true,
       "pagingType": "full_numbers",
       "oLanguage": { "sSearch": ""},
       "columnDefs": [
