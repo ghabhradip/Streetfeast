@@ -14,6 +14,14 @@
  *= require dataTables/extras/dataTables.responsive
  *= require dataTables/jquery.dataTables
  */
+.modal-dialog {
+    position: fixed;
+    width: 100%;
+    
+    text-align: center;
+    top: 57px;
+    padding: 10px;
+}
 .field{
   margin:10px;
 }
@@ -52,6 +60,8 @@ a:hover{
     height: 33px;
     background: #222;
     border-top: 2px solid #ffffff59;
+    
+
 }
 .info_panel_side_nav_name{
   color: white;
@@ -78,15 +88,15 @@ nav.navbar.navbar-inverse.fixed_navbar {
     width: 100%;
     border-radius: 0px;
     border: 0px;
-
-
 }
 nav.navbar.navbar-inverse{
   width: 100%;
   top:0;
   position:fixed;
-    border-radius: 0px;
-z-index: 9999999;
+  border-radius: 0px;
+  z-index: 9999999;
+    
+
 }
 .alert{
       z-index: 9999;
@@ -114,11 +124,12 @@ z-index: 9999999;
 .sidenav {
     width: 195px;
     position: fixed;
-    top: 48px;
+    top: 53px;
     background: #222;
     overflow-y: auto;
     height: calc(100% - 81px);
     z-index: 9999999;
+    
 }
 ::-webkit-scrollbar {
   width: 7px;
