@@ -61,3 +61,5 @@ gem 'will_paginate'
 gem 'wicked_pdf'
 gem 'wkhtmltopdf-binary'
 gem "braintree", "~> 2.89.0"
+gem 'haml'
+gem 'bootstrap-sass', "3.3.5"

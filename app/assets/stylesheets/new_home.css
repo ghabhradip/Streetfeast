@@ -1,0 +1,527 @@
+@font-face {
+    font-family: Roboto-Black;
+    src: url(/assets/fonts/Roboto-Black.ttf);
+}
+@font-face {
+    font-family: Roboto-Bold;
+    src: url(/assets/fonts/Roboto-Bold.ttf);
+}
+@font-face {
+    font-family: RobotoCondensed-Bold;
+    src: url(/assets/fonts/RobotoCondensed-Bold.ttf);
+}
+@font-face {
+    font-family: RobotoCondensed-Light;
+    src: url(/assets/fonts/RobotoCondensed-Light.ttf);
+}
+@font-face {
+    font-family: RobotoCondensed-Regular;
+    src: url(/assets/fonts/RobotoCondensed-Regular.ttf);
+}
+@font-face {
+    font-family: Roboto-Light;
+    src: url(/assets/fonts/Roboto-Light.ttf);
+}
+@font-face {
+    font-family: Roboto-Medium;
+    src: url(/assets/fonts/Roboto-Medium.ttf);
+}
+@font-face {
+    font-family: Roboto-Regular;
+    src: url(/assets/fonts/Roboto-Regular.ttf);
+}
+@font-face {
+    font-family: Roboto-Thin;
+    src: url(/assets/fonts/Roboto-Thin.ttf);
+}
+.home_page{background: #F7DF05;}
+.banner_sec{background: url("/assets/banner.jpg");height: 500px;background-size: 100% auto;}
+.banner_text{
+	padding-top: 100px;
+    padding-left: 10%;
+    width: 50%;
+    color: #fff;
+}
+.banner_text h1 {
+    font-size: 60px;
+    letter-spacing: 20px;
+    font-weight: bold;
+}
+.banner_text p {
+    font-size: 24px;
+    font-family: Roboto-Thin;
+}
+a.know_more:hover, a.know_more:focus {
+    background: #fff;
+    color: #111;
+    text-decoration: none;
+}
+
+a.know_more {
+    color: #fff;
+    border: 4px solid #fff;
+    display: inline-block;
+    padding: 10px 20px;
+    text-decoration: none;
+    font-size: 20px;
+    -webkit-transition: all 1s ease;
+    -moz-transition: all 1s ease;
+    -o-transition: all 1s ease;
+    font-weight: bold;
+    font-family: Roboto-Black;
+    letter-spacing: 1px;
+}
+.feast_smartly_wrapper {
+    background: url(/assets/img_left.jpg) no-repeat;
+    height: 500px;
+    background-size: 100%;
+}
+.feast_smartly_container {
+    margin-top: 50px;
+}
+.feast_smartly_txt_area {
+    text-align: center;
+    margin-top: 100px;
+}
+.feast_smartly_txt_area h3 {
+    display: inline-block;
+    letter-spacing: 10px;
+    font-weight: bold;
+    font-size: 40px;
+    font-family: Roboto-Black;
+    letter-spacing: 11px;
+}
+h3.wht_txt {
+    color: #fff;
+}
+.feast_smartly_txt_area h3 {
+    display: inline-block;
+    letter-spacing: 8px;
+    font-weight: bold;
+    font-size: 35px;
+}
+.feast_smartly_txt_area p {
+    width: 50%;
+    margin: 30px auto;
+    font-size: 17px;
+    font-family: Roboto-Light;
+}
+
+a.find_now:hover, a.find_now:focus {
+    background: #111;
+    color: #fff;
+    font-family: Roboto-Black;
+    letter-spacing: 3px;
+    text-decoration: none;
+}
+
+a.find_now {
+    color: #111;
+    border: 4px solid #111;
+    display: inline-block;
+    padding: 10px 20px;
+    text-decoration: none;
+    font-size: 20px;
+    -webkit-transition: all 1s ease;
+    -moz-transition: all 1s ease;
+    -o-transition: all 1s ease;
+    font-weight: bold;
+    font-family: Roboto-Black;
+    letter-spacing: 3px;
+}
+img{max-width:100%;}
+.blogs_container {
+    width: 80%;
+    margin: 50px auto;
+    position: relative;
+}
+.blog_desc_container {
+    background: #fff;
+    padding: 50px;
+}
+.blog_by_pf span{
+    border: 1px solid #495f69;
+    display: inline-block;
+    border-radius: 50%;
+    height: 35px;
+    width: 35px;
+    text-align: center;
+    background: #495f69;
+    color: #fff;
+    font-size: 23px;
+}
+.blog_by_name{margin-left: 5px;}
+.blog_by_name, .blog_by_pf {
+    display: inline-block;
+    vertical-align: middle;
+}
+.blog_by_name p {
+    margin: 0;
+}
+a.blog_heading {
+    font-size: 24px;
+    margin-top: 30px;
+    display: inline-block;
+    text-transform: uppercase;
+    font-weight: bold;
+    color: #222;
+    text-decoration: none;
+    margin-bottom: 10px;
+    font-family: Roboto-Black;
+    letter-spacing: 4px;
+
+}
+a.blog_heading:hover {
+    color: #9c5e02;
+}
+p.blog_desc {
+    font-size: 15px;
+    letter-spacing: 1px;
+    font-family: Roboto-Light;
+}
+.fl{float: left;}
+.fr{float: right;}
+.cb{clear: both;}
+.blog_footer_sec .view_count {
+    display: inline-block;
+    margin-right: 10px;
+}
+.blog_footer_sec {
+    border-top: 1px solid #aaa;
+    margin-top: 20px;
+    padding-top: 20px;
+}
+.blog_cntr {
+    margin-bottom: 30px;
+    position: relative;
+    z-index: 1;
+}
+
+
+a.write_blog_btn:hover, a.write_blog_btn:focus {
+    text-decoration: none;
+    color: #111;
+    background: #fff;
+    border-color: #fff;
+}
+
+.write_blog_btn {
+    color: #fff;
+    background: #111;
+    border: 4px solid #111;
+	margin-top: 0;
+}
+
+a.about_us_btn:hover, a.about_us_btn:focus {
+    text-decoration: none;
+    color: #fff;
+    background: #111;
+    border-color: #111;
+}
+
+.about_us_btn {
+    color: #111;
+    border: 4px solid #111;
+    margin-top: 20px;
+
+}
+.large_btn 
+{
+    display: inline-block;
+    padding: 30px 40px;
+    text-decoration: none;
+    font-size: 25px;
+    -webkit-transition: all 1s ease;
+    -moz-transition: all 1s ease;
+    -o-transition: all 1s ease;
+    font-weight: bold;
+    letter-spacing: 6px;
+    width: 300px;
+    text-align: center;
+    font-family: Roboto-Black;
+}
+
+.subscribe_form {
+    background: #fff;
+    padding: 20px;
+}
+.subscribe_form p{
+	font-size: 24px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    font-family: Roboto-Black;
+}
+
+.subscribe_form input {
+    display: block;
+    width: 100%;
+    border: 1px solid #111;
+    height: 38px;
+    margin-top: 10px;
+    padding: 5px;
+}
+
+.subscribe_form input:focus{
+	border-color: #66afe9;
+    outline: 0;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(102, 175, 233, 0.6);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(102, 175, 233, 0.6);
+}
+
+.subscribe_form input[type=button]{
+	background: #111;
+    color: #fff;
+    font-weight: bold;
+    font-size: 15px;
+    letter-spacing: 6px;
+    font-family: Roboto-Black;
+}
+
+.design_bar_1 {
+    margin: 200px 0 20px 0;
+    border: 3px solid;
+    width: 50px;
+}
+
+.feedback_strip {
+    font-weight: bold;
+    background: #111;
+    color: #fff;
+    text-align: center;
+    padding: 20px 0;
+    letter-spacing: 8px;
+    font-size: 25px;
+    font-family: Roboto-Black;
+}
+
+.feedback_strip a {
+    padding: 6px 40px;
+    text-decoration: none;
+    -webkit-transition: all 1s ease;
+    -moz-transition: all 1s ease;
+    -o-transition: all 1s ease;
+    font-weight: bold;
+    text-align: center;
+    color: #fff;
+    border: 1px solid;
+    display: inline-block;
+}
+
+.feedback_strip a:hover, .feedback_strip a:focus {
+    text-decoration: none;
+    color: #111;
+    background: #fff;
+    border-color: #fff;
+}
+
+.feedback_strip p {
+    display: inline-block;
+    margin: 0;
+}
+
+.contact_us_section {
+    background: #fff;
+    margin-top: 51px;
+    padding: 100px 0;
+}
+.landing_footer
+{
+	background: #111;
+	padding: 150px;
+	text-align: center;
+}
+.landing_footer a
+{
+
+	padding: 0 12px;  
+    display: inline-block;  
+}
+
+.landing_footer p
+{
+	color: #fff;
+    margin-top: 40px;
+    font-size: 13px;
+    font-family: Roboto-Light;
+}
+
+.circle {
+  width: 150px;
+  height: 150px;
+  line-height: 200px;
+  border-radius: 50%; /* the magic */
+  -moz-border-radius: 50%;
+  -webkit-border-radius: 50%;
+  text-align: center;
+  color: white;
+  font-size: 16px;
+  text-transform: uppercase;
+  font-weight: 700;
+  margin: 0 auto 40px;
+  background: linear-gradient(to right, #333 , #f7df05);
+}
+.circle_bottom
+{
+  position: absolute;
+  bottom: 0;
+  z-index: 0;
+  left: -125px;
+}
+.circle_top
+{
+	z-index: 0;
+    top: 1390px;
+    position: absolute;
+    left: 883px;
+}
+
+.contact_form_section form input[type=text], .contact_form_section form input[type=email] {
+    width: 100%;
+    border: 1px solid #333;
+    margin-bottom: 3px;
+    padding: 5px;
+    background: rgba(232, 230, 230, 1);
+}
+.contact_form_section textarea {
+    width: 100%;
+    resize: none;
+    height: 102px;
+    border: 1px solid #333;
+    background: rgba(232, 230, 230, 1);
+}
+.contact_form_section .col-md-6 {
+    padding-left: 0;
+    padding-right: 3px;
+}
+.contact_form_section {
+    width: 80%;
+}
+.contact_us_sbumit_btn {
+    text-align: right;
+}
+.contact_us_sbumit_btn input {
+    background: #111;
+    border: 1px solid #111;
+    color: #fff;
+    display: inline-block;
+    margin-right: 3px;
+    font-family: Roboto-Light;
+}
+.contact_email_section {
+    width: 50%;
+    margin: 0 auto;
+}
+.contact_email_section p {
+    width: 170px;
+    font-size: 26px;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: #111;
+    letter-spacing: 6px;
+    display: inline-block;
+    font-family: Roboto-Black;
+}
+.contact_email_section span {
+    border: 3px solid #111;
+    width: 80px;
+    display: inline-block;
+    vertical-align: top;
+    margin-top: 8px;
+    position: relative;
+    right: -90px;
+}
+.contact_email_section a, .contact_email_section a:hover, .contact_email_section a:focus {
+    color: #111;
+    font-weight: bold;
+    text-decoration: none;
+    font-family: Roboto-Black;
+    letter-spacing: 1px;
+}
+.blog_footer_sec .like_btn {
+    color: #ef5d5d;
+    text-decoration: none;
+}
+.diagonal_line
+{
+    position: absolute;
+    z-index: 1;
+    width: 25%;
+    height: 1px;
+    background-color: black;
+    -webkit-transform: rotate(-60deg); /* Safari and Chrome */
+        -ms-transform: rotate(-60deg); /* IE 9 */
+            transform: rotate(-60deg);
+}
+.diagonal_line_one {
+    left: 76%;
+    top: 828px;
+}
+.diagonal_line_two {
+    left: 75%;
+    top: 928px;
+}
+.navbar.navbar-inverse  /* This is to make navbar edges sharp*/
+{
+    border-radius: 0;
+    background-color: #111;
+    border-color: #111;
+}
+
+@media screen and (max-width: 768px) {
+	.banner_text h1 {
+	    font-size: 35px;
+	    letter-spacing: 2px;
+	}
+	.banner_text p {
+	    font-size: 16px;
+	}
+	.blogs_container {
+	    width: 100%;
+	}
+	a.know_more {
+	    font-size: 16px;
+	}
+	.feast_smartly_wrapper {
+	    height: 150px;
+	}
+	.large_btn{
+		margin-top: 20px;
+		width: 100%;
+	}
+	.design_bar_1 {
+    margin: 89px 0 20px 0;
+	}
+	.feedback_strip a
+	{
+		font-size: 11px;
+		letter-spacing: 2px;
+	}
+	.circle_bottom
+	{
+		display: none;
+	}
+	.circle_top
+	{
+		display: none;
+	}
+    .contact_form_section {
+        width: 100%;
+    }
+    .landing_footer{
+        padding: 50px;
+    }
+    .contact_email_section {
+        width: 100%;
+        margin: 0 auto 30px;
+        
+    }
+    .contact_email_section span {
+        right: -60px;
+    }
+    .diagonal_line
+    {
+        display: none;
+    }
+
+}
