@@ -1,6 +1,6 @@
-<!-- <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script> -->
-<div style="padding: 20px;">
-  <div class="card" style="padding: 10px;">
+<script type="text/javascript" src="/assets/bootstrap-filestyle.js"> </script>
+<div class="blog_container">
+  <div class="card show_blog_card">
     <div class="container-fluid">
       <div class ="new_blog">
         <%= form_for (@blog),url: "/blog/update_blog_user/#{@blog.id}", :html => { :multipart => true } do |f| %>
@@ -28,8 +28,8 @@
           </div>
           <br>
           <div class="actions">
-            <button type="submit" class="btn btn-primary btn_large" >Update</button>&nbsp;&nbsp;
-            <button type="submit" class="btn btn-primary btn_large" id="add_to_restaurant" data-id="<%=@blog.id %>" data-toggle="modal" data-target="#myModal" >Add to restaurant</button>
+            <button type="submit" class="medium_button" >Update</button>&nbsp;&nbsp;
+            <button type="submit" class="medium_button_inverse" id="add_to_restaurant" data-id="<%=@blog.id %>" data-toggle="modal" data-target="#myModal" >Add to restaurant</button>
           </div>
         <% end %>
       </div>
@@ -53,6 +53,8 @@
 </div>
 
 <script>
+  $(":file").filestyle({classButton: "btn btn-default file_button"});
+
   $("#add_to_restaurant").on("click",function(e){
     e.preventDefault();
     var id = $(this).data('id');
@@ -84,11 +86,5 @@
   #example_wrapper .row:first-child{
     margin-bottom: 24px;
   }
-  .card {
-    box-shadow: 0 10px 20px 0 rgba(0,0,0,0.2);
-    transition: 0.3s;
-    border: 1px solid;
-    border-radius: 5px;
-    height: auto;
-}
+
 </style>

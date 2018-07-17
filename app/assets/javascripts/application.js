@@ -217,3 +217,7 @@ c[0]._fixedHeader[a+"Offset"]():k:this.iterator("table",function(c){if(c=c._fixe
 
 
 //------------------------------------------ Datatable for Pending Indent-----------------------------//
+
+
+//----------------------------------------- Bootstrap file-style.js------------------------------------//
+

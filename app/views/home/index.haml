@@ -61,7 +61,7 @@
               Mailing List
             %div
               = email_field_tag :email, "",:placeholder => "Email Address"
-              %input{ :type => 'button', :value => "SUBSCRIBE"} 
+              %input{ :id => 'subscribe_button', :type => 'button', :value => "SUBSCRIBE"} 
         .clearfix 
     .blog_cntr
       .blog_wrapper
@@ -192,6 +192,20 @@
 
 
 :javascript
+
+    
+    var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+    (function(){
+    var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+    s1.async=true;
+    s1.src='https://embed.tawk.to/5b34c143d0b5a5479682426f/default';
+    s1.charset='UTF-8';
+    s1.setAttribute('crossorigin','*');
+    s0.parentNode.insertBefore(s1,s0);
+    })();
+
+
+
     $(window).scroll(function() {
       var circle_top_top = $('.circle_top').offset().top,
        circle_top_outer_height = $('.circle_top').outerHeight(),
@@ -212,4 +226,10 @@
         $('.contact_left').addClass('animated flipInY');
         $('.contact_right').addClass('animated flipInY');
       }
+    });
+
+    $("#subscribe_button").on("click",function()
+    {
+      swal('Thank you for subscribing');
+
     });

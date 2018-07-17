@@ -2,8 +2,7 @@
 <script src="//cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="http://jonthornton.github.io/jquery-timepicker/jquery.timepicker.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tokenfield/0.12.0/bootstrap-tokenfield.js"></script>
-<div style="padding:10px;" >
-  <div class="card bg-light mb-3" style="width: 100%;">
+  <div class="card bg-light mb-3">
     <div class="card-header"><h3><center><strong><%= @restaurant.name.capitalize %></strong></center></h3></div>
       <div class="card-body">
         <% if current_user.is_admin.eql? true %>
@@ -174,7 +173,7 @@
       </div>
     </div>
   </div>
-</div>
+
 
 
 
@@ -353,12 +352,5 @@
     height: auto;
     cursor: pointer;
   }
-.card {
-    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
-    transition: 0.3s;
-    border: 1px solid;
-    border-radius: 5px;
-    height: auto;
-}
 
 </style>
