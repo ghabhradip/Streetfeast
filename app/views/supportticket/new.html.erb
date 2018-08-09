@@ -1,5 +1,5 @@
 <center>
-  <div class="card bg-light mb-3" style="max-width: 46rem;">
+  <div class="card bg-light mb-3 new_issue_card">
     <div class="card-header"><h2>Submit Issue</h2></div>
     <div class="card-body">
       <div class ="new_blog">
@@ -8,12 +8,12 @@
           <div class="form-group">
             <%= select_tag 'support_ticket[issue_type]',content_tag(:option,'Select Issue Type',:value=>"")+ options_from_collection_for_select(IssueType.all, 'id', 'issue_type'),:class=>"form-control" %>
           </div>
-          <div class="field">
-            <%= f.text_area :issue_description,:class=>"form-control",:placeholder => "Issue" %>
+          <div class="form-group">
+            <%= f.text_area :issue_description,:class=>"form-control",:placeholder => "Issue Description" %>
           </div>
           <br>
-          <div class="actions">
-            <button type="submit" class="btn btn-primary btn_large" >Submit</button>
+          <div class="form-group">
+            <button type="submit" class="medium_button">Submit</button>
           </div>
         <% end %>
       </div>
